@@ -48,6 +48,10 @@ No agent may autonomously mutate production, change access, delete content, make
 - [Scaling guide](docs/architecture/SCALING_GUIDE.md)
 - [Contribution rules](CONTRIBUTING.md)
 - [Repository controls and hosting limitation](governance/repository-controls.md)
+- [Sanitized evidence boundary](governance/evidence-boundary.md)
+- [Evidence gap backlog](workstreams/evidence-gap-backlog.md)
+- [Skill priority register](skills/PRIORITY_REGISTER.md)
+- [Pilot readiness gates](workstreams/pilots/READINESS.md)
 
 Internal source material is intentionally excluded from GitHub. Store it locally or in an approved MGP evidence repository and reference it by evidence ID.
 

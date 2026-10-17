@@ -59,3 +59,18 @@ Use `qa/screenshot-register.csv`. For every image, explain what it proves; a scr
 - Do not rely on redaction for inherently sensitive content; recreate the scenario safely.
 - Retain publication approval and the source-to-public transformation record.
 
+## Existing-media rule
+
+Existing recordings, emails, meeting screenshots, application screens, flow definitions, inventories, and architecture walkthroughs are internal evidence candidates only. They are not public assets.
+
+Do not publish media containing:
+
+- tenant, environment, application, flow, resource, repository, channel, or group identifiers
+- trigger URLs, webhook endpoints, tokens, authorization material, secrets, or service-principal details
+- client, employee, applicant, resident, vendor, payment, invoice, signature, screening, or task-assignment data
+- detailed finance, audit, records, retention, folder, payment, or external-integration architecture
+- access weaknesses, missing permissions, temporary workarounds, unresolved defects, or client feedback
+- staffing, handoff, performance, career, promotion, or unapproved rating information
+- private code, exported packages, internal standards, training guides, or infrastructure details
+
+Recreate public examples in a demonstration environment with synthetic data and an explicit publication approval.

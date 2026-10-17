@@ -1,2 +1,1 @@
-Measurement ID,Project,Activity,Standard Version,Developer,Start Definition,Stop Definition,Baseline Minutes,AI Assisted Minutes,Human Review Minutes,Rework Minutes,Waiting Minutes,Defects Before Release,Defects After Release,Sample Size,Data Source,Exclusions,Notes
-
+Measurement ID,Project,Activity,Standard Version,Developer,Start Definition,Stop Definition,Baseline Minutes,AI Assisted Minutes,Human Review Minutes,Rework Minutes,Waiting Minutes,Deployment Minutes,Defects Sev1,Defects Sev2,Defects Sev3,Defects Sev4,Escaped Defects,Critical Tests Planned,Critical Tests Passed,Documentation Completeness Percent,Independent Assistance Minutes,Sample Size,Data Source,Exclusions,Actual or Estimate,Notes
