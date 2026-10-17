@@ -94,6 +94,20 @@ Every applicable journey defines and tests these states. Examples use generic wo
 
 - Backend changes are made through the authoring service (Canvas MCP, YAML sync/compile) or approved CLI; visual acceptance is made by viewing the live app in the shared browser per `standards/visual-verification.md`. Both halves are required for every bounded change.
 - Use reusable Canvas components for repeated app-shell and cross-screen UI. Prefer an approved component library when reuse spans multiple apps. Instances use `Control: CanvasComponent` with `ComponentName`.
+
+### Canvas MCP sync rules (verified 2026-10-17 on the Flossmoor FOIA pilot)
+
+These were discovered by inspecting the rendered DOM after a compile-clean sync produced black, default-sized controls. They are mandatory until the authoring service changes.
+
+1. **Never reparent an existing control through sync.** The sync merges a same-named control onto its existing instance; if its parent changed, the instance is corrupted (renders at template defaults with a black fill, all layout properties blank, children positioned absolutely). Property-only updates to an existing control under the same parent are safe.
+2. **Structural rebuilds use a two-sync wipe-and-recreate.** First sync the screens with no children (keep `App`, `_EditorState`, and `ComponentDefinitions`), confirm the server returns zero controls, then sync the full YAML. Every control is then created fresh.
+3. **A freshly created parent requires freshly created descendants.** If a parent is recreated, every descendant must also be new; otherwise the descendants are reparented and corrupted (rule 1).
+4. **Canvas component instances are not allowed inside a Gallery template.** Use a native control (e.g. `ModernBadge`) with the same mapping inside galleries.
+5. **Event custom properties require `Default: =false`.** `PropertyKind: Event` without a `Default` fails compile.
+6. **Do not put `App.Width` behind a named formula for breakpoints.** `IsPhone = App.Width < 600` in `App.Formulas` is evaluated once and does not re-evaluate on resize or rotation. Inline `App.Width < BreakpointPhone` in control formulas; keep only literal tokens (`BreakpointPhone = 600`) as named formulas.
+7. **`ModernBadge` enums:** `BadgeIntent` has `Neutral`, not `Subtle`; `Size` is a number; `Content` is not readable as an output.
+8. **Studio device emulator does not drive `App.Width`.** Phone/tablet emulation scales the canvas but `App.Width` does not follow. Verify breakpoints by resizing the real browser viewport (Browser preview mode) or in the published Player.
+9. **After a large sync, hard-reload Studio.** The designer's render order and property pane can lag the server document; the server YAML (`sync_canvas` into a clean folder) is authoritative.
 - Reject duplicated headers, navigation, sidebars, or footers unless a recorded authoring limitation blocks component creation and a named owner accepts the temporary exception.
 - Use AutoLayout and formula-driven sizing for all supported device classes. Review every fixed width, height, X, and Y value for necessity.
 - Prefer Fluent modern controls and shared design tokens; avoid per-screen color, spacing, and type literals.

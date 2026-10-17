@@ -1,0 +1,52 @@
+App:
+  Properties:
+    Formulas: |-
+      =// ---- Fluent 2 color tokens ----
+      ColorBrand = RGBA(0, 120, 212, 1);
+      ColorBrandHover = RGBA(16, 110, 190, 1);
+      ColorBrandTint = RGBA(235, 243, 252, 1);
+      ColorNeutralBg = RGBA(250, 250, 250, 1);
+      ColorSurface = RGBA(255, 255, 255, 1);
+      ColorNeutralStroke = RGBA(225, 223, 221, 1);
+      ColorTextPrimary = RGBA(36, 36, 36, 1);
+      ColorTextSecondary = RGBA(97, 97, 97, 1);
+      ColorSuccess = RGBA(16, 124, 16, 1);
+      ColorWarning = RGBA(157, 93, 0, 1);
+      ColorCritical = RGBA(196, 43, 28, 1);
+      ColorInfo = RGBA(0, 120, 212, 1);
+      ColorSuccessBg = RGBA(241, 250, 241, 1);
+      ColorWarningBg = RGBA(255, 249, 245, 1);
+      ColorCriticalBg = RGBA(253, 243, 244, 1);
+      // ---- Legacy aliases (retired names; do not use in new code) ----
+      ColorNavy = ColorBrand;
+      ColorCharcoal = ColorTextPrimary;
+      ColorGold = ColorBrand;
+      ColorBorder = ColorNeutralStroke;
+      // ---- Breakpoints ----
+      BreakpointPhone = 600;
+      BreakpointDesktop = 1200;
+      IsPhone = App.Width < BreakpointPhone;
+      IsTablet = App.Width >= BreakpointPhone && App.Width < BreakpointDesktop;
+      IsDesktop = App.Width >= BreakpointDesktop;
+      // ---- Spacing / sizing ----
+      SpaceXs = 4;
+      SpaceSm = 8;
+      SpaceMd = 16;
+      SpaceLg = 24;
+      RadiusSm = 4;
+      ControlMinTouch = 44;
+      InputHeight = 44;
+      FieldHeight = 72;
+      HeaderHeight = 64;
+      NavRailWidth = If(IsDesktop, 220, 64);
+      BottomNavHeight = 56;
+      PagePadding = If(IsPhone, SpaceMd, SpaceLg);
+      TileHeight = 104;
+      // ---- Type scale (Segoe UI via modern controls) ----
+      FontSizeTitle = If(IsPhone, 18, 22);
+      FontSizeSection = 16;
+      FontSizeBody = 14;
+      FontSizeCaption = 12;
+      FontSizeKpi = 28
+    StartScreen: =Dashboard
+    Theme: =PowerAppsTheme
