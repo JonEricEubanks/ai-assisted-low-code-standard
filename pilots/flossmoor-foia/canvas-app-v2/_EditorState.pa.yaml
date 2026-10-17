@@ -1,0 +1,12 @@
+EditorState:
+  ScreensOrder:
+    - DepartmentWork
+    - Home
+    - NewRequest
+    - RequestDetail
+    - ResponseCloseout
+  ComponentDefinitionsOrder:
+    - cmpAppHeader
+    - cmpRequestDetailPane
+    - cmpSideNav
+    - cmpStatusBadge

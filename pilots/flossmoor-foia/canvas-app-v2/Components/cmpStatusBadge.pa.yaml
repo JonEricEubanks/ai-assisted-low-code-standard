@@ -1,0 +1,65 @@
+ComponentDefinitions:
+  cmpStatusBadge:
+    DefinitionType: CanvasComponent
+    Description: Fluent semantic status badge with icon for FOIA status values.
+    AccessAppScope: true
+    CustomProperties:
+      Status:
+        PropertyKind: Input
+        DisplayName: Status
+        Description: Status text (OverallStatus.Value or AssignmentStatus.Value).
+        DataType: Text
+        Default: ="Not set"
+    Properties:
+      Height: =24
+      Width: =120
+    Children:
+      - cntBadgeRoot:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Horizontal
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - bdgStatus:
+                Control: ModernBadge
+                Properties:
+                  AccessibleLabel: |-
+                    ="Status: " & Coalesce(cmpStatusBadge.Status, "Not set")
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Content: =Coalesce(cmpStatusBadge.Status, "Not set")
+                  FillPortions: =1
+                  FontWeight: =FontWeight.Semibold
+                  Icon: |-
+                    =Switch(cmpStatusBadge.Status,
+                      "New", "Info",
+                      "In Progress", "ArrowClockwise",
+                      "On Hold", "Pause",
+                      "Ready", "Checkmark",
+                      "Delivered", "Send",
+                      "Closed", "CheckmarkCircle",
+                      "Complete", "CheckmarkCircle",
+                      "Overdue", "Warning",
+                      "Circle")
+                  Intent: |-
+                    =Switch(cmpStatusBadge.Status,
+                      "New", BadgeIntent.Informative,
+                      "In Progress", BadgeIntent.Highlight,
+                      "On Hold", BadgeIntent.Caution,
+                      "Ready", BadgeIntent.Attention,
+                      "Delivered", BadgeIntent.Positive,
+                      "Closed", BadgeIntent.Positive,
+                      "Complete", BadgeIntent.Positive,
+                      "Overdue", BadgeIntent.Critical,
+                      BadgeIntent.Neutral)
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  Shape: =BadgeShape.Rounded
+                  Size: =FontSizeCaption

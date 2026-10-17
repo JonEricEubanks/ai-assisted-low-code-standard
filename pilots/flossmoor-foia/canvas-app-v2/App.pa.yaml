@@ -1,0 +1,55 @@
+App:
+  Properties:
+    Formulas: |-
+      =// ---- Fluent 2 color tokens (carried from v1) ----
+      ColorBrand = RGBA(0, 120, 212, 1);
+      ColorBrandHover = RGBA(16, 110, 190, 1);
+      ColorBrandTint = RGBA(235, 243, 252, 1);
+      ColorNeutralBg = RGBA(250, 250, 250, 1);
+      ColorSurface = RGBA(255, 255, 255, 1);
+      ColorNeutralStroke = RGBA(225, 223, 221, 1);
+      ColorTextPrimary = RGBA(36, 36, 36, 1);
+      ColorTextSecondary = RGBA(97, 97, 97, 1);
+      ColorSuccess = RGBA(16, 124, 16, 1);
+      ColorWarning = RGBA(157, 93, 0, 1);
+      ColorCritical = RGBA(196, 43, 28, 1);
+      ColorInfo = RGBA(0, 120, 212, 1);
+      ColorSuccessBg = RGBA(241, 250, 241, 1);
+      ColorWarningBg = RGBA(255, 249, 245, 1);
+      ColorCriticalBg = RGBA(253, 243, 244, 1);
+      // ---- Breakpoints (literals only; compare App.Width INLINE in controls — sync rule 6) ----
+      BreakpointPhone = 600;
+      BreakpointDesktop = 1200;
+      // ---- Spacing / sizing ----
+      SpaceXs = 4;
+      SpaceSm = 8;
+      SpaceMd = 16;
+      SpaceLg = 24;
+      RadiusSm = 4;
+      ControlMinTouch = 44;
+      InputHeight = 44;
+      FieldHeight = 72;
+      HeaderHeight = 64;
+      BottomNavHeight = 56;
+      NavRailWidthTablet = 64;
+      NavRailWidthDesktop = 220;
+      PagePaddingPhone = 16;
+      PagePaddingWide = 24;
+      ContentMaxWidth = 1600;
+      TileMaxWidth = 360;
+      TileHeight = 104;
+      StatStripHeight = 64;
+      ListPaneRatio = 0.38;
+      // ---- Type scale per tier (Segoe UI via modern controls). Pick with an inline App.Width test. ----
+      FontSizeBodyPhone = 15;
+      FontSizeBody = 14;
+      FontSizeCaption = 12;
+      FontSizeSection = 16;
+      FontSizeTitlePhone = 20;
+      FontSizeTitleTablet = 22;
+      FontSizeTitleDesktop = 24;
+      FontSizeKpiPhone = 28;
+      FontSizeKpiTablet = 30;
+      FontSizeKpiDesktop = 32
+    StartScreen: =Home
+    Theme: =PowerAppsTheme
