@@ -16,18 +16,18 @@
 
 ## Portfolio tasks
 
-- [ ] Create sanitized ELM and Early Check case-study templates.
-- [ ] Map evidence to Senior Developer capabilities and official rating measures.
-- [ ] Capture before/after process, architecture, QA, adoption, and outcome visuals.
-- [ ] Create a leadership demonstration outline.
+- [x] Create a reusable case-study template and two synthetic stand-ins for the pilot case-study work; no pilot identifiers or evidence are included ([template](../../portfolio/case-study-template.md), [example A](../../portfolio/synthetic-case-study-a.md), [example B](../../portfolio/synthetic-case-study-b.md)).
+- [x] Map portfolio evidence to Senior Developer capabilities and the proposed rating scorecard.
+- [x] Create public-safe process, architecture, QA, adoption, and outcome visuals with alt text and captions.
+- [x] Create a leadership demonstration outline.
 
 ## Blog tasks
 
-- [ ] Draft the six-part series using synthetic examples.
-- [ ] Add alt text, captions, source notes, and publication approvals.
-- [ ] Run privacy, security, client, accessibility, and proprietary-content review.
-- [ ] Ensure realized and projected benefits are clearly distinguished.
+- [x] Draft the six-part series using synthetic examples.
+- [x] Add alt text, captions, source notes, and an approval workflow; actual publication approval remains pending.
+- [x] Add a privacy, security, client, accessibility, and proprietary-content review checklist; asset-specific final reviews remain pending.
+- [x] Require realized and projected benefits to be clearly distinguished.
 
 ## Definition of done
 
-The portfolio proves technical leadership and team enablement using measured, source-cited, public-safe evidence.
+The public-safe portfolio package is complete with synthetic, traceable examples. Claims about pilot results or realized benefits require approved, source-cited evidence and publication approval before release.

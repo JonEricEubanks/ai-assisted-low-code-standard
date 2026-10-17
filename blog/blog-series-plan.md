@@ -1,52 +1,44 @@
 # Blog Series Plan
 
-The public blog is a sanitized derivative of the internal standard. It must not expose client, tenant, user, security, licensing, or proprietary implementation details.
+The public blog is a synthetic demonstration package, not a derivative of internal pilot artifacts. It must not expose client, tenant, user, security, licensing, or proprietary implementation details. Existing evidence candidates remain internal-only; public examples are recreated with synthetic data. No article is approved for external publication until the review and approval record is complete.
 
 ## Article 1: Why Low-Code Teams Need an AI-Assisted Standard
 
-Story: move from isolated prompting to a governed delivery system.
-
-Screenshots: current-state process, target operating model, instructions/skills/MCP/agents diagram.
+Draft: [Why Low-Code Teams Need a Governed AI-Assisted Standard](article-01-governed-standard.md).
 
 ## Article 2: Designing the Delivery Lifecycle
 
-Story: intake through retrospective, stage gates, human accountability.
-
-Screenshots: lifecycle, swimlane, Definition of Ready/Done, intake example.
+Draft: [Designing the Delivery Lifecycle](article-02-delivery-lifecycle.md).
 
 ## Article 3: Reusable Skills for Power Apps and Power Automate
 
-Story: skill contracts, platform tools, constraints, validation, and first pilot lessons.
-
-Screenshots: sanitized skill anatomy, edit plan, App Checker, flow validation, before/after.
+Draft: [Reusable Skills for Low-Code Delivery](article-03-reusable-skills.md).
 
 ## Article 4: Standardizing SharePoint Solution Design
 
-Story: lists, libraries, pages, metadata, indexes, permissions, and integration contracts.
-
-Screenshots: synthetic schema, view, library metadata, page wireframe, final page.
+Draft: [Designing SharePoint Solutions with Explicit Contracts](article-04-sharepoint-design.md).
 
 ## Article 5: Building the QA System
 
-Story: deterministic checks first, then Playwright, vision, bounded computer use, and human release authority.
-
-Screenshots: QA architecture, failed test, visual finding, rerun, evidence record.
+Draft: [A Layered QA System for Low-Code Solutions](article-05-qa-system.md).
 
 ## Article 6: Measuring Whether AI Improved Delivery
 
-Story: baseline method, sample size, cycle time, rework, defects, adoption, limitations, and next steps.
+Draft: [Measuring Whether AI Improved Delivery](article-06-measurement.md).
 
-Screenshots: metric dashboard, adoption evidence, standard version history.
+## Public visual set
+
+Use the fictional diagrams in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md) or create fresh images in a synthetic demonstration environment. Do not use existing recordings, screenshots, emails, or other pilot artifacts. Every image needs alt text, a descriptive caption, a source note, and approval recorded in [`publication-review.md`](publication-review.md).
 
 ## Per-article checklist
 
-- [ ] One clear audience and problem
-- [ ] Sanitized reproducible example
-- [ ] Architecture or process visual
-- [ ] One limitation or failure
-- [ ] Evidence-based outcome
-- [ ] Accessibility review
-- [ ] Security/privacy review
-- [ ] Internal publication approval
-- [ ] Alt text and descriptive captions
+- [x] One clear audience and problem
+- [x] Synthetic reproducible example
+- [x] Architecture or process visual plan
+- [x] One limitation or failure
+- [x] Outcome evidence boundary
+- [ ] Accessibility review for final publication format
+- [ ] Security/privacy/client/proprietary review and publication approval
+- [x] Alt text and descriptive captions for synthetic diagrams
 
+The completed draft checkboxes describe package contents, not approval to publish. Review status and unresolved decisions are tracked in [`publication-review.md`](publication-review.md).
