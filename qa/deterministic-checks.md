@@ -70,3 +70,7 @@ Use the severity scale in [`qa-strategy.md`](qa-strategy.md). Do not close a def
 6. A named human approver has recorded an `approved` decision.
 
 The output always names human reviewers as the release authority and lists failed/blocked critical tests, incomplete sensitive paths, open findings, missing evidence, and unapproved human decisions as residual risks. A passing recommendation is evidence for the accountable human's release decision, never a substitute for it.
+
+## Pilot handoff
+
+For each pilot, provide the signed deterministic regression, requirement-to-test-to-evidence trace, separately classified findings, and failure, recovery, rollback, permission, accessibility, representative-volume, and successor-run regression evidence called for by [`evidence-gap-backlog.md`](../workstreams/evidence-gap-backlog.md). This QA output supports, but does not replace, the pilot exit gate in [`READINESS.md`](../workstreams/pilots/READINESS.md), which also requires retained evidence, metrics, and a retrospective-driven standard update.
