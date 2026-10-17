@@ -4,7 +4,6 @@ import argparse
 import csv
 import json
 import math
-import os
 import statistics
 import sys
 from collections import defaultdict
@@ -296,7 +295,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", required=True, type=Path, help="Path for machine-readable JSON output.")
     args = parser.parse_args(argv)
 
-    if os.path.abspath(args.input) == os.path.abspath(args.output):
+    if args.input.resolve() == args.output.resolve():
         print("Input and output paths must be different.", file=sys.stderr)
         return 2
     try:
