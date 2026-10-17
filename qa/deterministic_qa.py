@@ -19,6 +19,8 @@ REQUIREMENT_ID = re.compile(r"^REQ-([A-Z0-9]+-)?[0-9]{3}$")
 TEST_ID = re.compile(r"^TST-[A-Z0-9]+-[0-9]{3}$")
 DEFECT_ID = re.compile(r"^DEF-[A-Z0-9]+-[0-9]{3}$")
 RELEASE_SENSITIVE_CATEGORIES = {"destructive", "security", "records-sensitive"}
+SEVERITIES = {"Sev 1", "Sev 2", "Sev 3", "Sev 4"}
+FINDING_STATUSES = {"open", "closed"}
 
 
 def validate_evidence_record(record: Any) -> list[str]:
@@ -26,6 +28,30 @@ def validate_evidence_record(record: Any) -> list[str]:
         return ["record must be an object"]
 
     errors: list[str] = []
+    allowed = {
+        "evidenceId",
+        "runId",
+        "project",
+        "environment",
+        "solutionVersion",
+        "requirementId",
+        "testId",
+        "executor",
+        "modelSkillVersion",
+        "persona",
+        "timestamp",
+        "result",
+        "expected",
+        "actual",
+        "artifacts",
+        "defectId",
+        "reviewer",
+        "approval",
+        "classification",
+        "retentionTag",
+    }
+    for field in sorted(record.keys() - allowed):
+        errors.append(f"{field} is not allowed")
     required = {
         "evidenceId",
         "runId",
@@ -60,7 +86,9 @@ def validate_evidence_record(record: Any) -> list[str]:
             errors.append(f"{field} has an invalid identifier")
 
     result = record.get("result")
-    if result is not None and result not in RESULTS:
+    if result is not None and (
+        not isinstance(result, str) or result not in RESULTS
+    ):
         errors.append("result must be pass, fail, blocked, or review-needed")
 
     defect_id = record.get("defectId")
@@ -74,7 +102,11 @@ def validate_evidence_record(record: Any) -> list[str]:
     timestamp = record.get("timestamp")
     if timestamp is not None:
         try:
-            datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+            parsed_timestamp = datetime.fromisoformat(
+                timestamp.replace("Z", "+00:00")
+            )
+            if parsed_timestamp.tzinfo is None:
+                errors.append("timestamp must include a UTC or explicit offset")
         except (AttributeError, TypeError, ValueError):
             errors.append("timestamp must be an ISO 8601 date-time")
 
@@ -89,7 +121,9 @@ def validate_evidence_record(record: Any) -> list[str]:
             for field in ("type", "reference", "claim"):
                 if not isinstance(artifact.get(field), str) or not artifact[field]:
                     errors.append(f"artifacts[{index}].{field} is required")
-            if artifact.get("type") not in {
+            if artifact.keys() - {"type", "reference", "claim"}:
+                errors.append(f"artifacts[{index}] has an unexpected field")
+            if not isinstance(artifact.get("type"), str) or artifact.get("type") not in {
                 "log",
                 "screenshot",
                 "video",
@@ -97,6 +131,23 @@ def validate_evidence_record(record: Any) -> list[str]:
                 "export",
             }:
                 errors.append(f"artifacts[{index}].type is invalid")
+
+    for field in ("modelSkillVersion", "persona"):
+        if field in record and (
+            not isinstance(record[field], str) or not record[field].strip()
+        ):
+            errors.append(f"{field} must be a non-empty string")
+    if "approval" in record:
+        approval = record["approval"]
+        if (
+            not isinstance(approval, dict)
+            or set(approval) != {"approver", "decision"}
+            or not isinstance(approval.get("approver"), str)
+            or not approval["approver"].strip()
+            or not isinstance(approval.get("decision"), str)
+            or approval.get("decision") not in {"approved", "rejected", "deferred"}
+        ):
+            errors.append("approval must include a named approver and valid decision")
 
     for field in (
         "project",
@@ -128,6 +179,46 @@ def evaluate_release_gate(inputs: Any) -> dict[str, Any]:
         raise ValueError("criticalTests and releaseSensitiveTests must be arrays")
     if not isinstance(open_findings, list):
         raise ValueError("openFindings must be an array")
+    for index, test in enumerate(critical_tests):
+        if (
+            not isinstance(test, dict)
+            or not isinstance(test.get("testId"), str)
+            or not TEST_ID.fullmatch(test["testId"])
+            or not isinstance(test.get("result"), str)
+            or test["result"] not in RESULTS
+        ):
+            raise ValueError(f"criticalTests[{index}] has an invalid test ID or result")
+    for index, test in enumerate(sensitive_tests):
+        if (
+            not isinstance(test, dict)
+            or not isinstance(test.get("testId"), str)
+            or not TEST_ID.fullmatch(test["testId"])
+            or not isinstance(test.get("category"), str)
+            or test["category"] not in RELEASE_SENSITIVE_CATEGORIES
+            or not isinstance(test.get("executed"), bool)
+            or not isinstance(test.get("result"), str)
+            or test["result"] not in RESULTS
+        ):
+            raise ValueError(
+                f"releaseSensitiveTests[{index}] has an invalid ID, category, execution state, or result"
+            )
+    for index, finding in enumerate(open_findings):
+        if (
+            not isinstance(finding, dict)
+            or not isinstance(finding.get("severity"), str)
+            or finding["severity"] not in SEVERITIES
+            or not isinstance(finding.get("status"), str)
+            or finding["status"] not in FINDING_STATUSES
+        ):
+            raise ValueError(f"openFindings[{index}] has an invalid severity or status")
+    if not isinstance(inputs.get("releaseSensitiveApplicabilityReviewed"), bool):
+        raise ValueError("releaseSensitiveApplicabilityReviewed must be a boolean")
+    if not isinstance(inputs.get("allFailedAndBlockedDispositioned"), bool):
+        raise ValueError("allFailedAndBlockedDispositioned must be a boolean")
+    if not isinstance(inputs.get("rollbackEvidence"), bool):
+        raise ValueError("rollbackEvidence must be a boolean")
+    if not isinstance(inputs.get("supportEvidence"), bool):
+        raise ValueError("supportEvidence must be a boolean")
 
     critical_pass_rate = (
         sum(test.get("result") == "pass" for test in critical_tests)
@@ -136,7 +227,8 @@ def evaluate_release_gate(inputs: Any) -> dict[str, Any]:
         else 0.0
     )
     critical_pass = bool(critical_tests) and critical_pass_rate >= 0.95
-    sensitive_coverage = bool(sensitive_tests) and all(
+    applicability_reviewed = inputs["releaseSensitiveApplicabilityReviewed"]
+    sensitive_coverage = applicability_reviewed and all(
         test.get("executed") is True for test in sensitive_tests
     )
     no_critical_findings = not any(
@@ -155,12 +247,11 @@ def evaluate_release_gate(inputs: Any) -> dict[str, Any]:
         "noOpenSev1OrSev2": no_critical_findings,
         "criticalRegressionAtLeast95Percent": critical_pass,
         "criticalRegressionPassRate": critical_pass_rate,
+        "releaseSensitiveApplicabilityReviewed": applicability_reviewed,
         "releaseSensitivePathsExecuted": sensitive_coverage,
-        "failedAndBlockedTestsDispositioned": (
-            inputs.get("allFailedAndBlockedDispositioned") is True
-        ),
-        "rollbackEvidenceComplete": inputs.get("rollbackEvidence") is True,
-        "supportEvidenceComplete": inputs.get("supportEvidence") is True,
+        "failedAndBlockedTestsDispositioned": inputs["allFailedAndBlockedDispositioned"],
+        "rollbackEvidenceComplete": inputs["rollbackEvidence"],
+        "supportEvidenceComplete": inputs["supportEvidence"],
         "namedHumanApprovalRecorded": human_approval_recorded,
     }
 
@@ -192,24 +283,22 @@ def evaluate_release_gate(inputs: Any) -> dict[str, Any]:
                     "description": finding.get("description", "Open finding."),
                 }
             )
-    if inputs.get("allFailedAndBlockedDispositioned") is not True:
+    if not inputs["allFailedAndBlockedDispositioned"]:
         residual_risks.append(
             {"description": "Failed or blocked tests lack explicit disposition."}
         )
-    if inputs.get("rollbackEvidence") is not True:
+    if not inputs["rollbackEvidence"]:
         residual_risks.append({"description": "Rollback evidence is incomplete."})
-    if inputs.get("supportEvidence") is not True:
+    if not inputs["supportEvidence"]:
         residual_risks.append({"description": "Support evidence is incomplete."})
     if not human_approval_recorded:
         residual_risks.append(
             {"description": "Named human release approval is missing or not approved."}
         )
-    if not sensitive_tests:
+    if not applicability_reviewed:
         residual_risks.append(
             {
-                "description": (
-                    "No destructive, security, or records-sensitive paths were declared."
-                )
+                "description": "Applicability of release-sensitive paths was not reviewed."
             }
         )
     if not critical_tests:

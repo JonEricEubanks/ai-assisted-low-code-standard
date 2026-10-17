@@ -52,6 +52,10 @@
 
 Use `qa/screenshot-register.csv`. For every image, explain what it proves; a screenshot without a claim is decoration, not evidence.
 
+## Evaluation order
+
+Complete deterministic checks and requirement-to-test-to-evidence traceability before visual or computer-use evaluation. Keep their outputs separate: visual uncertainty is `review-needed`, and computer-use results are exploratory only. Any screenshots or traces must follow the synthetic-data, publication-approval, and existing-media rules below.
+
 ## Public safety
 
 - Prefer a demonstration tenant/site and synthetic data.

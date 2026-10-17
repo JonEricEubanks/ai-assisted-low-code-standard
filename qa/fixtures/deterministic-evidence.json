@@ -6,7 +6,7 @@
       "project": "Synthetic Request Demo",
       "environment": "Demo",
       "solutionVersion": "1.0.0",
-      "requirementId": "REQ-006",
+      "requirementId": "REQ-008",
       "testId": "TST-QA-001",
       "executor": "Python standard-library validator",
       "timestamp": "2026-10-17T00:00:00Z",

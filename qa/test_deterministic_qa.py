@@ -99,10 +99,16 @@ class ReleaseGateTests(unittest.TestCase):
         inputs = copy.deepcopy(self.inputs)
         inputs["criticalTests"] = []
         inputs["releaseSensitiveTests"] = []
+        inputs["releaseSensitiveApplicabilityReviewed"] = False
         report = evaluate_release_gate(inputs)
         self.assertEqual(report["recommendation"], "not-ready")
         self.assertEqual(report["criteria"]["criticalRegressionPassRate"], 0)
         self.assertFalse(report["criteria"]["releaseSensitivePathsExecuted"])
+
+        inputs["releaseSensitiveApplicabilityReviewed"] = True
+        report = evaluate_release_gate(inputs)
+        self.assertTrue(report["criteria"]["releaseSensitivePathsExecuted"])
+        self.assertEqual(report["recommendation"], "not-ready")
 
 
 if __name__ == "__main__":

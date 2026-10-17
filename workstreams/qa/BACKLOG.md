@@ -7,13 +7,15 @@
 
 ## Deterministic QA tasks
 
-- [ ] Formalize the evidence record as a machine-readable schema.
-- [ ] Create sanitized fixtures and validate evidence IDs, requirement IDs, test IDs, and result states.
-- [ ] Define platform-specific deterministic check interfaces.
-- [ ] Create the first vertical-slice requirement-to-test-to-evidence example.
-- [ ] Add stable Playwright journey conventions and trace retention guidance.
-- [ ] Define defect, enhancement, and missed-requirement classifications.
-- [ ] Define release-gate calculation and residual-risk output.
+- [x] Formalize the evidence record as a machine-readable schema.
+- [x] Create sanitized fixtures and validate evidence IDs, requirement IDs, test IDs, and result states.
+- [x] Define platform-specific deterministic check interfaces.
+- [x] Create the first vertical-slice requirement-to-test-to-evidence example.
+- [x] Add stable Playwright journey conventions and trace retention guidance.
+- [x] Define defect, enhancement, and missed-requirement classifications.
+- [x] Define release-gate calculation and residual-risk output.
+
+Deterministic QA is complete before visual or computer-use evaluation. The executable evidence and gate fixtures, check interfaces, traceability example, classification, and gate contract are in `qa/`; the screenshot policy remains governed by `qa/screenshot-plan.md`.
 
 ## Foundry tasks
 

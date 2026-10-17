@@ -8,10 +8,12 @@
   "releaseSensitiveTests": [
     {
       "testId": "TST-QA-002",
+      "category": "security",
       "result": "pass",
       "executed": true
     }
   ],
+  "releaseSensitiveApplicabilityReviewed": true,
   "openFindings": [],
   "allFailedAndBlockedDispositioned": true,
   "rollbackEvidence": true,
