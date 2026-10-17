@@ -25,6 +25,19 @@
 
 Another developer can use the standard and skill to plan, build, self-review, and hand off one bounded Canvas app change.
 
+## Applied on the Flossmoor pilot (2026-10-17)
+
+- [x] Standard and skill exercised end-to-end on a new Tablet-type app (`pilots/flossmoor-foia/canvas-app-v2/`).
+- [x] Responsive requirement hardened: Tablet app-type prerequisite, inlined `App.Width` checks, adaptive layout tier matrix (phone bottom nav → tablet rail → desktop master-detail).
+- [x] Component requirement proven: four components incl. `cmpRequestDetailPane` reused across screens; verified instance syntax recorded.
+- [x] Visual verification loop added and used; found black-box corruption, placeholder images, button wrapping, silent save failure — none visible to compile or App Checker.
+- [x] Fifteen Canvas MCP sync/platform rules recorded in `standards/power-apps.md`.
+- [x] Write-path rules added: required columns set/defaulted and gated; every write in `IfError`.
+- [ ] Reviewer sign-off on the updated standard (T022).
+- [ ] Second-developer bounded change on v2 (T072) — the Definition of done test.
+
+Trace of every request to its rule: `pilots/flossmoor-foia/evidence/STANDARD-CHANGE-CAPTURE.md`.
+
 ## PR handoff
 
 - **Shared-file proposal (not applied):** Ask the program owner to update `plan.md` so REQ-003 and REQ-009 explicitly point to this Power Apps standard, delivery skill, and backlog as workstream outputs. Keep ELM inventory, execution, and evidence tasks open until an authorized owner supplies the missing facts and approvals.
