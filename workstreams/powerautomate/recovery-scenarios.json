@@ -103,7 +103,7 @@
       "requirements": ["REQ-003", "REQ-006", "REQ-008"],
       "preconditions": ["The operation is known to be safe to repeat or idempotent.", "A finite retry count and delay policy are defined for the actual connector."],
       "synthetic_inputs": {"request_id": "REQ-DEMO-007", "idempotency_key": "IDEMP-DEMO-007", "configured_max_attempts": 3},
-      "injected_condition": "The synthetic action returns a throttling response for two attempts, then succeeds.",
+      "injected_condition": "The synthetic action returns HTTP 429 (too many requests) for two attempts, then succeeds.",
       "expected_results": {"state_transition": "attempt_1_throttled -> bounded_wait -> attempt_2_throttled -> bounded_wait -> attempt_3_succeeded -> completed", "observable_behavior": "Attempts and delays remain within the configured bound; success is recorded only after the action succeeds."},
       "observed_results": {"status": "not_observed", "detail": "Offline scenario definition only; no flow was run."},
       "duplicate_prevention_retry_recovery": {"duplicate_prevention": "Preserve the same idempotency key across attempts.", "automatic_retry": "Bounded retry only if connector support, response handling, and operation safety are verified; no guarantee is assumed here.", "human_authorized_replay": "After exhaustion, replay only after review and outcome check.", "compensating_action": "None for successful completion."},

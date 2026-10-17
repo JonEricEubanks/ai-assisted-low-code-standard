@@ -32,7 +32,7 @@ python -m unittest discover -s workstreams/powerautomate -p 'test_*.py' -v
 - Automatic retry means only a finite, configured retry of an operation known to be safe to repeat. Human-authorized replay is a separate recovery decision made after checking prior side effects and remote state. A compensating action is a separately reviewed business operation; it must not be destructive or run automatically without explicit authorization.
 - Never blindly replay a write whose timeout leaves its downstream completion uncertain. Do not claim exactly-once delivery: actual duplicate prevention depends on the validated flow design and storage/concurrency primitives.
 - A failed operation, rejected/expired approval, or failed notification cannot be represented as successful business completion. Observability failure must not overwrite the original outcome.
-- Flow actions, run-after behavior, connector retry support and response semantics, idempotency storage, atomicity, and concurrency behavior all require environment-specific validation. This pack invents no connector guarantees and is not a deployable flow definition.
+- Flow actions, run-after behavior, connector retry support and response semantics, idempotency storage, atomicity, and concurrency semantics all require environment-specific validation. This pack invents no connector guarantees and is not a deployable flow definition.
 - Evidence listed in a scenario describes what a future live validation should collect. Native run history, action details, retry behavior, timestamps, and correlation values do not exist for this offline pack.
 
 ## Synthetic-source status and assumptions
