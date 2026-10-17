@@ -38,6 +38,17 @@ Another developer can use the standard and skill to plan, build, self-review, an
 
 Trace of every request to its rule: `pilots/flossmoor-foia/evidence/STANDARD-CHANGE-CAPTURE.md`.
 
+## Elevated UI/UX refinement (2026-10-17, after pilot review)
+
+Driver: v2 was functional and responsive but visually below the two internal reference apps (Team Onboarding / ELM; Early Check Request). Their DOM was inspected in the shared browser and the design language codified.
+
+- [x] `skills/power-apps-delivery/references/design-system.md` created: principles, `App.Formulas` token set, screen skeleton, 11-component catalog with contracts, 8 signature patterns with YAML, motion/feedback, accessibility, Elevated-UI acceptance checklist (§8), reference-evidence plan.
+- [x] Skill procedure updated — Specify step requires a per-screen pattern map; Edit step orders tokens → components → screens; Check step runs the §8 checklist against screenshots; both checklists and Required outputs extended.
+- [x] `standards/power-apps.md` — Design quality bar added under Responsive and accessible UI; tier-matrix acceptance now includes §8.
+- [ ] Capture sanitized reference screenshots (desktop/tablet/phone × home, detail, form w/ validation, empty state) for both reference apps into `visuals/power-apps/reference/` (T0xx — needs the Studio tab shared).
+- [ ] Re-apply the design system to FOIA App v2: tokens, `cmpAppHeader`/`cmpSideNav`/`cmpPhoneNav`/`cmpMetricTile`/`cmpStatusBadge`/`cmpEmptyState`/`cmpToast`, accent-bar rows, desktop master-detail + status-distribution strip; fix New Request save path; capture §8 evidence at three tiers.
+- [ ] Power Automate intake flow (Microsoft Forms internal / Survey123 external-with-attachments → FOIA Pilot Requests) as a parallel agent task under `power-automate-delivery`.
+
 ## PR handoff
 
 - **Shared-file proposal (not applied):** Ask the program owner to update `plan.md` so REQ-003 and REQ-009 explicitly point to this Power Apps standard, delivery skill, and backlog as workstream outputs. Keep ELM inventory, execution, and evidence tasks open until an authorized owner supplies the missing facts and approvals.

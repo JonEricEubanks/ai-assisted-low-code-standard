@@ -50,7 +50,8 @@ Use app-level state only for values genuinely shared across screens. Prefer decl
 - Phone layouts are single-column with touch targets of at least 44 pixels. Tablet layouts wrap or use bounded two-column groups. Desktop layouts may use multi-column content and persistent navigation.
 - Set text controls to `AutoHeight` when content can wrap or vary. Give AutoLayout children a small, intentional `LayoutMinHeight`; do not clip long labels, localized text, validation messages, or record content.
 - Build shared headers, navigation, sidebars, footers, status treatments, and other repeated shell elements as Canvas components with explicit input/output/event contracts. Do not copy the same shell controls across screens without a documented tool or platform limitation.
-- Prefer modern Fluent controls, Segoe UI, neutral surfaces, accessible semantic colors, and consistent spacing/type tokens. Color is never the only status cue.
+- Prefer modern Fluent controls, Lato or Segoe UI, neutral surfaces, one brand accent, accessible semantic colors, and consistent spacing/type tokens. Color is never the only status cue.
+- **Design quality bar.** Apps must match the internal reference design language documented in `skills/power-apps-delivery/references/design-system.md`: white header with centered title, icon rail (desktop/tablet) or bottom tab bar (phone), tinted-icon metric tiles, accent-bar list rows with status pills, carded sections with light shadow and 8–10 px radii, designed loading/empty/validation/error/success states, and desktop-only supplementary panels that add information. "Compiles and works" is necessary but not sufficient for acceptance.
 - Keep navigation, labels, focus order, keyboard operation, contrast, and non-color status cues usable at each supported size.
 - Every actionable control has a clear accessible name and purpose; do not use placeholder text as the only label.
 - Record accessibility findings and disposition. A clean automated check does not replace keyboard and assistive-technology review where required.
@@ -77,7 +78,7 @@ Rules:
 - Progressive disclosure: hide, don't shrink. If a label does not fit at a tier, use an icon with an accessible name; do not reduce type below the tier's scale.
 - Master-detail detail pane is a component (`cmpRequestDetailPane`) reused by the desktop list screen and the phone/tablet detail screen so logic lives once.
 - Supplementary desktop panels must add information not already on screen (timeline, distribution, next action); decoration is not justification.
-- Capture evidence at all three tiers per `visual-verification.md`; the tier matrix above is the acceptance checklist.
+- Capture evidence at all three tiers per `visual-verification.md`; the tier matrix above plus the Elevated-UI checklist in `skills/power-apps-delivery/references/design-system.md` §8 are the acceptance checklist.
 
 ### Reusable component contract
 
