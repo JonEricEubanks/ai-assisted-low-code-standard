@@ -26,6 +26,7 @@
 - Approval approve/reject/reassign/expire paths
 - Permission and service-account continuity
 - Monitoring and support notification
+- Visual verification of the flow designer and a representative run detail in the shared browser per `visual-verification.md`; a passing preflight is not acceptance
 
 ## Evidence
 

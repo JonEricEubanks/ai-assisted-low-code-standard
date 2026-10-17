@@ -92,7 +92,8 @@ Every applicable journey defines and tests these states. Examples use generic wo
 
 ## Build controls
 
-- Use reusable Canvas components for repeated app-shell and cross-screen UI. Prefer an approved component library when reuse spans multiple apps.
+- Backend changes are made through the authoring service (Canvas MCP, YAML sync/compile) or approved CLI; visual acceptance is made by viewing the live app in the shared browser per `standards/visual-verification.md`. Both halves are required for every bounded change.
+- Use reusable Canvas components for repeated app-shell and cross-screen UI. Prefer an approved component library when reuse spans multiple apps. Instances use `Control: CanvasComponent` with `ComponentName`.
 - Reject duplicated headers, navigation, sidebars, or footers unless a recorded authoring limitation blocks component creation and a named owner accepts the temporary exception.
 - Use AutoLayout and formula-driven sizing for all supported device classes. Review every fixed width, height, X, and Y value for necessity.
 - Prefer Fluent modern controls and shared design tokens; avoid per-screen color, spacing, and type literals.

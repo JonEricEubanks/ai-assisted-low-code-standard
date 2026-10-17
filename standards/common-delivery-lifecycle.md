@@ -34,6 +34,8 @@ Use the applicable platform standards and skills. Make changes only in approved 
 
 Run deterministic checks first, then functional, accessibility, visual, exploratory, permissions, recovery, performance, and regression testing as applicable.
 
+Visual checks follow `visual-verification.md`: the agent that made a backend change opens the real rendered surface in the shared browser, captures it at each supported breakpoint, and inspects the capture before claiming completion.
+
 **Exit:** critical tests pass and defects are dispositioned.
 
 ## 7. Release approval and deployment

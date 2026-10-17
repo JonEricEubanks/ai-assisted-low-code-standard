@@ -27,4 +27,5 @@
 - Search and navigation
 - Accessibility and responsive review
 - Backup, recovery, and rollback
+- Visual verification of the default view, new-item form, and any consuming page at desktop and phone widths in the shared browser per `visual-verification.md`
 
