@@ -499,7 +499,16 @@ Screens:
                                           LayoutMinWidth: =180
                                           OnSelect: |-
                                             =Set(gblSaveSuccess, false);
-                                            If(IsBlank(cmbAssignmentStatus.Selected) || IsBlank(datAssignmentDueDate.SelectedDate) || IsBlank(Trim(txtResponseNotes.Text)), Notify("Status, due date, and response notes are required.", NotificationType.Error), Patch('FOIA Pilot Assignments', gblSelectedAssignment, {AssignmentStatus: cmbAssignmentStatus.Selected, AssignmentDueDate: datAssignmentDueDate.SelectedDate, RedactionRequired: {Value: If(tglRedactionRequired.Checked, "Yes", "No")}, ResponseNotes: txtResponseNotes.Text}); Set(gblSelectedAssignment, LookUp('FOIA Pilot Assignments', ID = gblSelectedAssignment.ID)); Set(gblSaveSuccess, true); Notify("Assignment saved.", NotificationType.Success))
+                                            If(IsBlank(cmbAssignmentStatus.Selected) || IsBlank(datAssignmentDueDate.SelectedDate) || IsBlank(Trim(txtResponseNotes.Text)),
+                                              Notify("Status, due date, and response notes are required.", NotificationType.Error),
+                                              IfError(
+                                                Patch('FOIA Pilot Assignments', gblSelectedAssignment, {AssignmentStatus: cmbAssignmentStatus.Selected, AssignmentDueDate: datAssignmentDueDate.SelectedDate, RedactionRequired: {Value: If(tglRedactionRequired.Checked, "Yes", "No")}, ResponseNotes: txtResponseNotes.Text});
+                                                Set(gblSelectedAssignment, LookUp('FOIA Pilot Assignments', ID = gblSelectedAssignment.ID));
+                                                Set(gblSaveSuccess, true);
+                                                Notify("Assignment saved.", NotificationType.Success),
+                                                Notify("The assignment could not be saved: " & FirstError.Message, NotificationType.Error)
+                                              )
+                                            )
                                           Size: =FontSizeBody
                                           Text: ="Save assignment"
                                           Width: =180
@@ -514,7 +523,16 @@ Screens:
                                           LayoutMinHeight: =ControlMinTouch
                                           LayoutMinWidth: =190
                                           OnSelect: |-
-                                            =If(IsBlank(Trim(txtResponseNotes.Text)), Notify("Add response notes before marking the assignment complete.", NotificationType.Error), Patch('FOIA Pilot Assignments', gblSelectedAssignment, {AssignmentStatus: {Value: "Complete"}, DepartmentCompleteDate: Today(), ResponseNotes: txtResponseNotes.Text, RedactionRequired: {Value: If(tglRedactionRequired.Checked, "Yes", "No")}}); Set(gblSelectedAssignment, LookUp('FOIA Pilot Assignments', ID = gblSelectedAssignment.ID)); Set(gblSaveSuccess, true); Notify("Assignment marked complete.", NotificationType.Success))
+                                            =If(IsBlank(Trim(txtResponseNotes.Text)),
+                                              Notify("Add response notes before marking the assignment complete.", NotificationType.Error),
+                                              IfError(
+                                                Patch('FOIA Pilot Assignments', gblSelectedAssignment, {AssignmentStatus: {Value: "Complete"}, DepartmentCompleteDate: Today(), ResponseNotes: txtResponseNotes.Text, RedactionRequired: {Value: If(tglRedactionRequired.Checked, "Yes", "No")}});
+                                                Set(gblSelectedAssignment, LookUp('FOIA Pilot Assignments', ID = gblSelectedAssignment.ID));
+                                                Set(gblSaveSuccess, true);
+                                                Notify("Assignment marked complete.", NotificationType.Success),
+                                                Notify("The assignment could not be marked complete: " & FirstError.Message, NotificationType.Error)
+                                              )
+                                            )
                                           Size: =FontSizeBody
                                           Text: ="Mark complete"
                                           Width: =190

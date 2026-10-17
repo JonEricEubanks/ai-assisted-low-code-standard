@@ -402,6 +402,7 @@ Screens:
                                               Properties:
                                                 AccessibleLabel: ="Intake method"
                                                 AlignInContainer: =AlignInContainer.Stretch
+                                                DefaultSelectedItems: =LookUp(Choices('FOIA Pilot Requests'.IntakeMethod), Value = "Online Form")
                                                 Height: =InputHeight
                                                 InputTextPlaceholder: ="Select an intake method"
                                                 IsSearchable: =false
@@ -543,7 +544,7 @@ Screens:
                                               Properties:
                                                 AccessibleLabel: ="Request received date"
                                                 AlignInContainer: =AlignInContainer.Stretch
-                                                DefaultDate: =Blank()
+                                                DefaultDate: =Today()
                                                 Format: ="mm/dd/yyyy"
                                                 Height: =InputHeight
                                                 IsEditable: =true
@@ -753,7 +754,7 @@ Screens:
                                     BasePaletteColor: =ColorBrand
                                     DisplayMode: |-
                                       =If(
-                                        IsBlank(txtRequesterFirstName.Text) || IsBlank(txtRequesterLastName.Text) || IsBlank(txtRequestDescription.Text) || IsBlank(cmbPrimaryDepartment.Selected) || IsBlank(cmbRequestRoute.Selected) || IsBlank(datDueDate.SelectedDate) || !gblDueDateConfirmed || gblPermissionDenied,
+                                        IsBlank(txtRequesterFirstName.Text) || IsBlank(txtRequesterLastName.Text) || IsBlank(txtRequestDescription.Text) || IsBlank(cmbPrimaryDepartment.Selected) || IsBlank(cmbRequestRoute.Selected) || IsBlank(cmbIntakeMethod.Selected) || IsBlank(datReceivedDate.SelectedDate) || IsBlank(datDueDate.SelectedDate) || !gblDueDateConfirmed || gblPermissionDenied,
                                         DisplayMode.Disabled,
                                         DisplayMode.Edit
                                       )
@@ -763,33 +764,40 @@ Screens:
                                     OnSelect: |-
                                       =Set(gblIsLoading, true);
                                       Set(gblLoadError, false);
-                                      Set(
-                                        gblSelectedRequest,
-                                        Patch(
-                                          'FOIA Pilot Requests',
-                                          Defaults('FOIA Pilot Requests'),
-                                          {
-                                            Title: Concatenate(txtRequesterLastName.Text, ", ", txtRequesterFirstName.Text),
-                                            RequesterFirstName: txtRequesterFirstName.Text,
-                                            RequesterLastName: txtRequesterLastName.Text,
-                                            RequesterEmail: txtRequesterEmail.Text,
-                                            RequesterPhone: txtRequesterPhone.Text,
-                                            RequestDescription: txtRequestDescription.Text,
-                                            PrimaryDepartment: {Id: cmbPrimaryDepartment.Selected.ID, Value: cmbPrimaryDepartment.Selected.Title},
-                                            IntakeMethod: cmbIntakeMethod.Selected,
-                                            RequestRoute: cmbRequestRoute.Selected,
-                                            DeliveryFormat: cmbDeliveryFormat.Selected,
-                                            ReceivedDate: datReceivedDate.SelectedDate,
-                                            DueDate: datDueDate.SelectedDate,
-                                            DueDateConfirmed: gblDueDateConfirmed,
-                                            CertifiedCopies: LookUp(Choices('FOIA Pilot Requests'.CertifiedCopies), Value = If(chkCertifiedCopies.Checked, "Yes", "No")),
-                                            FeeWaiverRequested: LookUp(Choices('FOIA Pilot Requests'.FeeWaiverRequested), Value = If(chkFeeWaiverRequested.Checked, "Yes", "No"))
-                                          }
-                                        )
-                                      );
-                                      Set(gblIsLoading, false);
-                                      Set(gblSaveSuccess, true);
-                                      Navigate(RequestDetail, ScreenTransition.Fade)
+                                      Set(gblSaveSuccess, false);
+                                      IfError(
+                                        Set(
+                                          gblSelectedRequest,
+                                          Patch(
+                                            'FOIA Pilot Requests',
+                                            Defaults('FOIA Pilot Requests'),
+                                            {
+                                              Title: Concatenate(txtRequesterLastName.Text, ", ", txtRequesterFirstName.Text),
+                                              RequesterFirstName: txtRequesterFirstName.Text,
+                                              RequesterLastName: txtRequesterLastName.Text,
+                                              RequesterEmail: txtRequesterEmail.Text,
+                                              RequesterPhone: txtRequesterPhone.Text,
+                                              RequestDescription: txtRequestDescription.Text,
+                                              PrimaryDepartment: {Id: cmbPrimaryDepartment.Selected.ID, Value: cmbPrimaryDepartment.Selected.Title},
+                                              IntakeMethod: cmbIntakeMethod.Selected,
+                                              RequestRoute: cmbRequestRoute.Selected,
+                                              DeliveryFormat: cmbDeliveryFormat.Selected,
+                                              OverallStatus: LookUp(Choices('FOIA Pilot Requests'.OverallStatus), Value = "New"),
+                                              ReceivedDate: datReceivedDate.SelectedDate,
+                                              DueDate: datDueDate.SelectedDate,
+                                              DueDateConfirmed: gblDueDateConfirmed,
+                                              CertifiedCopies: LookUp(Choices('FOIA Pilot Requests'.CertifiedCopies), Value = If(chkCertifiedCopies.Checked, "Yes", "No")),
+                                              FeeWaiverRequested: LookUp(Choices('FOIA Pilot Requests'.FeeWaiverRequested), Value = If(chkFeeWaiverRequested.Checked, "Yes", "No"))
+                                            }
+                                          )
+                                        );
+                                        Set(gblIsLoading, false);
+                                        Set(gblSaveSuccess, true);
+                                        Navigate(RequestDetail, ScreenTransition.Fade),
+                                        Set(gblIsLoading, false);
+                                        Set(gblLoadError, true);
+                                        Notify("The request could not be saved: " & FirstError.Message, NotificationType.Error)
+                                      )
                                     Size: =FontSizeBody
                                     Text: ="Save request"
                                     Width: =150
