@@ -47,6 +47,7 @@ No agent may autonomously mutate production, change access, delete content, make
 - [Agent assignment matrix](docs/architecture/AGENT_ASSIGNMENT_MATRIX.md)
 - [Scaling guide](docs/architecture/SCALING_GUIDE.md)
 - [Contribution rules](CONTRIBUTING.md)
+- [Repository controls and hosting limitation](governance/repository-controls.md)
 
 Internal source material is intentionally excluded from GitHub. Store it locally or in an approved MGP evidence repository and reference it by evidence ID.
 

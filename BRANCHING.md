@@ -6,11 +6,12 @@ One branch = one workstream.
 One workstream = one owner.
 One PR = one approval gate.
 
-## Protected default branch
+## Default branch policy
 
-- `main` is the protected branch.
+- `main` is the canonical branch and is treated as protected by operating policy.
 - No agent writes directly to `main`.
 - `main` represents the approved standard, not the working draft.
+- Technical branch protection requires GitHub Pro or an approved organization plan for this private repository; see `governance/repository-controls.md`.
 
 ## Branch naming
 
