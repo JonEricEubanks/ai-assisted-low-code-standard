@@ -43,10 +43,29 @@ Use app-level state only for values genuinely shared across screens. Prefer decl
 
 ## Responsive and accessible UI
 
-- Prefer responsive containers and relative sizing over fixed coordinates. State the supported viewport and test every required device class.
+- Desktop, tablet, and phone are the default supported device classes unless the approved specification explicitly narrows the target. Record the approved minimum widths and orientation.
+- Use phone `< 600`, tablet `600-1199`, and desktop `>= 1200` as the default breakpoint contract. Centralize breakpoint, spacing, color, typography, and minimum-touch-target values as app named formulas rather than repeating literals.
+- Use AutoLayout containers, `Parent.Width`/`Parent.Height`, `FillPortions`, `LayoutMinWidth`, `LayoutWrap`, `Min`, `Max`, and breakpoint formulas. Fixed coordinates or viewport-sized widths require a documented exception.
+- Phone layouts are single-column with touch targets of at least 44 pixels. Tablet layouts wrap or use bounded two-column groups. Desktop layouts may use multi-column content and persistent navigation.
+- Set text controls to `AutoHeight` when content can wrap or vary. Give AutoLayout children a small, intentional `LayoutMinHeight`; do not clip long labels, localized text, validation messages, or record content.
+- Build shared headers, navigation, sidebars, footers, status treatments, and other repeated shell elements as Canvas components with explicit input/output/event contracts. Do not copy the same shell controls across screens without a documented tool or platform limitation.
+- Prefer modern Fluent controls, Segoe UI, neutral surfaces, accessible semantic colors, and consistent spacing/type tokens. Color is never the only status cue.
 - Keep navigation, labels, focus order, keyboard operation, contrast, and non-color status cues usable at each supported size.
 - Every actionable control has a clear accessible name and purpose; do not use placeholder text as the only label.
 - Record accessibility findings and disposition. A clean automated check does not replace keyboard and assistive-technology review where required.
+
+### Reusable component contract
+
+For every shared Canvas component, record:
+
+- purpose and consuming screens
+- input, output, and event properties with types and defaults
+- app-scope dependencies and whether they are justified
+- width, height, and breakpoint behavior
+- accessible name, focus behavior, and keyboard interaction
+- independent component test plus one test on every consuming device class
+
+Before source-based component editing, run the authoring service's execution assessment and compile a minimal component definition and instance. If the service rejects `ComponentDefinitions` or `Control: Component`, stop the component edit and record the exact diagnostic. Use Power Apps Studio or an approved component library workflow; do not replace the requested component with duplicated controls and claim compliance.
 
 ## Data and delegation review
 
@@ -73,7 +92,10 @@ Every applicable journey defines and tests these states. Examples use generic wo
 
 ## Build controls
 
-- Use reusable components and consistent layout containers when they improve reuse or consistency.
+- Use reusable Canvas components for repeated app-shell and cross-screen UI. Prefer an approved component library when reuse spans multiple apps.
+- Reject duplicated headers, navigation, sidebars, or footers unless a recorded authoring limitation blocks component creation and a named owner accepts the temporary exception.
+- Use AutoLayout and formula-driven sizing for all supported device classes. Review every fixed width, height, X, and Y value for necessity.
+- Prefer Fluent modern controls and shared design tokens; avoid per-screen color, spacing, and type literals.
 - Avoid nondelegable formulas on growing data sources without an explicitly approved and tested bound.
 - Keep authorization in the data/service layer; the interface may improve usability but is not an authorization control.
 - Validate before writes, surface connector failures, and define duplicate, retry, and recovery behavior.
@@ -86,6 +108,9 @@ Run and retain results for applicable checks:
 
 - App Checker findings and formula errors, including disposition of remaining findings
 - Accessibility output plus the planned keyboard journey and its result
+- Phone, tablet, and desktop screenshots or assessment results at the approved widths, including navigation, long text, forms, galleries, and action areas
+- Component-definition compile evidence, component contract tests, and consuming-screen tests; if blocked, retain the exact service diagnostic and Studio remediation owner
+- Evidence that repeated shell controls were replaced by components, or the approved temporary exception
 - Delegation review and representative-volume results
 - Critical persona journeys and both app-level and data-layer permission boundaries
 - Submit/update/delete and duplicate behavior, connector failure, and recovery
