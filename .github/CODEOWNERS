@@ -1,0 +1,33 @@
+# Default owner and shared governance
+* @JonEricEubanks
+
+# Cross-cutting files remain program-owner controlled
+/README.md @JonEricEubanks
+/requirements.md @JonEricEubanks
+/plan.md @JonEricEubanks
+/governance/ @JonEricEubanks
+/.github/ @JonEricEubanks
+/docs/architecture/ @JonEricEubanks
+
+# Replace or extend these entries when workstream leads receive GitHub access.
+/standards/power-apps.md @JonEricEubanks
+/skills/power-apps-delivery/ @JonEricEubanks
+/workstreams/powerapps/ @JonEricEubanks
+
+/standards/power-automate.md @JonEricEubanks
+/skills/power-automate-delivery/ @JonEricEubanks
+/workstreams/powerautomate/ @JonEricEubanks
+
+/standards/sharepoint.md @JonEricEubanks
+/skills/sharepoint-delivery/ @JonEricEubanks
+/workstreams/sharepoint/ @JonEricEubanks
+
+/qa/ @JonEricEubanks
+/agents/qa-reviewer.md @JonEricEubanks
+/agents/foundry-validation-architecture.md @JonEricEubanks
+/workstreams/qa/ @JonEricEubanks
+
+/blog/ @JonEricEubanks
+/portfolio/ @JonEricEubanks
+/metrics/ @JonEricEubanks
+/workstreams/portfolio/ @JonEricEubanks

@@ -1,0 +1,23 @@
+# Local env
+.vscode/
+.DS_Store
+*.log
+*.tmp
+
+# Python
+__pycache__/
+.venv/
+
+# Node
+node_modules/
+
+# Generated evidence / local-only
+*.local
+*.bak
+
+# Internal evidence stays local and must never be published.
+source-material/
+
+# Local validation output
+artifacts/
+evidence/
