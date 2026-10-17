@@ -7,9 +7,9 @@ description: Plan, implement, validate, and hand off a bounded Canvas app change
 
 ## Procedure
 
-1. **Qualify.** Confirm the approved outcome, scope, owner, acceptance criteria, personas, data contract, and test identities. Record unknowns and who must resolve them. Stop if a missing security, data ownership, or production-access decision is required.
+1. **Qualify.** Confirm the approved outcome, scope, owner, acceptance criteria, personas, data contract, and test identities. Record unknowns and who must resolve them. Stop if a missing security, data ownership, or production-access decision is required. **For a new app, create it as the Tablet form factor** (`connect_and_open_studio_with_new_blank` currently yields Phone; after creation verify `DocumentAppType` via `pac canvas download` and recreate if it is not Tablet).
 2. **Inspect.** For an existing app, inventory its version, screens, controls, formulas, data sources, connectors, dependencies, permissions, and known issues before proposing edits. Use only approved access and environments.
-3. **Specify.** Complete the app specification required by `standards/power-apps.md`: journeys and exceptions, screens/states, phone/tablet/desktop responsive targets, repeated UI that must become components, Fluent design tokens, data/delegation constraints, and delivery/support details. Link requirements to acceptance and test IDs.
+3. **Specify.** Complete the app specification required by `standards/power-apps.md`: journeys and exceptions, screens/states, phone/tablet/desktop responsive targets, repeated UI that must become components, Fluent design tokens, data/delegation constraints, and delivery/support details. **Fill the Adaptive layout tier matrix for this app** — what each tier shows, hides, and adds (desktop master-detail, supplementary panels). Link requirements to acceptance and test IDs.
 4. **Plan.** Produce a bounded edit plan and have the designated reviewer approve it before editing. Include:
    - app/environment/version and scope boundary
    - files/screens/controls/formulas/data sources to inspect or change

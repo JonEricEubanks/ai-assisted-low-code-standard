@@ -43,8 +43,9 @@ Use app-level state only for values genuinely shared across screens. Prefer decl
 
 ## Responsive and accessible UI
 
+- **App type is a prerequisite, not a setting.** Create every multi-device Canvas app as the **Tablet** form factor. A Phone-type app scales its design width to the viewport in the Player, which shrinks type on wide screens and prevents `App.Width` from tracking the real viewport; breakpoints then never fire. App type cannot be changed through MCP or YAML — a Phone-type app must be recreated. Verify with `pac canvas download` → `Properties.json` → `DocumentAppType = Tablet`.
 - Desktop, tablet, and phone are the default supported device classes unless the approved specification explicitly narrows the target. Record the approved minimum widths and orientation.
-- Use phone `< 600`, tablet `600-1199`, and desktop `>= 1200` as the default breakpoint contract. Centralize breakpoint, spacing, color, typography, and minimum-touch-target values as app named formulas rather than repeating literals.
+- Use phone `< 600`, tablet `600-1199`, and desktop `>= 1200` as the default breakpoint contract. Centralize breakpoint, spacing, color, typography, and minimum-touch-target values as app named formulas rather than repeating literals — **except `App.Width`/`App.Height` comparisons, which must be inlined in control formulas** because named formulas capture the value once.
 - Use AutoLayout containers, `Parent.Width`/`Parent.Height`, `FillPortions`, `LayoutMinWidth`, `LayoutWrap`, `Min`, `Max`, and breakpoint formulas. Fixed coordinates or viewport-sized widths require a documented exception.
 - Phone layouts are single-column with touch targets of at least 44 pixels. Tablet layouts wrap or use bounded two-column groups. Desktop layouts may use multi-column content and persistent navigation.
 - Set text controls to `AutoHeight` when content can wrap or vary. Give AutoLayout children a small, intentional `LayoutMinHeight`; do not clip long labels, localized text, validation messages, or record content.
@@ -53,6 +54,30 @@ Use app-level state only for values genuinely shared across screens. Prefer decl
 - Keep navigation, labels, focus order, keyboard operation, contrast, and non-color status cues usable at each supported size.
 - Every actionable control has a clear accessible name and purpose; do not use placeholder text as the only label.
 - Record accessibility findings and disposition. A clean automated check does not replace keyboard and assistive-technology review where required.
+
+### Adaptive layout tiers
+
+Mobile-first: design the phone tier first, then add capability as width grows. More width earns more information density and more simultaneous context — it never just stretches the phone layout wider.
+
+| Concern | Phone `< 600` | Tablet `600–1199` | Desktop `≥ 1200` |
+|---|---|---|---|
+| Navigation | Bottom tab bar, icon + short label, ≥ 44 px targets | Left icon rail | Left rail with icons and labels |
+| Header actions | Icon-only; secondary actions in an overflow | Icon + label for primary, icon-only secondary | Icon + label |
+| KPI tiles | 1 column, large value | 2 columns | 4 columns, or a single compact stat strip |
+| List / detail | List screen → tap → full-screen detail | List screen → detail screen | **Master-detail**: list pane (≈ 38 %) + persistent detail pane with inline tabs (summary / assignments / activity) |
+| Forms | Single column, one group per card, sticky action bar at bottom | Two columns in bounded groups | Two or three columns; related read-only context in a side pane |
+| Type scale | Body 15, caption 12, title 20, KPI 28 | Body 14, caption 12, title 22, KPI 30 | Body 14, caption 12, title 24, KPI 32, section 16 |
+| Content width | Full bleed with 16 px page padding | 24 px page padding | Cap content at 1440–1600 px and center; never let a tile exceed ~360 px wide |
+| Supplementary panels | None | Collapsible | Activity timeline, quick-action strip, keyboard-visible shortcuts, status distribution |
+| Empty states | Icon + one line + one primary action | Same | Same, plus a hint about what will appear |
+
+Rules:
+
+- Every tier is a different composition of the same components with different inputs, not a different app. Shell components accept a `Tier` or `Placement` input and render accordingly.
+- Progressive disclosure: hide, don't shrink. If a label does not fit at a tier, use an icon with an accessible name; do not reduce type below the tier's scale.
+- Master-detail detail pane is a component (`cmpRequestDetailPane`) reused by the desktop list screen and the phone/tablet detail screen so logic lives once.
+- Supplementary desktop panels must add information not already on screen (timeline, distribution, next action); decoration is not justification.
+- Capture evidence at all three tiers per `visual-verification.md`; the tier matrix above is the acceptance checklist.
 
 ### Reusable component contract
 

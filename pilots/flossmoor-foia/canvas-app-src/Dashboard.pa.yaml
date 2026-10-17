@@ -761,6 +761,19 @@ Screens:
                                           Text: ="Open"
                                           Tooltip: ="Open request"
                                           Width: =ControlMinTouch
+                        - lblDebugViewport:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: ="Viewport debug"
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =ColorTextSecondary
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =FontSizeCaption
+                              Text: ="VP " & App.Width & "x" & App.Height & " | ratio " & Round(App.Width / App.Height, 2) & " | DL " & App.DesignWidth & "x" & App.DesignHeight
             - cmpDashboardNavBottom:
                 Control: CanvasComponent
                 ComponentName: cmpSideNav
