@@ -1,0 +1,28 @@
+{
+  "records": [
+    {
+      "evidenceId": "EVD-QA-001",
+      "runId": "RUN-QA-001",
+      "project": "Synthetic Request Demo",
+      "environment": "Demo",
+      "solutionVersion": "1.0.0",
+      "requirementId": "REQ-006",
+      "testId": "TST-QA-001",
+      "executor": "Python standard-library validator",
+      "timestamp": "2026-10-17T00:00:00Z",
+      "result": "pass",
+      "expected": "The evidence record conforms to the required contract and traces to a requirement and test.",
+      "actual": "The record passed deterministic validation.",
+      "artifacts": [
+        {
+          "type": "log",
+          "reference": "synthetic://qa/run-001/validation.log",
+          "claim": "The evidence record passed the deterministic contract check."
+        }
+      ],
+      "reviewer": "Synthetic Independent Reviewer",
+      "classification": "synthetic",
+      "retentionTag": "demo-retention"
+    }
+  ]
+}
