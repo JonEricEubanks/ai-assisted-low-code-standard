@@ -28,6 +28,8 @@ Draft: [Measuring Whether AI Improved Delivery](article-06-measurement.md).
 
 ## Public visual set
 
+Six browser-rendered draft illustrations have been captured with Playwright and embedded in the articles. See the [asset index and capture notes](assets/README.md) for the PNGs, sources, capture method, and outstanding reviews. These are synthetic editorial illustrations, not product screenshots or pilot evidence.
+
 Use the fictional diagrams in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md) or create fresh images in a synthetic demonstration environment. Do not use existing recordings, screenshots, emails, or other pilot artifacts. Every image needs alt text, a descriptive caption, a source note, and approval recorded in [`publication-review.md`](publication-review.md).
 
 ## Per-article checklist

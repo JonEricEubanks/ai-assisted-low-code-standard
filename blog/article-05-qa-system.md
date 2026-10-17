@@ -8,10 +8,10 @@ That is a demonstration of a method, not a real defect report. Public examples s
 
 **Limitation:** A passing synthetic test set does not prove production readiness or replace risk-based human review.
 
-**Visual:** QA flow in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md).
+![A fictional QA method separates deterministic assertions, accessibility and visual review, and a human release decision; failed checks require correction and rerun.](assets/2026-10-17_blog_synthetic_layered-qa_draft.png)
 
-**Alt text:** Acceptance criteria flow into deterministic checks and accessibility review, with a correction loop before a human release decision.
+**Visual:** Playwright capture EVD-BLOG-005; [source and capture notes](assets/README.md).
 
-**Caption:** Synthetic QA path showing a failure, correction, rerun, and human release authority.
+**Caption:** Synthetic QA responsibilities and correction process; this illustration is not evidence of executed platform tests.
 
 **Source note:** Original synthetic diagram and failure scenario in this repository; external publication approval pending.

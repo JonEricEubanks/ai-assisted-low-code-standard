@@ -8,9 +8,9 @@ The example is a process illustration, not a report of a deployed project or mea
 
 **Limitation:** A process diagram cannot establish that a standard improved quality or delivery outcomes; that requires approved, comparable evidence.
 
-**Visual:** Before/after process in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md).
+![Fictional informal intake and repeated follow-up are compared with a structured request, validation, human review, and visible status.](assets/2026-10-17_blog_synthetic_governed-standard_draft.png)
 
-**Alt text:** A fictional unstructured request and manual re-entry process is compared with a structured, validated request reviewed by a human owner.
+**Visual:** Playwright capture EVD-BLOG-001; [source and capture notes](assets/README.md).
 
 **Caption:** Synthetic workflow illustration; it does not represent a measured outcome.
 

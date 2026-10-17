@@ -8,10 +8,10 @@ Real deployments require their own privacy, records, licensing, security, and su
 
 **Limitation:** The minimal synthetic schema is not a deployment design; production data, permissions, retention, and support need separate review.
 
-**Visual:** Minimal synthetic architecture in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md).
+![A fictional request form feeds a structured list, validation, and human review, followed by a status view with an intentional empty state.](assets/2026-10-17_blog_synthetic_data-contract_draft.png)
 
-**Alt text:** A synthetic request form writes to a structured list, where validation and human review precede a status view.
+**Visual:** Playwright capture EVD-BLOG-004; [source and capture notes](assets/README.md).
 
-**Caption:** A fictional data-to-view path with an explicit human decision point.
+**Caption:** A fictional data-to-view path with an explicit human decision point; not a SharePoint product screenshot.
 
 **Source note:** Original synthetic illustration in this repository; external publication approval pending.
