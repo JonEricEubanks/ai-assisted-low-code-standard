@@ -119,6 +119,14 @@ Every applicable journey defines and tests these states. Examples use generic wo
 
 - Backend changes are made through the authoring service (Canvas MCP, YAML sync/compile) or approved CLI; visual acceptance is made by viewing the live app in the shared browser per `standards/visual-verification.md`. Both halves are required for every bounded change.
 - Use reusable Canvas components for repeated app-shell and cross-screen UI. Prefer an approved component library when reuse spans multiple apps. Instances use `Control: CanvasComponent` with `ComponentName`.
+- Reject duplicated headers, navigation, sidebars, or footers unless a recorded authoring limitation blocks component creation and a named owner accepts the temporary exception.
+- Use AutoLayout and formula-driven sizing for all supported device classes. Review every fixed width, height, X, and Y value for necessity.
+- Prefer Fluent modern controls and shared design tokens; avoid per-screen color, spacing, and type literals.
+- Avoid nondelegable formulas on growing data sources without an explicitly approved and tested bound.
+- Keep authorization in the data/service layer; the interface may improve usability but is not an authorization control.
+- Validate before writes, surface connector failures, and define duplicate, retry, and recovery behavior.
+- Use environment variables and connection references where supported by the app's solution and environment.
+- Make edits only in the approved environment and within the approved bounded plan. Do not publish or mutate production without explicit approval.
 
 ### Canvas MCP sync rules (verified 2026-10-17 on the Flossmoor FOIA pilot)
 
@@ -132,16 +140,13 @@ These were discovered by inspecting the rendered DOM after a compile-clean sync 
 6. **Do not put `App.Width` behind a named formula for breakpoints.** `IsPhone = App.Width < 600` in `App.Formulas` is evaluated once and does not re-evaluate on resize or rotation. Inline `App.Width < BreakpointPhone` in control formulas; keep only literal tokens (`BreakpointPhone = 600`) as named formulas.
 7. **`ModernBadge` enums:** `BadgeIntent` has `Neutral`, not `Subtle`; `Size` is a number; `Content` is not readable as an output.
 8. **Studio device emulator does not drive `App.Width`.** Phone/tablet emulation scales the canvas but `App.Width` does not follow. Verify breakpoints by resizing the real browser viewport (Browser preview mode) or in the published Player.
-8a. **The agent's integrated browser is not a faithful Player surface for breakpoints.** On a DPR 1.25 host the Player rendered `#publishedCanvas` at `200%` with `transform: scale(0.5)`, so `App.Width` read as 2× the CSS width (2574 at a 1287 window; ~780 at a 390 phone) and did not re-layout on viewport resize. Phone/tablet breakpoint acceptance must come from a real device or the maker's own browser at 100% zoom; record the integrated-browser result as indicative only.
-9. **After a large sync, hard-reload Studio.** The designer's render order and property pane can lag the server document; the server YAML (`sync_canvas` into a clean folder) is authoritative.
-- Reject duplicated headers, navigation, sidebars, or footers unless a recorded authoring limitation blocks component creation and a named owner accepts the temporary exception.
-- Use AutoLayout and formula-driven sizing for all supported device classes. Review every fixed width, height, X, and Y value for necessity.
-- Prefer Fluent modern controls and shared design tokens; avoid per-screen color, spacing, and type literals.
-- Avoid nondelegable formulas on growing data sources without an explicitly approved and tested bound.
-- Keep authorization in the data/service layer; the interface may improve usability but is not an authorization control.
-- Validate before writes, surface connector failures, and define duplicate, retry, and recovery behavior.
-- Use environment variables and connection references where supported by the app's solution and environment.
-- Make edits only in the approved environment and within the approved bounded plan. Do not publish or mutate production without explicit approval.
+9. **The agent's integrated browser is not a faithful Player surface for breakpoints.** On a DPR 1.25 host the Player rendered `#publishedCanvas` at `200%` with `transform: scale(0.5)`, so `App.Width` read as 2× the CSS width and did not re-layout on viewport resize. Phone/tablet breakpoint acceptance must come from a real device or the maker's own browser at 100% zoom; record the integrated-browser result as indicative only.
+10. **After a large sync, hard-reload Studio.** The designer's render order and property pane can lag the server document; the server YAML (`sync_canvas` into a clean folder) is authoritative.
+11. **`Gallery.TemplateSize` is not readable as an output.** `galX.TemplateSize` and `Self.TemplateSize` fail compile. Repeat the TemplateSize formula inline wherever a height sum needs it.
+12. **`Select(Parent)` inside a nested gallery-template container targets the container, not the gallery.** `GroupContainer` has no `OnSelect`, so the call errors. Repeat the gallery's `OnSelect` body on the inner control instead.
+13. **Any plain-scalar formula containing `: ` must be quoted.** YAML parses `AccessibleLabel: ="Status: " & x` as a nested mapping. Wrap the whole value in single quotes (`'="Status: " & x'`), doubling any embedded apostrophes, or use a `|-` block scalar.
+14. **Studio narrower than ~700 px collapses the designer, not the app.** Do not use Studio preview for phone-width evidence; it shows an empty canvas. Use the Player.
+15. **A Phone-type app will never pass tier verification.** Confirm `DocumentAppType = DesktopOrTablet` in the downloaded package before building; the tier matrix is unreachable otherwise (see Responsive and accessible UI).
 
 ## Required validation and evidence
 
