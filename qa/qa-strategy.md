@@ -4,7 +4,7 @@
 
 ### 1. Deterministic
 
-Authoritative checks: schema, configuration, solution dependencies, App Checker, accessibility output, flow validation/preflight, API assertions, permissions, test data, and expected state.
+Run deterministic checks first. Their authoritative checks include schema, configuration, solution dependencies, App Checker, accessibility output, flow validation/preflight, API assertions, permissions, test data, and expected state. Use the platform interfaces in [`deterministic-checks.md`](deterministic-checks.md); unresolved or subjective results are `review-needed`, never inferred passes.
 
 ### 2. Functional
 
@@ -26,6 +26,8 @@ Run only in an allowlisted disposable non-production session with synthetic data
 
 Required for business acceptance, permissions, accessibility judgment, sensitive data, records, production release, and standard exceptions.
 
+Visual and computer-use evaluation may begin only after deterministic results and traceability are recorded. Follow the synthetic-data, publication-approval, and existing-media restrictions in [`screenshot-plan.md`](screenshot-plan.md).
+
 ## Severity
 
 | Severity | Meaning |
@@ -38,9 +40,11 @@ Required for business acceptance, permissions, accessibility judgment, sensitive
 ## Release threshold
 
 - No open Sev 1 or Sev 2
-- At least 95% critical regression pass
+- At least 95% critical regression pass (passed critical tests divided by all declared critical tests; an empty suite fails)
 - 100% of destructive, security, and records-sensitive paths executed
+- Explicitly review and record applicability of destructive, security, and records-sensitive paths
 - Failed/blocked tests explicitly dispositioned
 - Rollback and support evidence complete
-- Named human approval
+- Named human approval recorded as approved
 
+The deterministic gate calculation emits `release-ready` or `not-ready`, each criterion, and residual risks. A ready recommendation is not release authority; only the named human approver decides release. See [`deterministic-checks.md`](deterministic-checks.md#release-gate-and-residual-risk) and [`deterministic_qa.py`](deterministic_qa.py).

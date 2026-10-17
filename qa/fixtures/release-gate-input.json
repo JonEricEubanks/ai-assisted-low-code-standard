@@ -1,0 +1,25 @@
+{
+  "criticalTests": [
+    {
+      "testId": "TST-QA-001",
+      "result": "pass"
+    }
+  ],
+  "releaseSensitiveTests": [
+    {
+      "testId": "TST-QA-002",
+      "category": "security",
+      "result": "pass",
+      "executed": true
+    }
+  ],
+  "releaseSensitiveApplicabilityReviewed": true,
+  "openFindings": [],
+  "allFailedAndBlockedDispositioned": true,
+  "rollbackEvidence": true,
+  "supportEvidence": true,
+  "humanApproval": {
+    "approver": "Synthetic Release Approver",
+    "decision": "approved"
+  }
+}
