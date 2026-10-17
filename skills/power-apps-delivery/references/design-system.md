@@ -121,7 +121,7 @@ Each is a `ComponentDefinitions` entry with the contract below. Instances use `C
 | `cmpMetricTile` | KPI card: 50-px icon chip (tinted fill, radius `RadiusMedium`) + caption (`FontSizeCaption`, `ColorTextTertiary`) + value (KPI size, Semibold) + optional delta/footnote | `Label`, `Value`, `Icon`, `Intent`, `Compact: Boolean` | `OnSelect` | `Compact=true` renders the horizontal icon·value·label strip used on desktop. |
 | `cmpSectionCard` | White surface, radius `RadiusLarge`, `DropShadow.Light`, optional title row + "See all" action | `Title`, `ActionText`, `ShowAction` | `OnAction` | Wrap any content group that needs a card boundary. |
 | `cmpEmptyState` | Centered 48-px icon, one-line headline, one-line hint, one primary button | `Icon`, `Headline`, `Hint`, `ActionText` | `OnAction` | Used for no-results **and** permission-denied with different copy. |
-| `cmpToast` | Fluent 2 toast bottom-right (desktop) / top (phone): intent icon, title, message, auto-dismiss | `Intent`, `Title`, `Message`, `Visible` | `OnDismiss` | Replaces bare `Notify()` for save/delete outcomes. |
+| `cmpToast` | **Default notification surface for every app.** Imported from the reference "Fluent 2 Toast": collection-driven variable-height stack (icon · Semibold header · optional time · dismiss · body · optional progress), per-row timer auto-dismiss, queue capped at 4 | `ToastTable` (default `colToasts`), `SortOrder`; **Action** `SendToast(Header, Icon, IconColor, IconFilled, Body, Duration, ShowDismiss, ShowTime, ShowProgress)` | Output `AutoHeight`; events `AddToast`, `RemoveToast` | Full YAML in `toast-component.pa.yaml`; usage in §5.9. Bare `Notify()` is not permitted for user-facing outcomes. |
 | `cmpStepper` | Approval-flow progress: 20-px circles joined by 80-px connector lines; past = brand filled, current = brand ring, future = border grey; labels under circles | `Steps: Table(Label, State)`, `Orientation` | — | Vertical orientation on phone. Non-color cue = check icon in completed circles. |
 | `cmpDetailPane` | Record detail with inline tabs (Summary / Assignments / Activity), sticky action bar | `RecordId`, `Tier` | `OnClose`, `OnSaved` | Reused by desktop master-detail **and** the phone/tablet detail screen (standard rule). |
 | `cmpConfirmDialog` | Modal overlay 40 % scrim + centered 480-px card, title, body, Cancel/Confirm | `Title`, `Body`, `ConfirmText`, `Destructive: Boolean`, `Visible` | `OnConfirm`, `OnCancel` | `DropShadow.Bold`. Only modal allowed to use bold shadow. |
@@ -308,6 +308,87 @@ Add **only** when the panel conveys information not already on screen:
 | Quick-action strip | Assign to me · Add note · Mark complete (icon + label) | Detail pane sticky bar |
 | Keyboard hints | `/` focus search, `N` new request | Footer caption on desktop only |
 
+### 5.9 Toast notifications — the default feedback surface (Early Check "Fluent 2 Toast")
+
+The reference component's full YAML is stored verbatim at `toast-component.pa.yaml` in this folder. It is the team's **default notification surface**; the skill imports/recreates it as `cmpToast` in every app rather than designing a new one.
+
+**How it works (so you can debug it)**
+
+- Transparent 300-px component whose `Height = Self.AutoHeight` (an **Output** property: `0` when empty, else the container height) — so the host screen never reserves space for it.
+- `galToast` is a `VariableHeight` gallery over `Sort(ToastTable, CurrentTime, SortOrder)`. Row height is measured by a hidden `txtGaluAutoHeight` text (`conToast.Height + TemplatePadding`) and the gallery sums them; `conToast.Height` is derived from a 1-px `conAutoHeight` sentinel at the bottom of the card — the standard "measure an AutoLayout container" trick.
+- Each card: white, 8-px padding, 4-px gap → header row (32 px: 20-px `Icon` with `IconStyle` Filled/Outline, Semibold `Header` that does not wrap, optional right-aligned 12-px timestamp, transparent icon-only `Dismiss` button 32 px) → optional `Body` (AutoHeight, grey `RGBA(106,122,127)`) → optional 8-px `Progress` bar counting down `Duration`.
+- A hidden `Timer` per row (`Duration 100`, `Repeat true`) ticks `Set(varCurrentTime, Now())` for the progress bar and calls `RemoveToast(ThisItem)` once `Now() > RemoveTime`.
+- Queue is capped at **4**; `AddToast` drops the oldest first. In the designer (no active screen) it renders one sample toast so the component is visible while editing.
+
+**Contract**
+
+| Property | Kind | Purpose |
+|---|---|---|
+| `SendToast(Header, Icon, [IconColor], [IconFilled], [Body], [Duration=7000], [ShowDismiss=true], [ShowTime=false], [ShowProgress=false])` | **Action** | The only call sites use. Builds the record with `CurrentTime`/`RemoveTime` and raises `AddToast`. |
+| `AddToast(ToastRecord)` / `RemoveToast(ToastRecord)` | Event | Default bodies `Collect`/`Remove` on `colToasts`; override on the instance if the app uses a different collection. |
+| `ToastTable` | Input (Table) | Defaults to `colToasts`. |
+| `SortOrder` | Input | `SortOrder.Ascending` = oldest on top. |
+| `AutoHeight` | Output (Number) | Bind the instance `Height` to it. |
+
+**App-scope dependencies (justified under the component-contract rule):** `colToasts` and `varCurrentTime`. Initialise both in `App.OnStart`:
+
+```powerfx
+ClearCollect(colToasts, Filter(Table({Header:"", Icon:"", IconColor:Color.Gray, IconFilled:false, Body:"", Duration:7000,
+    ShowDismiss:true, ShowTime:false, ShowProgress:false, CurrentTime:Now(), RemoveTime:Now()}), false));
+Set(varCurrentTime, Now());
+```
+
+**Instance — last child of `cntPage` on every screen**
+
+```yaml
+- cmpToastHost:
+    Control: CanvasComponent
+    ComponentName: cmpToast
+    Properties:
+      ToastTable: =colToasts
+      SortOrder: =SortOrder.Ascending
+      Width: '=If(App.Width < BreakpointPhone, App.Width - 2 * Space4, 300)'
+      Height: =Self.AutoHeight
+      X: '=If(App.Width < BreakpointPhone, Space4, Parent.Width - Self.Width - Space2)'
+      Y: '=If(App.Width < BreakpointPhone, HeaderHeight + Space4, Parent.Height - Self.Height - PhoneNavHeight * 0)'
+```
+
+Desktop/tablet: bottom-right (reference uses `X = Parent.Width - Self.Width - 8`, `Y = Parent.Height - Self.Height`). Phone: top, full-width, below the header so it never covers the bottom tab bar.
+
+**Call sites — intent mapping is fixed; always pass icon + colour from tokens**
+
+```powerfx
+// success branch of IfError(Patch(...))
+cmpToastHost.SendToast("Request saved", "CheckmarkCircle", ColorSuccess, true,
+    "FOIA-" & Text(locNewId) & " is now In Progress.");
+
+// failure branch — sticky (no auto-dismiss), with progress hidden
+cmpToastHost.SendToast("Couldn't save the request", "DismissCircle", ColorDanger, true,
+    "Check the required fields and try again.", 600000, true, false, false);
+
+// warning / info
+cmpToastHost.SendToast("Due in 2 days", "Warning", ColorWarning, true, "Statutory deadline is " & Text(locDue, "mmm d"));
+cmpToastHost.SendToast("Assignment sent", "Info", ColorInfo, false, "", 5000, true, true, true);
+```
+
+| Intent | Icon | Colour token | Filled | Duration |
+|---|---|---|---|---|
+| Success | `CheckmarkCircle` | `ColorSuccess` | true | 7 000 |
+| Error | `DismissCircle` | `ColorDanger` | true | 600 000 (effectively sticky; user dismisses) |
+| Warning | `Warning` | `ColorWarning` | true | 10 000 |
+| Info | `Info` | `ColorInfo` | false | 5 000 |
+
+**Rules**
+
+- `Notify()` is **not** used for user-facing outcomes; it is permitted only for developer diagnostics behind a debug flag.
+- Every save, delete, assignment, send, approval, or failure raises `SendToast`. Screens never build toast UI themselves.
+- Colour is reinforced by icon and header text (non-colour cue). Keep `Header` ≤ ~40 characters (it does not wrap); put detail in `Body`.
+- Retokenise on import: `Fill` → `ColorSurface`, grey text → `ColorTextSecondary`, add `DropShadow.Regular` and `RadiusMedium` to `conToast` (the reference card is flat; our bar is carded).
+- Accessibility additions on import: `conToast.AccessibleLabel = ThisItem.Header & ". " & ThisItem.Body`, `btnToastDismiss.AccessibleLabel = "Dismiss notification"`, `txtHeader.Live = Live.Polite`.
+- Canvas MCP sync notes: drop the `@version` suffixes; `PropertyKind: Event` needs `Default` (present); `Action` properties with `Parameters` compile as shown. The sentinel-height pattern depends on reading `conAutoHeight.Y` and `conToast.Height` — both are readable, unlike `TemplateSize` (standard rule 11).
+
+**Reuse shortcut:** export from the reference app (*Tree view → Components → Export components*), import into the new app, rename to `cmpToast`, apply the retokenise/accessibility steps above, and record the import in the component inventory.
+
 ---
 
 ## 6. Motion and feedback
@@ -316,7 +397,7 @@ Add **only** when the panel conveys information not already on screen:
 - Buttons: use `Appearance` Primary (one per screen), Secondary, Subtle; never two Primary buttons visible at once.
 - Hover/press are handled by modern controls — do not hand-roll `HoverFill` on classic controls.
 - Loading: show a `cntSkeleton` (grey rounded rectangles matching row shapes) while `locIsLoading`; never an empty gallery.
-- Saves: disable the button, swap its text to "Saving…", then toast. Minimum perceived feedback 300 ms.
+- Saves: disable the button, swap its text to "Saving…", then raise a `cmpToast` (§5.9). Minimum perceived feedback 300 ms. `Notify()` is not a user-facing feedback surface.
 
 ---
 
@@ -342,6 +423,7 @@ Add to the skill's after-editing checklist. Each item needs a screenshot at the 
 - [ ] Desktop: content capped and centered, master-detail or supplementary panel present, metrics in a strip or 4-up.
 - [ ] Every list row has an accent bar or badge **and** a text status.
 - [ ] Loading, empty, validation, error, success states each captured once.
+- [ ] Every write outcome surfaces through `cmpToast` (success + error captured); no user-facing `Notify()` remains.
 - [ ] One Primary button per screen; icon-only buttons have labels/tooltips.
 - [ ] App Checker: zero errors, zero layout warnings (`FillPortions` + `Width` conflicts resolved).
 - [ ] Side-by-side with the reference apps: header, rail, tiles, rows, and pills are visually indistinguishable in structure.

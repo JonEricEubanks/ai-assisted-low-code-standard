@@ -62,6 +62,7 @@ Complete for each bounded change. Stop and escalate instead of checking a box wh
 ## References
 
 - `references/design-system.md` — tokens, screen skeleton, component catalog, signature patterns with YAML, motion/feedback, accessibility, and the Elevated-UI acceptance checklist. Read before specifying or editing any screen.
+- `references/toast-component.pa.yaml` — the reference Fluent 2 Toast component, verbatim. Import/recreate as `cmpToast` in every app; it is the default notification surface (design-system §5.9).
 
 ## Required outputs
 
