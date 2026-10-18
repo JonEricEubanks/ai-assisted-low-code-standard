@@ -1,0 +1,35 @@
+{
+  "screenshot": {
+    "artifact": {
+      "artifact_type": "screenshot",
+      "reference": "synthetic://case-001/current.png",
+      "claim": "Synthetic dashboard screenshot",
+      "provenance": "capture-run-001"
+    },
+    "viewport": "1366x768"
+  },
+  "baseline": {
+    "artifact": {
+      "artifact_type": "screenshot",
+      "reference": "approved-baseline://dashboard-v1.png",
+      "claim": "Approved synthetic dashboard baseline",
+      "provenance": "baseline-approval-001"
+    },
+    "version": "baseline-v1",
+    "approved": true
+  },
+  "rubric": {
+    "version": "visual-layout-v1",
+    "criteria": ["alignment", "clipping"]
+  },
+  "model": {
+    "provider": "fake-cloud",
+    "model": "vision-model",
+    "deployment_version": "deployment-v1"
+  },
+  "prompt_skill": {
+    "prompt_version": "prompt-v1",
+    "skill_version": "skill-v1"
+  },
+  "deterministic_result": "pass"
+}

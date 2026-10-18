@@ -1,0 +1,26 @@
+{
+  "observations": [
+    {
+      "criterion": "alignment",
+      "finding": false,
+      "uncertainty": false,
+      "region": null,
+      "confidence": 0.98,
+      "rationale": "No alignment issue observed."
+    },
+    {
+      "criterion": "clipping",
+      "finding": false,
+      "uncertainty": false,
+      "region": null,
+      "confidence": 0.97,
+      "rationale": "No clipping observed."
+    }
+  ],
+  "raw_output": {
+    "artifact_type": "evaluator-output",
+    "reference": "synthetic://case-001/raw-evaluator-output.json",
+    "claim": "Unmodified fake provider response",
+    "provenance": "fake-provider-run-001"
+  }
+}

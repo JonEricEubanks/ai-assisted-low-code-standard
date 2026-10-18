@@ -1,0 +1,77 @@
+name: Foundry QA shadow evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      subscription_id:
+        description: Approved Azure subscription ID
+        required: true
+        type: string
+      resource_group:
+        description: Approved Azure resource group
+        required: true
+        type: string
+      region:
+        description: Approved Azure region
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  shadow-evaluation:
+    runs-on: ubuntu-latest
+    environment: foundry-dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check approved scope and OIDC configuration
+        env:
+          SUBSCRIPTION_ID: ${{ inputs.subscription_id }}
+          RESOURCE_GROUP: ${{ inputs.resource_group }}
+          REGION: ${{ inputs.region }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        run: |
+          set -euo pipefail
+          [[ "$SUBSCRIPTION_ID" == "b8f90e47-b8ee-45f1-9442-d3b4f8fd0695" ]] || { echo "Scope preflight failed: subscription mismatch" >&2; exit 1; }
+          [[ "$AZURE_SUBSCRIPTION_ID" == "b8f90e47-b8ee-45f1-9442-d3b4f8fd0695" ]] || { echo "Scope preflight failed: configured subscription mismatch" >&2; exit 1; }
+          [[ "$RESOURCE_GROUP" == "rg-mgp-foundry-qa-dev" ]] || { echo "Scope preflight failed: resource group mismatch" >&2; exit 1; }
+          [[ "$REGION" == "eastus2" ]] || { echo "Scope preflight failed: region mismatch" >&2; exit 1; }
+          [[ -n "$AZURE_CLIENT_ID" ]] || { echo "Scope preflight failed: OIDC client ID is missing" >&2; exit 1; }
+          [[ "$AZURE_TENANT_ID" == "ce08ca1a-3a87-472b-affa-217b4d4793ce" ]] || { echo "Scope preflight failed: tenant mismatch" >&2; exit 1; }
+
+      - name: Authenticate to the approved subscription with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Normalize local shadow fixture
+        env:
+          SUBSCRIPTION_ID: ${{ inputs.subscription_id }}
+          RESOURCE_GROUP: ${{ inputs.resource_group }}
+          REGION: ${{ inputs.region }}
+        run: |
+          python scripts/run_foundry_shadow_eval.py \
+            --fixture qa/fixtures/deterministic-evidence.json \
+            --subscription-id "$SUBSCRIPTION_ID" \
+            --resource-group "$RESOURCE_GROUP" \
+            --region "$REGION" \
+            --output shadow-summary.json
+
+      - name: Upload sanitized shadow summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundry-qa-shadow-summary
+          path: shadow-summary.json
+          if-no-files-found: error
+          retention-days: 7

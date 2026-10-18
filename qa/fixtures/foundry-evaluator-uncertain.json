@@ -1,0 +1,8 @@
+{
+  "criterion": "alignment",
+  "finding": null,
+  "uncertainty": true,
+  "region": "header",
+  "confidence": 0.42,
+  "rationale": "The header boundary is ambiguous."
+}
