@@ -1,0 +1,178 @@
+ComponentDefinitions:
+  cmpMetricTile:
+    DefinitionType: CanvasComponent
+    Description: KPI metric tile - tinted 50px icon chip, caption, large value, optional note. Compact=true renders the horizontal desktop strip.
+    AccessAppScope: true
+    CustomProperties:
+      Compact:
+        PropertyKind: Input
+        DisplayName: Compact
+        Description: True renders icon - value - caption in one row (desktop stat strip).
+        DataType: Boolean
+        Default: =false
+      Icon:
+        PropertyKind: Input
+        DisplayName: Icon
+        Description: Fluent icon name.
+        DataType: Text
+        Default: ="Document"
+      Intent:
+        PropertyKind: Input
+        DisplayName: Intent
+        Description: Brand, Success, Warning, Danger, Info or Neutral - drives chip tint and icon colour.
+        DataType: Text
+        Default: ="Brand"
+      Label:
+        PropertyKind: Input
+        DisplayName: Label
+        Description: Caption shown above (or beside) the value.
+        DataType: Text
+        Default: ="Metric"
+      Note:
+        PropertyKind: Input
+        DisplayName: Note
+        Description: Optional footnote under the value. Hidden when Compact.
+        DataType: Text
+        Default: =""
+      OnSelect:
+        PropertyKind: Event
+        DisplayName: OnSelect
+        Description: Raised when the icon chip or the value is selected.
+        ReturnType: None
+        Default: =false
+      Value:
+        PropertyKind: Input
+        DisplayName: Value
+        Description: Display value (already formatted text).
+        DataType: Text
+        Default: ="0"
+    Properties:
+      Height: =TileHeight
+      Width: =320
+    Children:
+      - cntTileRoot:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            Fill: =ColorSurface
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutGap: =Space3
+            PaddingBottom: =If(cmpMetricTile.Compact, Space2, Space3)
+            PaddingLeft: =Space4
+            PaddingRight: =Space4
+            PaddingTop: =If(cmpMetricTile.Compact, Space2, Space3)
+            RadiusBottomLeft: =RadiusLarge
+            RadiusBottomRight: =RadiusLarge
+            RadiusTopLeft: =RadiusLarge
+            RadiusTopRight: =RadiusLarge
+            Width: =Parent.Width
+          Children:
+            - cntTileIconChip:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.Center
+                  DropShadow: =DropShadow.None
+                  Fill: =Switch(cmpMetricTile.Intent, "Success", ColorSuccessTint, "Warning", ColorWarningTint, "Danger", ColorDangerTint, "Info", ColorInfoTint, "Neutral", ColorNeutralTint, ColorBrandTint)
+                  FillPortions: =0
+                  Height: =If(cmpMetricTile.Compact, 40, IconChipSize)
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =RadiusMedium
+                  RadiusBottomRight: =RadiusMedium
+                  RadiusTopLeft: =RadiusMedium
+                  RadiusTopRight: =RadiusMedium
+                  Width: =If(cmpMetricTile.Compact, 40, IconChipSize)
+                Children:
+                  - icoTile:
+                      Control: ModernIcon
+                      Properties:
+                        AccessibleLabel: =cmpMetricTile.Label
+                        AlignInContainer: =AlignInContainer.Center
+                        Height: =24
+                        Icon: =cmpMetricTile.Icon
+                        IconColor: =Switch(cmpMetricTile.Intent, "Success", ColorSuccess, "Warning", ColorWarning, "Danger", ColorDanger, "Info", ColorInfo, "Neutral", ColorTextSecondary, ColorBrand)
+                        IconStyle: =IconStyle.Filled
+                        LayoutMinHeight: =24
+                        LayoutMinWidth: =24
+                        OnSelect: =cmpMetricTile.OnSelect()
+                        Width: =24
+            - cntTileText:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =If(cmpMetricTile.Compact, LayoutAlignItems.Center, LayoutAlignItems.Stretch)
+                  LayoutDirection: =If(cmpMetricTile.Compact, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                  LayoutGap: =If(cmpMetricTile.Compact, Space2, Space1)
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - lblTileValue:
+                      Control: ModernText
+                      Properties:
+                        AccessibleLabel: |-
+                          =cmpMetricTile.Label & ": " & cmpMetricTile.Value
+                        AlignInContainer: =If(cmpMetricTile.Compact, AlignInContainer.Center, AlignInContainer.Stretch)
+                        AutoHeight: =true
+                        Color: =ColorTextPrimary
+                        Font: =FontApp
+                        FontWeight: =FontWeight.Semibold
+                        Height: =If(cmpMetricTile.Compact, 34, 44)
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        OnSelect: =cmpMetricTile.OnSelect()
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =If(cmpMetricTile.Compact, FontSizeTitleDesktop, App.Width < BreakpointPhone, FontSizeKpiPhone, App.Width < BreakpointDesktop, FontSizeKpiTablet, FontSizeKpiDesktop)
+                        Text: =cmpMetricTile.Value
+                        Width: =If(cmpMetricTile.Compact, 64, 150)
+                        Wrap: =false
+                  - lblTileCaption:
+                      Control: ModernText
+                      Properties:
+                        AccessibleLabel: =Self.Text
+                        AlignInContainer: =If(cmpMetricTile.Compact, AlignInContainer.Center, AlignInContainer.Stretch)
+                        Color: =ColorTextSecondary
+                        FillPortions: =If(cmpMetricTile.Compact, 1, 0)
+                        Font: =FontApp
+                        Height: =20
+                        LayoutMinHeight: =20
+                        LayoutMinWidth: =0
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =If(cmpMetricTile.Compact, FontSizeBody, FontSizeCaption)
+                        Text: =cmpMetricTile.Label
+                        Wrap: =false
+                  - lblTileNote:
+                      Control: ModernText
+                      Properties:
+                        AccessibleLabel: =Self.Text
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Color: =ColorTextSecondary
+                        Font: =FontApp
+                        Height: =17
+                        LayoutMinHeight: =17
+                        LayoutMinWidth: =0
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =FontSizeCaption
+                        Text: =cmpMetricTile.Note
+                        Visible: =!cmpMetricTile.Compact && !IsBlank(cmpMetricTile.Note)
+                        Wrap: =false

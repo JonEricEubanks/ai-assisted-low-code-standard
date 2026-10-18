@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Start Solution Intake</title>
+    <meta
+      name="description"
+      content="Start an MGP solution intake in GitHub Copilot Chat using the approved CSM SharePoint project folder."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./start.css" />
+    <script src="./start.js" defer></script>
+  </head>
+  <body class="start-page">
+    <a class="skip-link" href="#main">Skip to intake setup</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Start Solution Intake</span>
+        </a>
+
+        <nav aria-label="Start navigation">
+          <a href="../training/index.html">Quick starts</a>
+          <a class="nav-cta" href="../index.html">
+            Guide home
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="start-hero">
+        <div class="start-grid" aria-hidden="true"></div>
+        <div class="container start-hero-layout">
+          <div>
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              Agent-first intake
+            </span>
+            <h1>Give Copilot the CSM handoff.</h1>
+            <p>
+              Open this repository in VS Code, select the MGP Delivery agent, and provide the
+              approved SharePoint project-folder link. The agent prepares the intake package and
+              stops for your approval before architecture or build.
+            </p>
+          </div>
+
+          <aside class="outcome-card" aria-label="Expected intake outcome">
+            <span>What Copilot produces</span>
+            <ul>
+              <li>Normalized requirements</li>
+              <li>Acceptance criteria</li>
+              <li>Unknowns and blocking questions</li>
+              <li>Platform recommendation</li>
+              <li>Risk and readiness disposition</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="prerequisites" class="readiness-section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">★ Prerequisites</span>
+            <h2>Have these six things before you start.</h2>
+            <p>
+              Install VS Code, Git, the two recommended extensions, and Azure CLI once. The MGP
+              agent, skills, prompts, and templates are already included in this repository.
+            </p>
+          </div>
+
+          <div class="prerequisite-panel">
+            <div class="prerequisite-item">
+              <span class="prerequisite-icon" aria-hidden="true">01</span>
+              <div>
+                <strong>VS Code</strong>
+                <p>Use the desktop app with this repository open as the active workspace.</p>
+              </div>
+            </div>
+            <div class="prerequisite-item">
+              <span class="prerequisite-icon" aria-hidden="true">02</span>
+              <div>
+                <strong>Git</strong>
+                <p>Git is required to clone and update this repository.</p>
+              </div>
+            </div>
+            <div class="prerequisite-item">
+              <span class="prerequisite-icon" aria-hidden="true">03</span>
+              <div>
+                <strong>GitHub Copilot license</strong>
+                <p>Sign in with the organizational GitHub account assigned to you.</p>
+              </div>
+            </div>
+            <div class="prerequisite-item">
+              <span class="prerequisite-icon" aria-hidden="true">04</span>
+              <div>
+                <strong>Two VS Code extensions</strong>
+                <p>GitHub Copilot Chat and Microsoft Power Platform Tools.</p>
+              </div>
+            </div>
+            <div class="prerequisite-item">
+              <span class="prerequisite-icon" aria-hidden="true">05</span>
+              <div>
+                <strong>Azure CLI</strong>
+                <p>Request admin installation of the <code>az</code> command-line tool if your device requires elevated rights.</p>
+              </div>
+            </div>
+            <div class="prerequisite-item">
+              <span class="prerequisite-icon" aria-hidden="true">06</span>
+              <div>
+                <strong>Approved tenant access</strong>
+                <p>IT must provision the authenticated SharePoint/Microsoft 365 MCP connection.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="readiness-grid">
+            <div class="readiness-card">
+              <span class="readiness-number">01</span>
+              <div>
+                <strong>Install VS Code and Git</strong>
+                <p>Start here on a blank machine. Both tools must be available before you can open the workspace.</p>
+              </div>
+              <a href="https://code.visualstudio.com/download" target="_blank" rel="noreferrer">
+                Download VS Code <span aria-hidden="true">↗</span>
+              </a>
+              <a href="https://git-scm.com/download/win" target="_blank" rel="noreferrer">
+                Download Git for Windows <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div class="readiness-card">
+              <span class="readiness-number">02</span>
+              <div>
+                <strong>Clone and open the repository</strong>
+                <p>Run this from a terminal, then open the cloned folder in VS Code.</p>
+                <code>git clone https://github.com/JonEricEubanks/ai-assisted-low-code-standard.git</code>
+              </div>
+              <a
+                href="vscode://vscode.git/clone?url=https%3A%2F%2Fgithub.com%2FJonEricEubanks%2Fai-assisted-low-code-standard.git"
+              >
+                VS Code installed? Clone automatically <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div class="readiness-card">
+              <span class="readiness-number">03</span>
+              <div>
+                <strong>Install the recommended extensions</strong>
+                <p>
+                  Accept the repository recommendations in VS Code. You do not separately install
+                  the MGP agent or skills.
+                </p>
+                <code>GitHub.copilot-chat<br />microsoft-IsvExpTools.powerplatform-vscode</code>
+              </div>
+              <a
+                href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Copilot Chat listing <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                href="https://marketplace.visualstudio.com/items?itemName=microsoft-IsvExpTools.powerplatform-vscode"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Power Platform Tools listing <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div class="readiness-card">
+              <span class="readiness-number">04</span>
+              <div>
+                <strong>Install and verify Azure CLI</strong>
+                <p>
+                  The official installer may require local administrator rights. Ask your IT
+                  administrator to install Azure CLI so the <code>az</code> command is available
+                  in your terminal. After installation, run <code>az --version</code>. Sign in only
+                  when an approved workflow requires it.
+                </p>
+              </div>
+              <a href="https://learn.microsoft.com/cli/azure/install-azure-cli" target="_blank" rel="noreferrer">
+                Give this guide to your administrator <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div class="readiness-card">
+              <span class="readiness-number">05</span>
+              <div>
+                <strong>Sign in to GitHub Copilot</strong>
+                <p>Use your approved organizational GitHub account and confirm Chat is available in VS Code.</p>
+              </div>
+              <span class="readiness-state">One-time setup</span>
+            </div>
+
+            <div class="readiness-card">
+              <span class="readiness-number">06</span>
+              <div>
+                <strong>Request and verify tenant tools</strong>
+                <p>
+                  SharePoint/Microsoft 365 MCP access is not downloaded from this repository. Use
+                  your standard IT service channel and send the request below.
+                </p>
+                <code>Install or enable the approved SharePoint/Microsoft 365 MCP connection for the Power Desk developer workflow. Confirm I can list and read an authorized CSM project folder.</code>
+              </div>
+              <span class="readiness-state">IT / platform owner</span>
+            </div>
+
+            <div class="readiness-card">
+              <span class="readiness-number">07</span>
+              <div>
+                <strong>Run the local readiness check</strong>
+                <p>
+                  In the VS Code PowerShell terminal, run this from the repository root. If policy
+                  blocks the script, contact IT rather than bypassing organizational controls.
+                </p>
+                <code>.\scripts\Test-DeveloperSetup.ps1</code>
+              </div>
+              <button id="copy-setup-command" class="inline-action" type="button">
+                Copy command <span aria-hidden="true">⧉</span>
+              </button>
+            </div>
+          </div>
+          <p id="setup-copy-status" class="copy-status" role="status" aria-live="polite"></p>
+
+          <div class="ownership-panel" aria-label="Setup responsibilities">
+            <div>
+              <span>You do</span>
+              <strong>Install approved extensions, open the repository, sign in to Copilot, and run the checker.</strong>
+            </div>
+            <div>
+              <span>IT / platform owner does</span>
+              <strong>Install Azure CLI when admin rights are required and provision approved MCP access.</strong>
+            </div>
+            <div>
+              <span>CSM provides</span>
+              <strong>The authorized SharePoint project-folder link and complete handoff documents.</strong>
+            </div>
+          </div>
+
+          <div class="ready-panel">
+            <div>
+              <span class="eyebrow">Setup complete</span>
+              <h3>You are ready when all six checks are true.</h3>
+            </div>
+            <ul>
+              <li>VS Code has this repository open as the active workspace.</li>
+              <li>Git works from the terminal.</li>
+              <li>Both recommended extensions are enabled.</li>
+              <li>GitHub Copilot Chat shows the MGP Delivery agent.</li>
+              <li><code>az --version</code> succeeds.</li>
+              <li>The approved MCP connection can list and read an authorized CSM folder.</li>
+            </ul>
+            <p>
+              The readiness script verifies local tools and repository files. Tenant authentication
+              still requires the manual folder-read check above.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="launch-section">
+        <div class="container launch-layout">
+          <div class="launch-copy">
+            <span class="eyebrow eyebrow-light">Every new CSM handoff</span>
+            <h2>One folder. One prompt. One approval gate.</h2>
+            <ol>
+              <li>
+                <span>1</span>
+                <div>
+                  <strong>Open GitHub Copilot Chat</strong>
+                  <p>Keep this repository open as the active workspace.</p>
+                </div>
+              </li>
+              <li>
+                <span>2</span>
+                <div>
+                  <strong>Select “MGP Delivery”</strong>
+                  <p>Use the agent picker in Copilot Chat. No separate download is required.</p>
+                </div>
+              </li>
+              <li>
+                <span>3</span>
+                <div>
+                  <strong>Copy the SharePoint project-folder link</strong>
+                  <p>Use the approved CSM folder, not an individual file or local download.</p>
+                </div>
+              </li>
+              <li>
+                <span>4</span>
+                <div>
+                  <strong>Paste the generated prompt</strong>
+                  <p>Copilot reviews the handoff and stops before architecture or implementation.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="prompt-builder">
+            <span class="prompt-label">Create your intake prompt</span>
+            <h2>Paste the project-folder URL.</h2>
+            <p>The URL remains in your browser and is not submitted by this page.</p>
+
+            <label for="sharepoint-url">Approved SharePoint project folder</label>
+            <div class="url-row">
+              <input
+                id="sharepoint-url"
+                type="url"
+                inputmode="url"
+                placeholder="https://tenant.sharepoint.com/sites/.../Project Folder"
+                autocomplete="off"
+              />
+              <button id="generate-prompt" class="button button-primary" type="button">
+                Generate
+              </button>
+            </div>
+            <p id="url-error" class="field-error" role="alert"></p>
+
+            <div id="prompt-output" class="prompt-output" hidden>
+              <div class="prompt-topline">
+                <span>Copilot Chat prompt</span>
+                <button id="copy-prompt" type="button">
+                  Copy prompt <span aria-hidden="true">⧉</span>
+                </button>
+              </div>
+              <pre><code id="prompt-text"></code></pre>
+              <p id="prompt-copy-status" class="copy-status" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="approval-section">
+        <div class="container approval-layout">
+          <div>
+            <span class="eyebrow">Human control</span>
+            <h2>The agent prepares. The developer approves.</h2>
+          </div>
+          <div class="approval-flow" aria-label="Intake approval flow">
+            <span>CSM folder</span>
+            <b aria-hidden="true">→</b>
+            <span>Agent intake</span>
+            <b aria-hidden="true">→</b>
+            <span class="approval-gate">Developer approval</span>
+            <b aria-hidden="true">→</b>
+            <span>Architecture</span>
+          </div>
+          <p>
+            If SharePoint access is missing, documents are inaccessible, or Tier 1 questions remain
+            unanswered, the agent must stop and report the blocker instead of pretending the intake
+            is complete.
+          </p>
+        </div>
+      </section>
+
+      <section class="continue-section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">After intake approval</span>
+            <h2>Continue with the platform the agent approved.</h2>
+            <p>
+              Do not choose by preference. Use the intake recommendation, then follow only that
+              platform’s quick path.
+            </p>
+          </div>
+
+          <div class="continue-grid">
+            <a href="../platform/index.html?type=power-apps">
+              <img src="../assets/product-icons/power-apps.svg" alt="" aria-hidden="true" />
+              <span>
+                <strong>Power Apps</strong>
+                <small>Canvas app quick path</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
+            <a href="../platform/index.html?type=power-automate">
+              <img src="../assets/product-icons/power-automate.svg" alt="" aria-hidden="true" />
+              <span>
+                <strong>Power Automate</strong>
+                <small>Cloud flow quick path</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
+            <a href="../platform/index.html?type=sharepoint">
+              <img src="../assets/product-icons/sharepoint.svg" alt="" aria-hidden="true" />
+              <span>
+                <strong>SharePoint</strong>
+                <small>List, library, or page quick path</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
+            <a href="../platform/index.html?type=integrated">
+              <img src="../assets/product-icons/power-platform.svg" alt="" aria-hidden="true" />
+              <span>
+                <strong>Integrated solution</strong>
+                <small>Cross-platform quick path</small>
+              </span>
+              <b aria-hidden="true">→</b>
+            </a>
+          </div>
+
+          <a class="azure-boundary-callout" href="../azure/index.html">
+            <img src="../assets/product-icons/azure-resource-groups.svg" alt="" aria-hidden="true" />
+            <span>
+              <strong>If the approved solution touches Azure, stop here first.</strong>
+              <small>Run Azure Resource Boundary to verify the executing identity, subscription, workload resource group, allowed location, and approved operation.</small>
+            </span>
+            <b aria-hidden="true">Open Azure guardrails →</b>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Developer delivery system</span>
+        <div>
+          <a href="../training/index.html">Quick starts</a>
+          <a href="../guide/index.html?doc=docs%2Fcsm-handoff-intake-flow.md">View intake flow</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

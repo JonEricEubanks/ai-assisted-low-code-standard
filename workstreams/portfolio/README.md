@@ -1,11 +1,11 @@
-# Portfolio and Blog Workstream
+# Operational Evidence and Training Content Workstream
 
 ## Scope
 
 - Metrics and baseline analysis
-- Portfolio evidence and case studies
+- Operational evidence and reusable case studies
 - Public-safe blog series
-- Adoption and capability storytelling
+- Developer onboarding and capability guidance
 
 ## Branch
 

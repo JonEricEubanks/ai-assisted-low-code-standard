@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Test Case Builder</title>
+    <meta
+      name="description"
+      content="Create a traceable MGP test case and export it as Markdown for delivery evidence."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./template.css" />
+    <script src="./test-case.js" defer></script>
+  </head>
+  <body class="template-page">
+    <a class="skip-link" href="#main">Skip to test case</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Test Case Builder</span>
+        </a>
+
+        <nav aria-label="Template navigation">
+          <a href="../training/index.html#validate-release">Validation guide</a>
+          <a class="nav-cta" href="../../templates/test-case.md" download>
+            Download source
+            <span aria-hidden="true">↓</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="template-hero">
+        <div class="template-grid" aria-hidden="true"></div>
+        <div class="container template-hero-layout">
+          <div>
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              Validation artifact
+            </span>
+            <h1>Prove the requirement works.</h1>
+            <p>
+              Complete one test case for each requirement or risk. Export the result and attach
+              it to the project evidence.
+            </p>
+          </div>
+          <aside class="template-guide" aria-label="Test case workflow">
+            <span>Three-step workflow</span>
+            <ol>
+              <li><b>01</b> Link the requirement</li>
+              <li><b>02</b> Run and record the test</li>
+              <li><b>03</b> Export the evidence</li>
+            </ol>
+          </aside>
+        </div>
+      </section>
+
+      <section class="template-workspace">
+        <div class="container workspace-layout">
+          <form id="test-case-form" class="test-form">
+            <div class="form-heading">
+              <div>
+                <span class="section-number">01</span>
+                <h2>Identify the test</h2>
+                <p>Connect this result to the approved requirement and release.</p>
+              </div>
+              <span class="required-note"><span aria-hidden="true">*</span> Required</span>
+            </div>
+
+            <div class="field-grid field-grid-three">
+              <label>
+                <span>Test ID <b aria-hidden="true">*</b></span>
+                <input id="test-id" name="testId" required placeholder="TC-001" />
+              </label>
+              <label>
+                <span>Requirement ID <b aria-hidden="true">*</b></span>
+                <input id="requirement-id" name="requirementId" required placeholder="REQ-001" />
+              </label>
+              <label>
+                <span>Risk</span>
+                <select id="risk" name="risk">
+                  <option value="">Select risk</option>
+                  <option>Low</option>
+                  <option>Medium</option>
+                  <option>High</option>
+                  <option>Critical</option>
+                </select>
+              </label>
+              <label>
+                <span>Environment</span>
+                <input id="environment" name="environment" placeholder="UAT" />
+              </label>
+              <label>
+                <span>Solution version</span>
+                <input id="solution-version" name="solutionVersion" placeholder="1.0.0" />
+              </label>
+              <label>
+                <span>Persona</span>
+                <input id="persona" name="persona" placeholder="Approver" />
+              </label>
+              <label>
+                <span>Executor</span>
+                <input id="executor" name="executor" autocomplete="name" placeholder="Name" />
+              </label>
+              <label>
+                <span>Date and time</span>
+                <input id="date-time" name="dateTime" type="datetime-local" />
+              </label>
+              <label>
+                <span>Test data</span>
+                <input id="test-data" name="testData" placeholder="Record or dataset reference" />
+              </label>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-heading">
+              <div>
+                <span class="section-number">02</span>
+                <h2>Define the test</h2>
+                <p>Write enough detail for another person to repeat it.</p>
+              </div>
+            </div>
+
+            <div class="field-stack">
+              <label>
+                <span>Preconditions</span>
+                <textarea
+                  id="preconditions"
+                  name="preconditions"
+                  rows="3"
+                  placeholder="What must already be true before this test begins?"
+                ></textarea>
+              </label>
+              <label>
+                <span>Steps <b aria-hidden="true">*</b></span>
+                <textarea
+                  id="steps"
+                  name="steps"
+                  rows="6"
+                  required
+                  placeholder="1. Open the solution&#10;2. Sign in as the test persona&#10;3. Complete the action"
+                ></textarea>
+              </label>
+              <label>
+                <span>Expected result <b aria-hidden="true">*</b></span>
+                <textarea
+                  id="expected-result"
+                  name="expectedResult"
+                  rows="4"
+                  required
+                  placeholder="Describe the observable result that proves the requirement."
+                ></textarea>
+              </label>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-heading">
+              <div>
+                <span class="section-number">03</span>
+                <h2>Record the outcome</h2>
+                <p>Capture what happened and point reviewers to the supporting evidence.</p>
+              </div>
+            </div>
+
+            <div class="field-stack">
+              <label>
+                <span>Actual result <b aria-hidden="true">*</b></span>
+                <textarea
+                  id="actual-result"
+                  name="actualResult"
+                  rows="4"
+                  required
+                  placeholder="Describe what actually happened during the test."
+                ></textarea>
+              </label>
+            </div>
+
+            <div class="field-grid field-grid-two">
+              <label>
+                <span>Status <b aria-hidden="true">*</b></span>
+                <select id="status" name="status" required>
+                  <option value="Not run">Not run</option>
+                  <option value="Passed">Passed</option>
+                  <option value="Failed">Failed</option>
+                  <option value="Blocked">Blocked</option>
+                </select>
+              </label>
+              <label>
+                <span>Evidence IDs or links</span>
+                <input id="evidence-ids" name="evidenceIds" placeholder="EVD-001, screenshot, or URL" />
+              </label>
+              <label>
+                <span>Defect ID</span>
+                <input id="defect-id" name="defectId" placeholder="Required when failed" />
+              </label>
+              <label>
+                <span>Reviewer</span>
+                <input id="reviewer" name="reviewer" autocomplete="name" placeholder="Name" />
+              </label>
+            </div>
+          </form>
+
+          <aside class="export-panel">
+            <div class="export-card">
+              <span class="export-kicker">Your output</span>
+              <h2>Ready for evidence.</h2>
+              <p>
+                The information stays in this browser until you export it. Nothing is submitted
+                or stored by this page.
+              </p>
+
+              <div class="export-actions">
+                <button class="button button-primary" id="download-button" type="button">
+                  Download test case
+                  <span aria-hidden="true">↓</span>
+                </button>
+                <button class="button button-secondary" id="copy-button" type="button">
+                  Copy as Markdown
+                </button>
+                <button class="text-button" id="print-button" type="button">
+                  Print or save as PDF
+                  <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+
+              <p id="action-status" class="action-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="traceability-card">
+              <span>Release rule</span>
+              <strong>No requirement is complete without a result and evidence.</strong>
+              <a href="../training/index.html#validate-release">
+                Return to validation
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Developer delivery system</span>
+        <div>
+          <a href="../index.html">Guide home</a>
+          <a href="../../templates/test-case.md" download>Download Markdown</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Developer Delivery Guide</title>
+    <meta
+      name="description"
+      content="The MGP developer path for planning, building, validating, and handing off low-code solutions."
+    />
+    <link rel="icon" href="./assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#top" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="./assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Developer Delivery Guide</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <a href="./start/index.html#prerequisites">New developer setup</a>
+          <a href="#playbooks">Playbooks</a>
+          <a href="#ship">Ship</a>
+          <a class="nav-cta" href="#resources">
+            Find a resource
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero">
+        <div class="hero-grid-pattern" aria-hidden="true"></div>
+        <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+        <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+
+        <div class="container hero-layout">
+          <div class="hero-copy">
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              MGP delivery system
+            </span>
+            <h1>
+              Build with clarity.
+              <span>Deliver with confidence.</span>
+            </h1>
+            <p>
+              One guided path for turning an idea into a tested, supportable solution.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="./start/index.html#prerequisites">
+                I’m new — set up my workstation
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="button button-secondary" href="#start">
+                I’m already set up
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+            <div class="hero-note">
+              <span class="hero-note-mark" aria-hidden="true">✓</span>
+              <span>No VS Code or extensions yet? Start with workstation setup—we’ll show you exactly what you need.</span>
+            </div>
+          </div>
+
+          <aside class="route-card" aria-label="Developer route">
+            <div class="route-topline">
+              <span>Your route</span>
+              <span class="route-status">
+                <span aria-hidden="true"></span>
+                Start here
+              </span>
+            </div>
+
+            <ol class="route-list">
+              <li class="route-active">
+                <span class="route-node">00</span>
+                <span>
+                  <strong>Set up</strong>
+                  <small>VS Code · license · extensions · Azure CLI</small>
+                </span>
+                <span class="route-check" aria-hidden="true">→</span>
+              </li>
+              <li>
+                <span class="route-node">01</span>
+                <span>
+                  <strong>Frame</strong>
+                  <small>Need · risk · platform</small>
+                </span>
+                <span class="route-check" aria-hidden="true">→</span>
+              </li>
+              <li>
+                <span class="route-node">02</span>
+                <span>
+                  <strong>Build</strong>
+                  <small>Playbook · pattern · proof</small>
+                </span>
+                <span class="route-check" aria-hidden="true">→</span>
+              </li>
+              <li>
+                <span class="route-node">03</span>
+                <span>
+                  <strong>Validate</strong>
+                  <small>Test · evidence · review</small>
+                </span>
+                <span class="route-check" aria-hidden="true">→</span>
+              </li>
+              <li>
+                <span class="route-node">04</span>
+                <span>
+                  <strong>Handoff</strong>
+                  <small>Release · support · learn</small>
+                </span>
+                <span class="route-check" aria-hidden="true">→</span>
+              </li>
+            </ol>
+
+            <a class="route-link" href="./start/index.html#prerequisites">
+              Open new developer setup
+              <span aria-hidden="true">↗</span>
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section video-section">
+        <div class="container video-layout">
+          <div class="video-preview">
+            <div class="video-card">
+              <span class="video-badge">Quick tour</span>
+              <a
+                class="video-frame"
+                href="./lifecycle/index.html"
+                aria-label="Open the visual MGP delivery lifecycle"
+              >
+                <img
+                  src="./assets/training-video/01-homepage-hero.png"
+                  alt="Preview of the MGP developer delivery route"
+                />
+                <span class="video-overlay" aria-hidden="true"></span>
+                <span class="video-play-button" aria-hidden="true">→</span>
+              </a>
+              <p><strong>Visual guide:</strong> Open the complete delivery lifecycle.</p>
+            </div>
+          </div>
+
+          <div class="video-copy">
+            <span class="eyebrow">Training in motion</span>
+            <h2>Make the path obvious for every developer.</h2>
+            <p>
+              Short videos reduce onboarding friction. They help developers answer the critical question:
+              “Where do I start, and what do I need next?”
+            </p>
+            <ul class="video-list">
+              <li>60–90 second orientation for the full delivery model</li>
+              <li>Task-based walkthroughs for intake, build, and validation</li>
+              <li>Screenshot-driven modules tied directly to the repo templates</li>
+            </ul>
+            <div class="video-actions">
+              <a class="button button-primary" href="#resources">Explore guides</a>
+              <a class="button button-secondary" href="./guide/index.html?doc=docs%2Ftraining-video-roadmap.md">View the roadmap</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="start" class="section decision-section">
+        <div class="container">
+          <div class="section-heading heading-row">
+            <div>
+              <span class="eyebrow">Start where you are</span>
+              <h2>What are you doing right now?</h2>
+            </div>
+            <p>New to the Power Desk? Complete setup first. Already equipped? Choose your task.</p>
+          </div>
+
+          <a class="setup-callout" href="./start/index.html#prerequisites">
+            <span class="setup-callout-badge">New developer · Start here</span>
+            <span class="setup-callout-copy">
+              <strong>Set up VS Code and your Power Desk tools</strong>
+              <small>
+                Install VS Code and Git, confirm your GitHub Copilot license, add the two required
+                extensions, request Azure CLI if needed, open the repository, and verify approved
+                tenant access.
+              </small>
+            </span>
+            <span class="setup-callout-list" aria-label="Setup includes">
+              <span>VS Code + Git</span>
+              <span>Copilot</span>
+              <span>Extensions</span>
+              <span>Azure CLI</span>
+              <span>Tenant access</span>
+            </span>
+            <span class="setup-callout-action">
+              Start workstation setup
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
+
+          <div class="decision-grid">
+            <a class="decision-card decision-discover" href="./start/index.html">
+              <span class="decision-meta">The CSM handoff is ready</span>
+              <span class="decision-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3v18M3 12h18" />
+                </svg>
+              </span>
+              <span class="decision-copy">
+                <strong>Review the CSM handoff</strong>
+                <small>Point the intake agent to the SharePoint project folder.</small>
+              </span>
+              <span class="card-link">Start solution intake <b aria-hidden="true">↗</b></span>
+            </a>
+
+            <a class="decision-card decision-build" href="./training/index.html#build-solution">
+              <span class="decision-meta">I’m ready to build</span>
+              <span class="decision-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14" />
+                </svg>
+              </span>
+              <span class="decision-copy">
+                <strong>Choose a playbook</strong>
+                <small>Follow the standard for your platform.</small>
+              </span>
+              <span class="card-link">Follow the build path <b aria-hidden="true">↗</b></span>
+            </a>
+
+            <a class="decision-card decision-validate" href="./training/index.html#validate-release">
+              <span class="decision-meta">I need to prove it works</span>
+              <span class="decision-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+              </span>
+              <span class="decision-copy">
+                <strong>Validate a change</strong>
+                <small>Test the outcome and capture evidence.</small>
+              </span>
+              <span class="card-link">Follow the release path <b aria-hidden="true">↗</b></span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section task-chooser-section">
+        <div class="container">
+          <div class="section-heading heading-row">
+            <div>
+              <span class="eyebrow">Common starting points</span>
+              <h2>Start with the work you actually need.</h2>
+            </div>
+            <p>Small app? Workflow? List? Cross-platform solution? Pick the first lane.</p>
+          </div>
+
+          <div class="playbook-grid task-grid">
+            <a class="playbook task-card azure-guardrail-card" href="./azure/index.html">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/azure-resource-groups.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Does the work touch Azure?</strong>
+                <small>Verify identity, subscription, approved resource group, and operation before any write.</small>
+              </span>
+              <span class="task-cta">Run Azure guardrails</span>
+            </a>
+
+            <a class="playbook task-card" href="./platform/index.html?type=power-apps">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/power-apps.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Need a small app?</strong>
+                <small>Start with Power Apps for a focused user experience.</small>
+              </span>
+              <span class="task-cta">Use Power Apps path</span>
+            </a>
+
+            <a class="playbook task-card" href="./platform/index.html?type=power-automate">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/power-automate.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Need automation?</strong>
+                <small>Start here for flows, approvals, alerts, and scheduled work.</small>
+              </span>
+              <span class="task-cta">Use Power Automate path</span>
+            </a>
+
+            <a class="playbook task-card" href="./platform/index.html?type=sharepoint">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/sharepoint.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Need a list or site?</strong>
+                <small>Use SharePoint for structure, content, and lightweight collaboration.</small>
+              </span>
+              <span class="task-cta">Use SharePoint path</span>
+            </a>
+
+            <a class="playbook task-card" href="./platform/index.html?type=integrated">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/power-platform.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Need more than one system?</strong>
+                <small>Start with the integrated-solution path and map platform boundaries.</small>
+              </span>
+              <span class="task-cta">Use integrated path</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="playbooks" class="section playbook-section">
+        <div class="container">
+          <div class="section-heading heading-row">
+            <div>
+                <span class="eyebrow eyebrow-light">Detailed standards</span>
+                <h2>Open the rules only when you need them.</h2>
+            </div>
+              <p>Start with a quick path above. Use these references for detailed platform controls.</p>
+          </div>
+
+          <div class="playbook-grid">
+            <a class="playbook playbook-featured" href="./guide/index.html?doc=standards%2Fpower-apps.md">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/power-apps.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Power Apps</strong>
+                <small>Design, build, and release usable applications.</small>
+              </span>
+              <span class="playbook-tags">
+                <span>UX</span>
+                <span>Canvas</span>
+                <span>Governance</span>
+              </span>
+            </a>
+
+            <a class="playbook" href="./guide/index.html?doc=standards%2Fpower-automate.md">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/power-automate.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Power Automate</strong>
+                <small>Build observable, resilient automation.</small>
+              </span>
+              <span class="playbook-tags">
+                <span>Flows</span>
+                <span>Recovery</span>
+              </span>
+            </a>
+
+            <a class="playbook" href="./guide/index.html?doc=standards%2Fsharepoint.md">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/sharepoint.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>SharePoint</strong>
+                <small>Structure information for long-term use.</small>
+              </span>
+              <span class="playbook-tags">
+                <span>Data</span>
+                <span>Access</span>
+              </span>
+            </a>
+
+            <a class="playbook" href="./guide/index.html?doc=standards%2Fintegrated-solutions.md">
+              <span class="playbook-topline">
+                <span class="playbook-logo" aria-hidden="true">
+                  <img src="./assets/product-icons/power-platform.svg" alt="" />
+                </span>
+                <span class="playbook-arrow" aria-hidden="true">↗</span>
+              </span>
+              <span class="playbook-content">
+                <strong>Integrated solutions</strong>
+                <small>Connect platforms without losing control.</small>
+              </span>
+              <span class="playbook-tags">
+                <span>Architecture</span>
+                <span>Risk</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="ship" class="section ship-section">
+        <div class="container ship-layout">
+          <div class="ship-intro">
+            <span class="eyebrow">Before it ships</span>
+            <h2>Make confidence visible.</h2>
+            <p>Every release leaves a clear trail for reviewers, owners, and the next developer.</p>
+            <a class="text-link" href="./guide/index.html?doc=qa%2Fqa-strategy.md">
+              Explore the QA strategy
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <ol class="ship-steps">
+            <li>
+              <span class="ship-number">01</span>
+              <span>
+                <strong>Test</strong>
+                <small>Confirm the requirement.</small>
+              </span>
+              <a href="./templates/test-case.html" aria-label="Open test case builder">↗</a>
+            </li>
+            <li>
+              <span class="ship-number">02</span>
+              <span>
+                <strong>Review</strong>
+                <small>Check evidence and risk.</small>
+              </span>
+              <a href="./guide/index.html?doc=qa%2Fdeterministic-checks.md" aria-label="Open deterministic checks">↗</a>
+            </li>
+            <li>
+              <span class="ship-number">03</span>
+              <span>
+                <strong>Release</strong>
+                <small>Pass the release gate.</small>
+              </span>
+              <a href="./templates/artifact.html?type=release" aria-label="Open release checklist">↗</a>
+            </li>
+            <li>
+              <span class="ship-number">04</span>
+              <span>
+                <strong>Handoff</strong>
+                <small>Transfer context and ownership.</small>
+              </span>
+              <a href="./templates/artifact.html?type=handoff" aria-label="Open handoff checklist">↗</a>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="resources" class="section resource-section">
+        <div class="container">
+          <div class="resource-shell">
+            <div class="resource-heading">
+              <span class="eyebrow">Resource index</span>
+              <h2>Go straight to it.</h2>
+              <p>The most-used standards, procedures, and templates.</p>
+            </div>
+
+            <div class="resource-list">
+              <a href="./lifecycle/index.html">
+                <span class="resource-type">Standard</span>
+                <strong>Delivery lifecycle</strong>
+                <span aria-hidden="true">↗</span>
+              </a>
+              <a href="./guide/index.html?doc=skills%2FPRIORITY_REGISTER.md">
+                <span class="resource-type">Procedures</span>
+                <strong>Skills library</strong>
+                <span aria-hidden="true">↗</span>
+              </a>
+              <a href="./guide/index.html?doc=governance%2Foperating-model.md">
+                <span class="resource-type">Governance</span>
+                <strong>Operating model</strong>
+                <span aria-hidden="true">↗</span>
+              </a>
+              <a href="./guide/index.html?doc=AGENT_WORKFLOW.md">
+                <span class="resource-type">Workflow</span>
+                <strong>Agent workflow</strong>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing">
+        <div class="closing-grid" aria-hidden="true"></div>
+        <div class="container closing-inner">
+          <div>
+            <span class="eyebrow eyebrow-light">The MGP standard</span>
+            <h2>Clear process.<br />Better outcomes.</h2>
+          </div>
+          <div class="closing-action">
+            <p>Build clearly. Test visibly. Hand off confidently.</p>
+            <a class="button button-white" href="./guide/index.html?doc=README.md">
+              Open the complete guide
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Improving communities through better delivery</span>
+        <div>
+          <a href="./guide/index.html?doc=governance%2Fpower-desk-delivery-charter.md">Power Desk charter</a>
+          <a href="./guide/index.html?doc=CONTRIBUTING.md">Contribute</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

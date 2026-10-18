@@ -16,8 +16,8 @@ This repository is designed to support parallel AI and developer work without cr
 ├── CONTRIBUTING.md
 ├── .gitignore
 ├── governance/
-│   ├── goal-charter.md
-│   ├── advanced-scorecard.md
+│   ├── power-desk-delivery-charter.md
+│   ├── delivery-quality-scorecard.md
 │   └── operating-model.md
 ├── standards/
 │   ├── common-delivery-lifecycle.md
@@ -53,7 +53,7 @@ This repository is designed to support parallel AI and developer work without cr
 ├── metrics/
 │   └── baseline-and-outcomes.csv
 ├── portfolio/
-│   └── evidence-matrix.md
+│   └── operational-evidence-matrix.md
 ├── blog/
 │   ├── blog-series-plan.md
 │   ├── work-log-template.md
@@ -94,7 +94,7 @@ This repository is designed to support parallel AI and developer work without cr
 - Power Automate workstream: flow design, telemetry, failure-handling, recovery patterns
 - SharePoint workstream: list/library/page governance and information architecture
 - QA/workflow validation: test harness, evidence schema, screenshot capture, Playwright/Foundry validation
-- Portfolio/blog workstream: evidence, metrics, public-safe articles, case studies, portfolio narrative
+- Evidence/blog workstream: operational evidence, metrics, public-safe articles, and reusable case studies
 
 ## Merge workflow
 

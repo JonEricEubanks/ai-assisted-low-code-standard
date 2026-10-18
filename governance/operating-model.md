@@ -4,7 +4,7 @@
 
 | Role | Accountable for |
 |---|---|
-| Program owner | Goal, scope, evidence portfolio, gates, and leadership reporting |
+| Power Desk owner | Program scope, operational evidence, gates, and leadership reporting |
 | Solution owner | Business outcome, acceptance criteria, UAT, release decision |
 | Solution architect | Architecture, data, integration, security, licensing, and impact decisions |
 | Builder | Approved implementation and developer validation |
@@ -35,4 +35,3 @@
 - Inability to deterministically validate a critical path
 - Missing rollback or support owner
 - Vision/computer-use result conflicts with deterministic evidence
-

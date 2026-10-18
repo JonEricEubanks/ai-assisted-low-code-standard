@@ -1,0 +1,147 @@
+ComponentDefinitions:
+  cmpEmptyState:
+    DefinitionType: CanvasComponent
+    Description: Centered empty / no-results / permission state - 48px icon, headline, hint, optional primary action.
+    AccessAppScope: true
+    CustomProperties:
+      ActionIcon:
+        PropertyKind: Input
+        DisplayName: ActionIcon
+        Description: Fluent icon for the action button.
+        DataType: Text
+        Default: ="Add"
+      ActionText:
+        PropertyKind: Input
+        DisplayName: ActionText
+        Description: Button text. Button hidden when blank.
+        DataType: Text
+        Default: =""
+      Headline:
+        PropertyKind: Input
+        DisplayName: Headline
+        Description: One-line headline.
+        DataType: Text
+        Default: ="Nothing here yet"
+      Hint:
+        PropertyKind: Input
+        DisplayName: Hint
+        Description: One-line hint about what will appear or what to do.
+        DataType: Text
+        Default: =""
+      Icon:
+        PropertyKind: Input
+        DisplayName: Icon
+        Description: Fluent icon name.
+        DataType: Text
+        Default: ="DocumentArrowUp"
+      OnAction:
+        PropertyKind: Event
+        DisplayName: OnAction
+        Description: Raised when the action button is selected.
+        ReturnType: None
+        Default: =false
+    Properties:
+      Height: =240
+      Width: =400
+    Children:
+      - cntEmptyRoot:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            Fill: =ColorSurface
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =Space2
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            PaddingBottom: =Space5
+            PaddingLeft: =Space5
+            PaddingRight: =Space5
+            PaddingTop: =Space5
+            RadiusBottomLeft: =RadiusLarge
+            RadiusBottomRight: =RadiusLarge
+            RadiusTopLeft: =RadiusLarge
+            RadiusTopRight: =RadiusLarge
+            Width: =Parent.Width
+          Children:
+            - cntEmptyIconChip:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  AlignInContainer: =AlignInContainer.Center
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorBrandTint
+                  FillPortions: =0
+                  Height: =64
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =32
+                  RadiusBottomRight: =32
+                  RadiusTopLeft: =32
+                  RadiusTopRight: =32
+                  Width: =64
+                Children:
+                  - icoEmpty:
+                      Control: ModernIcon
+                      Properties:
+                        AccessibleLabel: =cmpEmptyState.Headline
+                        AlignInContainer: =AlignInContainer.Center
+                        Icon: =cmpEmptyState.Icon
+                        IconColor: =ColorBrand
+            - lblEmptyHeadline:
+                Control: ModernText
+                Properties:
+                  AccessibleLabel: =Self.Text
+                  Align: =Align.Center
+                  AlignInContainer: =AlignInContainer.Stretch
+                  AutoHeight: =true
+                  Color: =ColorTextPrimary
+                  Font: =FontApp
+                  FontWeight: =FontWeight.Semibold
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =Space1
+                  Size: =FontSizeSection
+                  Text: =cmpEmptyState.Headline
+            - lblEmptyHint:
+                Control: ModernText
+                Properties:
+                  AccessibleLabel: =Self.Text
+                  Align: =Align.Center
+                  AlignInContainer: =AlignInContainer.Stretch
+                  AutoHeight: =true
+                  Color: =ColorTextSecondary
+                  Font: =FontApp
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  PaddingBottom: =0
+                  PaddingLeft: =0
+                  PaddingRight: =0
+                  PaddingTop: =0
+                  Size: =FontSizeBody
+                  Text: =cmpEmptyState.Hint
+                  Visible: =!IsBlank(cmpEmptyState.Hint)
+            - btnEmptyAction:
+                Control: ModernButton
+                Properties:
+                  AccessibleLabel: =cmpEmptyState.ActionText
+                  AlignInContainer: =AlignInContainer.Center
+                  BasePaletteColor: =ColorBrand
+                  Font: =FontApp
+                  Height: =TouchTarget
+                  Icon: =cmpEmptyState.ActionIcon
+                  Layout: =If(IsBlank(cmpEmptyState.ActionIcon), ButtonLayout.TextOnly, ButtonLayout.IconBefore)
+                  LayoutMinHeight: =TouchTarget
+                  LayoutMinWidth: =0
+                  OnSelect: =cmpEmptyState.OnAction()
+                  Size: =FontSizeBody
+                  Text: =cmpEmptyState.ActionText
+                  Tooltip: =cmpEmptyState.ActionText
+                  Visible: =!IsBlank(cmpEmptyState.ActionText)
+                  Width: =Len(cmpEmptyState.ActionText) * 9 + Space5 * 2 + If(IsBlank(cmpEmptyState.ActionIcon), 0, 24)

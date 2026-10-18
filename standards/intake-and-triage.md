@@ -43,7 +43,7 @@ Read the form and extract every statement into one of four buckets. Do not blend
 | Assumption | Something the developer would otherwise fill in silently |
 | Unknown | Required to build, and not answerable from the form |
 
-The non-negotiable rule from the goal charter applies here: **unknown facts are logged, not inferred.**
+The non-negotiable Power Desk rule applies here: **unknown facts are logged, not inferred.**
 
 Pay particular attention to narrative success-criteria text. Client narratives routinely contain requirements that never appear in the checkbox sections. The narrative is usually the richest part of the form and the least structured.
 
@@ -90,7 +90,7 @@ Every success-criteria bullet in the narrative must become either:
 - a testable acceptance criterion, or
 - an explicitly deferred item with a recorded reason
 
-No bullet may silently disappear. This is the traceability root. The goal charter requires 100% of acceptance criteria to map to test evidence, and that mapping begins here, at intake, not at QA.
+No bullet may silently disappear. This is the traceability root. The Power Desk delivery charter requires every acceptance criterion to map to test evidence, and that mapping begins here, at intake, not at QA.
 
 Acceptance criteria are written in the form: *persona + action + observable outcome + condition.*
 

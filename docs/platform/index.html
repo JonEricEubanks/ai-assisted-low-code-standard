@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Platform Quick Path</title>
+    <meta
+      name="description"
+      content="A task-focused MGP quick path for Power Apps, Power Automate, SharePoint, and integrated solutions."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./platform.css" />
+    <script src="./platform.js" defer></script>
+  </head>
+  <body class="platform-page">
+    <a class="skip-link" href="#main">Skip to quick path</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Platform Quick Path</span>
+        </a>
+
+        <nav aria-label="Quick path navigation">
+          <a href="../start/index.html#prerequisites">Setup</a>
+          <a href="../training/index.html">All quick starts</a>
+          <a class="nav-cta" href="../index.html">
+            Guide home
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="platform-hero">
+        <div class="platform-grid" aria-hidden="true"></div>
+        <div class="container platform-hero-layout">
+          <div class="platform-mark">
+            <img id="platform-icon" src="../assets/product-icons/power-apps.svg" alt="" />
+          </div>
+          <div>
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              Platform quick path
+            </span>
+            <h1 id="platform-title">Power Apps</h1>
+            <p id="platform-summary"></p>
+            <div class="platform-actions">
+              <a class="button button-primary" href="#copilot">Create the Copilot prompt</a>
+              <a
+                id="platform-launch-link"
+                class="button button-secondary"
+                href="https://make.powerapps.com"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open Power Apps
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <div class="hero-choice">
+              <span>Not sure this is the right platform?</span>
+              <a href="../start/index.html">Run solution intake first <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <nav class="platform-switcher" aria-label="Switch platform quick path">
+        <div class="container">
+          <span>Switch path</span>
+          <a data-platform-link="power-apps" href="./index.html?type=power-apps">
+            <img src="../assets/product-icons/power-apps.svg" alt="" aria-hidden="true" />
+            Power Apps
+          </a>
+          <a data-platform-link="power-automate" href="./index.html?type=power-automate">
+            <img src="../assets/product-icons/power-automate.svg" alt="" aria-hidden="true" />
+            Power Automate
+          </a>
+          <a data-platform-link="sharepoint" href="./index.html?type=sharepoint">
+            <img src="../assets/product-icons/sharepoint.svg" alt="" aria-hidden="true" />
+            SharePoint
+          </a>
+          <a data-platform-link="integrated" href="./index.html?type=integrated">
+            <img src="../assets/product-icons/power-platform.svg" alt="" aria-hidden="true" />
+            Integrated
+          </a>
+        </div>
+      </nav>
+
+      <section class="path-section path-readiness">
+        <div class="container">
+          <div class="path-heading">
+            <span class="eyebrow">Before you build</span>
+            <h2>Know what you need—and when to stop.</h2>
+            <p>If any blocker applies, return to intake instead of guessing.</p>
+          </div>
+
+          <div class="readiness-columns">
+            <article>
+              <span class="panel-label">Use this path when</span>
+              <ul id="use-when-list"></ul>
+            </article>
+            <article>
+              <span class="panel-label">Bring these inputs</span>
+              <ul id="inputs-list"></ul>
+            </article>
+            <article class="blocker-panel">
+              <span class="panel-label">Stop and resolve</span>
+              <ul id="blockers-list"></ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="path-section path-steps">
+        <div class="container">
+          <div class="path-heading path-heading-light">
+            <span class="eyebrow eyebrow-light">Your working path</span>
+            <h2>Five steps from approved intake to handoff.</h2>
+            <p>Each step tells you the action, the proof, and where to go next.</p>
+          </div>
+          <ol id="steps-list" class="platform-steps"></ol>
+        </div>
+      </section>
+
+      <section id="copilot" class="path-section prompt-section">
+        <div class="container prompt-layout">
+          <div class="prompt-copy">
+            <span class="eyebrow">Start with Copilot</span>
+            <h2>Give the agent the right context.</h2>
+            <p>
+              Use this after intake and architecture are approved. The prompt tells the MGP
+              Delivery agent which governed skill to use and requires it to surface blockers first.
+            </p>
+
+            <div class="prompt-fields">
+              <label for="solution-name">Project or solution name</label>
+              <input id="solution-name" type="text" placeholder="Example: Permit request tracker" />
+
+              <label for="asset-reference">Existing asset link or ID <span>(optional for new work)</span></label>
+              <input id="asset-reference" type="text" placeholder="Environment, app, flow, site, or list reference" />
+            </div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="prompt-card-topline">
+              <span>Copilot starter prompt</span>
+              <button id="copy-platform-prompt" type="button">Copy prompt <span aria-hidden="true">⧉</span></button>
+            </div>
+            <pre><code id="platform-prompt"></code></pre>
+            <p id="prompt-status" class="prompt-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="path-section resources-section">
+        <div class="container">
+          <div class="path-heading">
+            <span class="eyebrow">Open only what you need</span>
+            <h2>Keep the quick path open. Use details on demand.</h2>
+          </div>
+
+          <div class="resource-cards">
+            <a href="../start/index.html">
+              <span>01</span>
+              <strong>Solution intake</strong>
+              <small>Use when requirements, ownership, risk, or platform direction are not approved.</small>
+            </a>
+            <a id="standard-link" href="../guide/index.html?doc=standards%2Fpower-apps.md">
+              <span>02</span>
+              <strong>Detailed platform standard</strong>
+              <small>Open for design rules, platform controls, and required validation.</small>
+            </a>
+            <a href="../templates/test-case.html">
+              <span>03</span>
+              <strong>Test case builder</strong>
+              <small>Record expected results, actual results, and evidence for each requirement.</small>
+            </a>
+            <a href="../templates/artifact.html?type=release">
+              <span>04</span>
+              <strong>Release checklist</strong>
+              <small>Confirm approval, readiness, rollback, and unresolved risk before release.</small>
+            </a>
+            <a href="../templates/artifact.html?type=handoff">
+              <span>05</span>
+              <strong>Handoff checklist</strong>
+              <small>Transfer support context, ownership, known limitations, and recovery guidance.</small>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="path-section done-section">
+        <div class="container done-layout">
+          <div>
+            <span class="eyebrow eyebrow-light">Definition of done</span>
+            <h2 id="done-title">You are finished when the result is usable, proven, and owned.</h2>
+          </div>
+          <ul id="done-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Power Desk platform quick path</span>
+        <div>
+          <a href="../training/index.html">Quick starts</a>
+          <a href="../index.html">Guide home</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

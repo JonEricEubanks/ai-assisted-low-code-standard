@@ -1,0 +1,323 @@
+# Fluent 2 Toast — reference component, captured verbatim from the Early Check Request App (2026-10-17).
+# This is the team's default notification surface. See design-system.md §5.9 for contract, usage, and
+# the renames/retokenisation the skill applies (component → cmpToast, colours → App.Formulas tokens).
+# Control version suffixes (@x.y.z) are Studio export format; drop them when syncing through the Canvas MCP.
+# App-scope dependencies (must exist in the host app): colToasts (collection), varCurrentTime (global).
+
+ComponentDefinitions:
+  Fluent 2 Toast:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      AddToast:
+        PropertyKind: Event
+        DisplayName: Add Toast
+        Description: Add toast notification to collection
+        ReturnType: None
+        Default: =If(CountRows(colToasts)=4, Remove(colToasts, First(colToasts))); Collect(colToasts,ToastRecord)
+        Parameters:
+          - ToastRecord:
+              Description: Record from "Send Toast" Action property
+              DataType: Record
+              Default: |-
+                ={
+                Header: "",
+                Icon: "",
+                IconColor: Color.Gray,
+                IconFilled: false,
+                Body: "",
+                Duration: 7000,
+                ShowDismiss: true,
+                ShowTime: false,
+                ShowProgress: false,
+                CurrentTime: Now(),
+                RemoveTime: Now()
+                }
+      AutoHeight:
+        PropertyKind: Output
+        DisplayName: Auto Height
+        Description: A custom property
+        DataType: Number
+      RemoveToast:
+        PropertyKind: Event
+        DisplayName: Remove Toast
+        Description: A custom property
+        ReturnType: None
+        Default: =Remove(colToasts, ToastRecord)
+        Parameters:
+          - ToastRecord:
+              Description: A parameter
+              DataType: Record
+              Default: |-
+                ={
+                Header: "",
+                Icon: "",
+                IconColor: Color.Gray,
+                IconFilled: false,
+                Body: "",
+                Duration: 7000,
+                ShowDismiss: true,
+                ShowTime: false,
+                ShowProgress: false,
+                CurrentTime: Now(),
+                RemoveTime: Now()
+                }
+      SendToast:
+        PropertyKind: Action
+        DisplayName: Send Toast
+        Description: Send a toast notification
+        ReturnType: None
+        Parameters:
+          - Header:
+              Description: Toast Header
+              DataType: Text
+              Default: ="Header Text"
+          - Icon:
+              Description: Icon text from control
+              DataType: Text
+              Default: =""
+          - IconColor:
+              Description: Color for Icon
+              IsOptional: true
+              DataType: Color
+              Default: =Color.Gray
+          - IconFIlled:
+              Description: Whether the header Icon should be filled
+              IsOptional: true
+              DataType: Boolean
+              Default: =false
+          - Body:
+              Description: Body text
+              IsOptional: true
+              DataType: Text
+              Default: =""
+          - Duration:
+              Description: Duration of toast message in milliseconds
+              IsOptional: true
+              DataType: Number
+              Default: =7000
+          - ShowDismiss:
+              Description: A parameter
+              IsOptional: true
+              DataType: Boolean
+              Default: =true
+          - ShowTime:
+              Description: A parameter
+              IsOptional: true
+              DataType: Boolean
+              Default: =false
+          - ShowProgress:
+              Description: A parameter
+              IsOptional: true
+              DataType: Boolean
+              Default: =false
+      SortOrder:
+        PropertyKind: Input
+        DisplayName: Sort Order
+        Description: A custom property
+        DataType: Text
+        Default: =SortOrder.Ascending
+      ToastTable:
+        PropertyKind: Input
+        DisplayName: Toast Table
+        Description: Table of collection use by component
+        DataType: Table
+        Default: =colToasts
+    Properties:
+      AutoHeight: =If(galToast.AllItemsCount=0, 0, conToastComponent.Height)
+      Height: =Self.AutoHeight
+      SendToast: |-
+        =Self.AddToast(
+            {
+                Header: Header,
+                Icon: Icon,
+                IconColor: IconColor,
+                IconFilled: IconFIlled,
+                Body: Body,
+                Duration: Duration,
+                ShowDismiss: ShowDismiss,
+                ShowTime: ShowTime,
+                ShowProgress: ShowProgress,
+                CurrentTime: Now(),
+                RemoveTime: DateAdd(Now(),Duration,TimeUnit.Milliseconds)
+            }
+        )
+      Width: =300
+    Children:
+      - conToastComponent:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =galToast.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            Width: =Parent.Width
+          Children:
+            - galToast:
+                Control: Gallery@2.15.0
+                Variant: VariableHeight
+                Properties:
+                  FillPortions: =0
+                  Height: =Sum(Self.AllItems,txtGaluAutoHeight.Text) + Self.TemplatePadding
+                  Items: |-
+                    =If( IsBlank(App.ActiveScreen.Name), [
+                    {
+                    Header: "Header",
+                    Icon: "CheckmarkCircle",
+                    IconColor: Color.Gray,
+                    IconFilled: false,
+                    Body: "Body Text",
+                    Duration: 7000,
+                    ShowDismiss: true,
+                    ShowTime: false,
+                    ShowProgress: false,
+                    CurrentTime: Now(),
+                    RemoveTime: Now()
+                    }], 
+                    Sort(
+                    'Fluent 2 Toast'.ToastTable,CurrentTime,'Fluent 2 Toast'.SortOrder)
+                    )
+                  LayoutMaxHeight: =
+                  LayoutMaxWidth: =
+                  LayoutMinWidth: =0
+                  ShowScrollbar: =false
+                  TemplatePadding: =16
+                  TemplateSize: =100
+                Children:
+                  - txtGaluAutoHeight:
+                      Control: Text@0.0.51
+                      Properties:
+                        Text: =conToast.Height + Parent.TemplatePadding
+                        Visible: =false
+                        X: =40
+                        Y: =40
+                  - conToast:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =conAutoHeight.Y + Self.PaddingBottom
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =4
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        Width: =Parent.TemplateWidth
+                      Children:
+                        - conToastHeader:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =8
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =0
+                            Children:
+                              - icoToast:
+                                  Control: Icon@0.0.7
+                                  Properties:
+                                    Height: =20
+                                    Icon: =ThisItem.Icon
+                                    IconColor: =ThisItem.IconColor
+                                    IconStyle: =If(ThisItem.IconFilled, "Filled", "Outline")
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    Visible: =!IsBlank(ThisItem.Icon)
+                                    Width: =20
+                              - txtHeader:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    FillPortions: =1
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    Text: =ThisItem.Header
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Weight: ='TextCanvas.Weight'.Semibold
+                                    Wrap: =false
+                              - txtTime:
+                                  Control: Text@0.0.51
+                                  Properties:
+                                    Align: ='TextCanvas.Align'.End
+                                    FillPortions: =1
+                                    FontColor: =RGBA(106, 122, 127, 1)
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    LayoutMinWidth: =56
+                                    Size: =12
+                                    Text: =Text(ThisItem.CurrentTime, "hh:mm AM/PM")
+                                    VerticalAlign: =VerticalAlign.Middle
+                                    Visible: =ThisItem.ShowTime
+                                    Wrap: =false
+                              - btnToastDismiss:
+                                  Control: Button@0.0.45
+                                  Properties:
+                                    Appearance: ='ButtonCanvas.Appearance'.Transparent
+                                    Icon: ="Dismiss"
+                                    Layout: ='ButtonCanvas.Layout'.IconOnly
+                                    LayoutMaxHeight: =
+                                    LayoutMaxWidth: =
+                                    OnSelect: ='Fluent 2 Toast'.RemoveToast(ThisItem)
+                                    Visible: =ThisItem.ShowDismiss
+                                    Width: =32
+                        - txtToastBody:
+                            Control: Text@0.0.51
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              FontColor: =RGBA(106, 122, 127, 1)
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =0
+                              Text: =ThisItem.Body
+                              Visible: =!IsBlank(ThisItem.Body)
+                        - Progress1:
+                            Control: Progress@1.1.34
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
+                              Height: =8
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =0
+                              Max: =ThisItem.Duration
+                              Value: =DateDiff(ThisItem.CurrentTime, varCurrentTime, TimeUnit.Milliseconds)
+                              Visible: =ThisItem.ShowProgress
+                        - conAutoHeight:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMaxHeight: =
+                              LayoutMaxWidth: =
+                              LayoutMinWidth: =0
+                  - tmrDuration:
+                      Control: Timer@2.1.0
+                      Properties:
+                        AutoPause: =false
+                        AutoStart: =true
+                        Duration: =100
+                        OnSelect: =Select(Parent)
+                        OnTimerEnd: =If(Now()>ThisItem.RemoveTime, 'Fluent 2 Toast'.RemoveToast(ThisItem), Set(varCurrentTime,Now()))
+                        Repeat: =true
+                        Visible: =false
+                        X: =224
+                        Y: =24
+
+# Reference instance (as placed on an Early Check screen; last child of the screen's page container)
+#  - Fluent 2 Toast_1:
+#      Control: CanvasComponent
+#      ComponentName: Fluent 2 Toast
+#      Properties:
+#        Height: =Self.AutoHeight
+#        SortOrder: =SortOrder.Ascending
+#        ToastTable: =colToasts
+#        Width: =300
+#        X: =Parent.Width -Self.Width -8
+#        Y: =Parent.Height - Self.Height

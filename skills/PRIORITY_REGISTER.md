@@ -1,6 +1,6 @@
 # Skill Priority Register
 
-This sequence is derived from recurring portfolio patterns and evidence gaps. Detailed source citations remain in the internal evidence store.
+This sequence is derived from recurring delivery patterns and evidence gaps. Detailed source citations remain in the internal evidence store.
 
 | Rank | Candidate skill | Primary benefit | Prerequisite |
 |---|---|---|---|
@@ -15,7 +15,7 @@ This sequence is derived from recurring portfolio patterns and evidence gaps. De
 | 9 | Playwright and visual evidence runner | Automates stable journeys and evidence while retaining human release authority | Deterministic QA baseline |
 | 10 | AI-assisted change reviewer and estimation comparator | Requires plan, impact, validation, and explicit separation of estimates from actuals | Measured baseline |
 
-## Promotion criteria
+## Approval criteria
 
 A candidate becomes an approved reusable skill only when:
 

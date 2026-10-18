@@ -2,7 +2,7 @@
 
 ## Summary
 
-Operationalize the Copilot research package as a versioned delivery system with standards, reusable skills, agents, templates, QA evidence, pilots, adoption, metrics, portfolio proof, and a public-safe blog series. The approach standardizes the lifecycle first, encodes it as skills second, uses existing MCP tools third, and introduces specialized agents only where role separation adds measurable value.
+Operationalize the Copilot research package as a versioned Power Desk delivery system with standards, reusable skills, agents, templates, QA evidence, pilots, developer onboarding, metrics, operational evidence, and public-safe training content. The approach standardizes the lifecycle first, encodes it as skills second, uses existing MCP tools third, and introduces specialized agents only where role separation adds measurable value.
 
 ## Technical Context
 
@@ -35,8 +35,8 @@ Operationalize the Copilot research package as a versioned delivery system with 
 
 #### Plan 1.1 - Approve charter and evidence model (REQ-001, REQ-008, REQ-013)
 
-- [ ] T001 [Plan:1.1] Review and approve `governance/goal-charter.md` with the manager and sponsor.
-- [ ] T002 [P] [Plan:1.1] Confirm official rating thresholds in `governance/advanced-scorecard.md`.
+- [ ] T001 [Plan:1.1] Review and approve `governance/power-desk-delivery-charter.md` with Power Desk leadership.
+- [ ] T002 [P] [Plan:1.1] Confirm operational quality thresholds in `governance/delivery-quality-scorecard.md`.
 - [ ] T003 [P] [Plan:1.1] Name all accountable roles and backups in `governance/operating-model.md`.
 - [ ] T004 [Plan:1.1] Approve the evidence repository, classification, and retention fields in `qa/evidence-schema.md`.
 
@@ -152,23 +152,23 @@ Added 2026-10-17. ELM and Early Check are reconstruction pilots blocked on human
 - [ ] T045 [Plan:6.1] Conduct successor walkthrough and independent regression.
 - [ ] T046 [Plan:6.1] Retrospect and publish standard/skill version updates.
 
-### Phase 7: Adoption, portfolio, and publication
+### Phase 7: Developer adoption, evidence, and publication
 
 #### Plan 7.1 - Demonstrate independent team adoption (REQ-010)
 
 - [ ] T047 [Plan:7.1] Deliver role-based training on lifecycle, skills, platform standards, QA, and handoff.
-- [ ] T048 [Plan:7.1] Run an independent developer challenge without author intervention.
+- [ ] T048 [Plan:7.1] Run an independent developer challenge without relying on the original developer.
 - [ ] T049 [Plan:7.1] Record assistance required, unclear instructions, output consistency, defects, and participant feedback.
 
 #### Plan 7.2 - Measure and communicate outcomes (REQ-011, REQ-012)
 
-- [x] T050 [P] [Plan:7.2] Publish `portfolio/evidence-matrix.md`.
+- [x] T050 [P] [Plan:7.2] Publish `portfolio/operational-evidence-matrix.md`.
 - [x] T051 [P] [Plan:7.2] Publish `blog/blog-series-plan.md` and `blog/work-log-template.md`.
 - [x] T052 [P] [Plan:7.2] Publish `visuals/process-diagrams.md`.
 - [ ] T053 [Plan:7.2] Calculate before/after medians with sample size, range, exclusions, rework, review, and defects.
 - [ ] T054 [Plan:7.2] Create sanitized case studies for ELM and Early Check.
 - [ ] T055 [Plan:7.2] Complete privacy, client, accessibility, and publication review for every blog asset.
-- [ ] T056 [Plan:7.2] Present the evidence portfolio, residual risks, operating ownership, and Q1 backlog for sign-off.
+- [ ] T056 [Plan:7.2] Present operational evidence, residual risks, operating ownership, and the improvement backlog for sign-off.
 
 ## Project Structure
 
@@ -178,7 +178,7 @@ The root README links governance, standards, skills, agents, templates, QA, metr
 
 | REQ ID | Description | Plan Items | Implementation Evidence |
 |---|---|---|---|
-| REQ-001 | Goal and scorecard | P1.1 | `governance/goal-charter.md`, `governance/advanced-scorecard.md` |
+| REQ-001 | Delivery charter and quality scorecard | P1.1 | `governance/power-desk-delivery-charter.md`, `governance/delivery-quality-scorecard.md` |
 | REQ-002 | Common lifecycle | P2.1 | `standards/common-delivery-lifecycle.md` |
 | REQ-003 | Platform standards | P2.1, P5A.2, P5A.3 | `standards/power-apps.md`, `standards/power-automate.md`, `standards/sharepoint.md`, `standards/integrated-solutions.md`, `standards/visual-verification.md`, `standards/intake-and-triage.md` |
 | REQ-004 | Skills, instructions, templates, agents | P2.2, P3.1, P3.2, P5A.1 | `skills/`, `templates/`, `agents/` |
@@ -192,4 +192,3 @@ The root README links governance, standards, skills, agents, templates, QA, metr
 | REQ-012 | Portfolio and blog | P7.2 | `portfolio/`, `blog/`, sanitized case studies |
 | REQ-013 | Governance and controls | P1.1, P2.1, P2.2 | Charter, standards, decisions, release evidence |
 | REQ-014 | Preserve sources | P1.2 | `source-material/copilot-package/`, source register |
-

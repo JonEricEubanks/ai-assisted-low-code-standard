@@ -2,8 +2,8 @@
 
 ## G0 governance
 
-- [ ] Select and document the portfolio counting convention.
-- [ ] Obtain manager confirmation of the Advanced rating thresholds.
+- [ ] Select and document the operational evidence counting convention.
+- [ ] Obtain Power Desk approval of the delivery quality thresholds.
 - [ ] Identify one accountable owner and one practical backup for each pilot.
 - [ ] Approve the evidence location, classification, retention, and access model.
 
