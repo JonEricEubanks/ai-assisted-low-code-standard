@@ -1,0 +1,111 @@
+App:
+  Properties:
+    Formulas: |-
+      =// ============================================================
+      // MGP design-system tokens (design-system.md §2) — v3 uplift
+      // Existing v2 token NAMES are kept as aliases so every screen
+      // keeps compiling; new screens/components use the §2 names.
+      // App.Width comparisons stay INLINE in controls (sync rule 6).
+      // ============================================================
+
+      // ---- Breakpoints (literals only) ----
+      BreakpointPhone = 600;
+      BreakpointDesktop = 1200;
+
+      // ---- Brand & semantic colors (Fluent 2 neutral ramp + one accent) ----
+      ColorBrand = RGBA(27, 74, 137, 1);
+      ColorBrandHover = RGBA(21, 60, 112, 1);
+      ColorBrandTint = RGBA(27, 74, 137, 0.10);
+      ColorBrandAlt = RGBA(55, 73, 114, 1);
+
+      ColorSurface = RGBA(255, 255, 255, 1);
+      ColorCanvas = RGBA(245, 245, 245, 1);
+      ColorNeutralBg = ColorCanvas;
+      ColorBorder = RGBA(225, 223, 221, 1);
+      ColorNeutralStroke = ColorBorder;
+      ColorTextPrimary = RGBA(36, 36, 36, 1);
+      ColorTextSecondary = RGBA(97, 97, 97, 1);
+      ColorTextTertiary = RGBA(150, 148, 146, 1);
+      ColorTextOnBrand = RGBA(255, 255, 255, 1);
+
+      ColorSuccess = RGBA(16, 124, 16, 1);
+      ColorSuccessTint = RGBA(16, 124, 16, 0.12);
+      ColorWarning = RGBA(157, 93, 0, 1);
+      ColorWarningTint = RGBA(255, 185, 0, 0.18);
+      ColorDanger = RGBA(196, 49, 75, 1);
+      ColorDangerTint = RGBA(196, 49, 75, 0.12);
+      ColorCritical = ColorDanger;
+      ColorInfo = RGBA(0, 120, 212, 1);
+      ColorInfoTint = RGBA(0, 120, 212, 0.12);
+      ColorNeutralTint = RGBA(97, 97, 97, 0.12);
+      // opaque status backgrounds carried from v2 (still referenced)
+      ColorSuccessBg = RGBA(241, 250, 241, 1);
+      ColorWarningBg = RGBA(255, 249, 245, 1);
+      ColorCriticalBg = RGBA(253, 243, 244, 1);
+
+      // ---- Typography (Lato via modern controls' Font property) ----
+      FontApp = Font.Lato;
+      FontSizeCaption = 12;
+      FontSizeBody = 14;
+      FontSizeBodyPhone = 15;
+      FontSizeSection = 16;
+      FontSizeTitlePhone = 20;
+      FontSizeTitleTablet = 22;
+      FontSizeTitleDesktop = 24;
+      FontSizeKpiPhone = 28;
+      FontSizeKpiTablet = 30;
+      FontSizeKpiDesktop = 32;
+      FontSizeAppTitle = 28;
+
+      // ---- Spacing & shape ----
+      Space1 = 4;
+      Space2 = 8;
+      Space3 = 12;
+      Space4 = 16;
+      Space5 = 24;
+      Space6 = 32;
+      SpaceXs = Space1;
+      SpaceSm = Space2;
+      SpaceMd = Space4;
+      SpaceLg = Space5;
+      RadiusSmall = 4;
+      RadiusMedium = 8;
+      RadiusLarge = 10;
+      RadiusSm = RadiusSmall;
+      TouchTarget = 44;
+      ControlMinTouch = TouchTarget;
+      InputHeight = 44;
+      FieldHeight = 72;
+
+      // ---- Shell dimensions ----
+      HeaderHeight = 64;
+      RailWidth = 50;
+      RailWidthExpanded = 220;
+      NavRailWidthTablet = RailWidth;
+      NavRailWidthDesktop = RailWidthExpanded;
+      PhoneNavHeight = 64;
+      BottomNavHeight = PhoneNavHeight;
+      PagePaddingPhone = Space4;
+      PagePaddingWide = Space5;
+      ContentMaxWidth = 1600;
+      TileMaxWidth = 360;
+      TileHeight = 104;
+      StatStripHeight = 64;
+      StatusAccentWidth = 5;
+      ListPaneRatio = 0.38;
+      IconChipSize = 50;
+      StepperCircleSize = 20;
+      StepperConnectorWidth = 80
+    OnStart: |-
+      =ClearCollect(
+        colToasts,
+        FirstN(
+          Table({Header: "", Icon: "", IconColor: Color.Gray, IconFilled: false, Body: "", Duration: 7000,
+                 ShowDismiss: true, ShowTime: false, ShowProgress: false, CurrentTime: Now(), RemoveTime: Now()}),
+          0
+        )
+      );
+      Set(varCurrentTime, Now());
+      Set(gblNavExpanded, App.Width >= BreakpointDesktop)
+    StartScreen: =Home
+    Theme: =PowerAppsTheme

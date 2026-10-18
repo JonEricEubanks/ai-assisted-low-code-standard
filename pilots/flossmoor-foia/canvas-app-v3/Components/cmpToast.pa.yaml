@@ -1,0 +1,326 @@
+ComponentDefinitions:
+  cmpToast:
+    DefinitionType: CanvasComponent
+    Description: Fluent 2 toast stack - the app's only user-facing notification surface. Collection-driven (colToasts), per-row auto-dismiss, queue capped at 4. App-scope deps - colToasts, varCurrentTime (seeded in App.OnStart).
+    AccessAppScope: true
+    CustomProperties:
+      AddToast:
+        PropertyKind: Event
+        DisplayName: Add Toast
+        Description: Adds a toast record to the collection (drops the oldest when 4 are queued).
+        ReturnType: None
+        Default: =If(CountRows(colToasts) = 4, Remove(colToasts, First(colToasts))); Collect(colToasts, ToastRecord)
+        Parameters:
+          - ToastRecord:
+              Description: Record built by SendToast
+              DataType: Record
+              Default: |-
+                ={
+                Header: "",
+                Icon: "",
+                IconColor: Color.Gray,
+                IconFilled: false,
+                Body: "",
+                Duration: 7000,
+                ShowDismiss: true,
+                ShowTime: false,
+                ShowProgress: false,
+                CurrentTime: Now(),
+                RemoveTime: Now()
+                }
+      AutoHeight:
+        PropertyKind: Output
+        DisplayName: Auto Height
+        Description: 0 when no toasts are queued, otherwise the rendered stack height. Bind the instance Height to it.
+        DataType: Number
+      RemoveToast:
+        PropertyKind: Event
+        DisplayName: Remove Toast
+        Description: Removes a toast record from the collection.
+        ReturnType: None
+        Default: =Remove(colToasts, ToastRecord)
+        Parameters:
+          - ToastRecord:
+              Description: Record to remove
+              DataType: Record
+              Default: |-
+                ={
+                Header: "",
+                Icon: "",
+                IconColor: Color.Gray,
+                IconFilled: false,
+                Body: "",
+                Duration: 7000,
+                ShowDismiss: true,
+                ShowTime: false,
+                ShowProgress: false,
+                CurrentTime: Now(),
+                RemoveTime: Now()
+                }
+      SendToast:
+        PropertyKind: Action
+        DisplayName: Send Toast
+        Description: Raise a toast. SendToast(Header, Body, Intent) - Intent is "Success", "Error", "Warning", or "Info" and selects icon, colour, fill, and default duration. Optional - Duration (ms), ShowDismiss, ShowProgress, ShowTime. NOTE - the authoring service orders optional parameters by data type (Text, Number, Boolean, Color), so keep them declared in that order.
+        ReturnType: None
+        Parameters:
+          - Header:
+              Description: Toast header (does not wrap - keep under 40 characters)
+              DataType: Text
+              Default: ="Header Text"
+          - Body:
+              Description: Body text (wraps); pass "" for none
+              DataType: Text
+              Default: =""
+          - Intent:
+              Description: Success, Error, Warning, or Info
+              DataType: Text
+              Default: ="Info"
+          - Duration:
+              Description: Milliseconds before auto-dismiss; 0 = use the intent default (Success 7000, Error 600000, Warning 10000, Info 5000)
+              IsOptional: true
+              DataType: Number
+              Default: =0
+          - ShowDismiss:
+              Description: Show the dismiss button
+              IsOptional: true
+              DataType: Boolean
+              Default: =true
+          - ShowProgress:
+              Description: Show the countdown progress bar
+              IsOptional: true
+              DataType: Boolean
+              Default: =false
+          - ShowTime:
+              Description: Show the time the toast was raised
+              IsOptional: true
+              DataType: Boolean
+              Default: =false
+      SortOrder:
+        PropertyKind: Input
+        DisplayName: Sort Order
+        Description: SortOrder.Ascending = oldest on top.
+        DataType: Text
+        Default: =SortOrder.Ascending
+      ToastTable:
+        PropertyKind: Input
+        DisplayName: Toast Table
+        Description: Table of toast records (defaults to colToasts).
+        DataType: Table
+        Default: =colToasts
+    Properties:
+      AutoHeight: =If(galToast.AllItemsCount = 0, 0, conToastComponent.Height)
+      Height: =Self.AutoHeight
+      SendToast: |-
+        =With(
+            {
+                effDuration: If(Coalesce(Duration, 0) > 0, Duration,
+                    Switch(Intent, "Success", 7000, "Error", 600000, "Warning", 10000, 5000))
+            },
+            cmpToast.AddToast(
+                {
+                    Header: Header,
+                    Icon: Switch(Intent, "Success", "CheckmarkCircle", "Error", "DismissCircle", "Warning", "Warning", "Info"),
+                    IconColor: Switch(Intent, "Success", ColorSuccess, "Error", ColorDanger, "Warning", ColorWarning, ColorInfo),
+                    IconFilled: Intent <> "Info",
+                    Body: Body,
+                    Duration: effDuration,
+                    ShowDismiss: ShowDismiss,
+                    ShowTime: ShowTime,
+                    ShowProgress: ShowProgress,
+                    CurrentTime: Now(),
+                    RemoveTime: DateAdd(Now(), effDuration, TimeUnit.Milliseconds)
+                }
+            )
+        )
+      Width: =300
+    Children:
+      - conToastComponent:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Height: =galToast.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - galToast:
+                Control: Gallery
+                Variant: VariableHeight
+                Properties:
+                  AccessibleLabel: ="Notifications"
+                  FillPortions: =0
+                  Height: =Sum(Self.AllItems, txtGaluAutoHeight.Text) + Self.TemplatePadding
+                  Items: |-
+                    =If(IsBlank(App.ActiveScreen.Name),
+                      Table({Header: "Request saved", Icon: "CheckmarkCircle", IconColor: ColorSuccess, IconFilled: true, Body: "Sample toast shown only in the designer.", Duration: 7000, ShowDismiss: true, ShowTime: false, ShowProgress: false, CurrentTime: Now(), RemoveTime: Now()}),
+                      Sort(cmpToast.ToastTable, CurrentTime, cmpToast.SortOrder))
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  ShowScrollbar: =false
+                  TemplatePadding: =Space4
+                  TemplateSize: =100
+                Children:
+                  - txtGaluAutoHeight:
+                      Control: ModernText
+                      Properties:
+                        Text: =conToast.Height + Parent.TemplatePadding
+                        Visible: =false
+                        X: =40
+                        Y: =40
+                  - conToast:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.Regular
+                        Fill: =ColorSurface
+                        Height: =conAutoHeight.Y + Self.PaddingBottom
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =Space1
+                        PaddingBottom: =Space2
+                        PaddingLeft: =Space2
+                        PaddingRight: =Space2
+                        PaddingTop: =Space2
+                        RadiusBottomLeft: =RadiusMedium
+                        RadiusBottomRight: =RadiusMedium
+                        RadiusTopLeft: =RadiusMedium
+                        RadiusTopRight: =RadiusMedium
+                        Width: =Parent.TemplateWidth
+                      Children:
+                        - conToastHeader:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =32
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =Space2
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - icoToast:
+                                  Control: ModernIcon
+                                  Properties:
+                                    AccessibleLabel: =ThisItem.Header
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Height: =20
+                                    Icon: =ThisItem.Icon
+                                    IconColor: =ThisItem.IconColor
+                                    IconStyle: =If(ThisItem.IconFilled, IconStyle.Filled, IconStyle.Outline)
+                                    LayoutMinHeight: =20
+                                    LayoutMinWidth: =20
+                                    Visible: =!IsBlank(ThisItem.Icon)
+                                    Width: =20
+                              - txtHeader:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =ThisItem.Header & ". " & ThisItem.Body
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Color: =ColorTextPrimary
+                                    FillPortions: =1
+                                    Font: =FontApp
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeBody
+                                    Text: =ThisItem.Header
+                                    Wrap: =false
+                              - txtTime:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    Align: =Align.Right
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Color: =ColorTextSecondary
+                                    FillPortions: =1
+                                    Font: =FontApp
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =56
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeCaption
+                                    Text: =Text(ThisItem.CurrentTime, "hh:mm AM/PM")
+                                    Visible: =ThisItem.ShowTime
+                                    Wrap: =false
+                              - btnToastDismiss:
+                                  Control: ModernButton
+                                  Properties:
+                                    AccessibleLabel: ="Dismiss notification"
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Appearance: =ButtonAppearance.Transparent
+                                    Icon: ="Dismiss"
+                                    Layout: =ButtonLayout.IconOnly
+                                    LayoutMinWidth: =32
+                                    OnSelect: =cmpToast.RemoveToast(ThisItem)
+                                    Text: ="Dismiss"
+                                    Tooltip: ="Dismiss"
+                                    Visible: =ThisItem.ShowDismiss
+                                    Width: =32
+                        - txtToastBody:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =ColorTextSecondary
+                              Font: =FontApp
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =FontSizeBody
+                              Text: =ThisItem.Body
+                              Visible: =!IsBlank(ThisItem.Body)
+                        - prgToast:
+                            Control: ModernProgressBar
+                            Properties:
+                              AccessibleLabel: ="Time remaining"
+                              AlignInContainer: =AlignInContainer.Stretch
+                              Height: =8
+                              LayoutMinHeight: =8
+                              LayoutMinWidth: =0
+                              Max: =ThisItem.Duration
+                              Value: =DateDiff(ThisItem.CurrentTime, varCurrentTime, TimeUnit.Milliseconds)
+                              Visible: =ThisItem.ShowProgress
+                        - conAutoHeight:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              FillPortions: =0
+                              Height: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                  - tmrDuration:
+                      Control: Timer
+                      Properties:
+                        AutoPause: =false
+                        AutoStart: =true
+                        Duration: =100
+                        OnTimerEnd: =If(Now() > ThisItem.RemoveTime, cmpToast.RemoveToast(ThisItem), Set(varCurrentTime, Now()))
+                        Repeat: =true
+                        Visible: =false
+                        X: =224
+                        Y: =24

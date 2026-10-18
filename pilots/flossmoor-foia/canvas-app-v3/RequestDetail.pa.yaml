@@ -1,0 +1,705 @@
+Screens:
+  RequestDetail:
+    Properties:
+      Fill: =ColorCanvas
+      LoadingSpinnerColor: =ColorBrand
+      OnVisible: |-
+        =Set(gblIsLoading, false);
+        Set(gblLoadError, false);
+        Set(gblPermissionDenied, false);
+        Set(gblSaveSuccess, false);
+        Set(gblExtensionValidationMessage, "")
+    Children:
+      - cntRequestDetailShell:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorCanvas
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =Space2
+            PaddingBottom: =Space2
+            PaddingLeft: =Space2
+            PaddingRight: =Space2
+            PaddingTop: =Space2
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - cmpRequestDetailHeader:
+                Control: CanvasComponent
+                ComponentName: cmpAppHeader
+                Properties:
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =HeaderHeight
+                  LayoutMinHeight: =HeaderHeight
+                  LayoutMinWidth: =0
+                  OnBack: =Navigate(Home, ScreenTransition.None)
+                  OnPrimary: =Navigate(ResponseCloseout, ScreenTransition.None)
+                  OnSecondary: =false
+                  PrimaryIcon: ="CheckmarkCircle"
+                  PrimaryLabel: ="Closeout"
+                  SecondaryIcon: =""
+                  SecondaryLabel: =""
+                  ShowBack: =true
+                  Subtitle: =If(IsBlank(gblSelectedRequest), "", "Received " & Text(gblSelectedRequest.ReceivedDate, "mmm d, yyyy"))
+                  Title: =Coalesce(gblSelectedRequest.Title, "Request detail")
+            - cntRequestDetailBody:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorCanvas
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =Space2
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - cmpRequestDetailNavRail:
+                      Control: CanvasComponent
+                      ComponentName: cmpSideNav
+                      Properties:
+                        ActiveScreen: ="Home"
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Expanded: =gblNavExpanded
+                        Height: =Parent.Height
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =RailWidth
+                        Placement: ="Rail"
+                        Visible: =App.Width >= BreakpointPhone
+                        Width: =If(gblNavExpanded, RailWidthExpanded, RailWidth)
+                  - cntRequestDetailContentOuter:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorCanvas
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - cntRequestDetailContent:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorCanvas
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =SpaceMd
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =If(App.Width < BreakpointPhone, Space3, Space4)
+                              PaddingLeft: =If(App.Width < BreakpointPhone, Space4, App.Width < BreakpointDesktop, Space5, Max(Space5, (Parent.Width - ContentMaxWidth) / 2))
+                              PaddingRight: =If(App.Width < BreakpointPhone, Space4, App.Width < BreakpointDesktop, Space5, Max(Space5, (Parent.Width - ContentMaxWidth) / 2))
+                              PaddingTop: =If(App.Width < BreakpointPhone, Space3, Space4)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Min(Parent.Width, ContentMaxWidth)
+                            Children:
+                              - cntRequestDetailEmpty:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    BorderColor: =ColorNeutralStroke
+                                    Fill: =ColorSurface
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =SpaceSm
+                                    LayoutJustifyContent: =LayoutJustifyContent.Center
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =SpaceLg
+                                    PaddingLeft: =SpaceLg
+                                    PaddingRight: =SpaceLg
+                                    PaddingTop: =SpaceLg
+                                    RadiusBottomLeft: =RadiusLarge
+                                    RadiusBottomRight: =RadiusLarge
+                                    RadiusTopLeft: =RadiusLarge
+                                    RadiusTopRight: =RadiusLarge
+                                    Visible: =IsBlank(gblSelectedRequest)
+                                  Children:
+                                    - icoRequestDetailEmpty:
+                                        Control: ModernIcon
+                                        Properties:
+                                          AccessibleLabel: ="No request selected"
+                                          AlignInContainer: =AlignInContainer.Center
+                                          Height: =48
+                                          Icon: ="DocumentSearch"
+                                          IconColor: =ColorTextSecondary
+                                          LayoutMinHeight: =48
+                                          LayoutMinWidth: =48
+                                          Width: =48
+                                    - lblRequestDetailEmptyTitle:
+                                        Control: ModernText
+                                        Properties:
+                                          AccessibleLabel: =Self.Text
+                                          Align: =Align.Center
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Color: =ColorTextPrimary
+                                          Font: =FontApp
+                                          FontWeight: =FontWeight.Semibold
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =FontSizeSection
+                                          Text: ="Select a request"
+                                          Wrap: =false
+                                    - lblRequestDetailEmptyHint:
+                                        Control: ModernText
+                                        Properties:
+                                          AccessibleLabel: =Self.Text
+                                          Align: =Align.Center
+                                          AlignInContainer: =AlignInContainer.Center
+                                          AutoHeight: =true
+                                          Color: =ColorTextSecondary
+                                          Font: =FontApp
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =FontSizeCaption
+                                          Text: ="Summary, department assignments, and a dated activity timeline will appear here."
+                                          Visible: =App.Width >= BreakpointPhone
+                                          Width: =320
+                                    - btnRequestDetailEmptyHome:
+                                        Control: ModernButton
+                                        Properties:
+                                          AccessibleLabel: ="Go to Home"
+                                          AlignInContainer: =AlignInContainer.Center
+                                          BasePaletteColor: =ColorBrand
+                                          Font: =FontApp
+                                          Height: =ControlMinTouch
+                                          Icon: ="Home"
+                                          LayoutMinHeight: =ControlMinTouch
+                                          LayoutMinWidth: =0
+                                          OnSelect: =Navigate(Home, ScreenTransition.None)
+                                          Size: =FontSizeBody
+                                          Text: ="Go to Home"
+                                          Tooltip: =Self.Text
+                                          Width: =Len(Self.Text) * 9 + SpaceLg * 2 + 24
+                              - cmpRequestDetailPaneHost:
+                                  Control: CanvasComponent
+                                  ComponentName: cmpRequestDetailPane
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    FillPortions: =1
+                                    Height: =Parent.Height
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    OnConfirmDueDate: =false
+                                    OnOpenCloseout: =Navigate(ResponseCloseout, ScreenTransition.None)
+                                    OnOpenDepartmentWork: |-
+                                      =If(IsBlank(gblSelectedAssignment) || gblSelectedAssignment.Request.Id <> gblSelectedRequest.ID,
+                                        Set(gblSelectedAssignment, First(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true))));
+                                      Set(gblSelectedDepartment, gblSelectedAssignment.Department);
+                                      Navigate(DepartmentWork, ScreenTransition.None)
+                                    ShowQuickActions: =true
+                                    Visible: =false
+                                    Width: =Parent.Width
+                              - cntDetailStack:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =Space4
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Visible: =!IsBlank(gblSelectedRequest)
+                                  Children:
+                                    - cntDetailStepperCard:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          Fill: =ColorSurface
+                                          FillPortions: =0
+                                          Height: =If(App.Width < BreakpointPhone, Space4 * 2 + 4 * (StepperCircleSize + Space3) + Space2, Space4 * 2 + StepperCircleSize + Space2 + 18)
+                                          LayoutAlignItems: =If(App.Width < BreakpointPhone, LayoutAlignItems.Stretch, LayoutAlignItems.Start)
+                                          LayoutDirection: =If(App.Width < BreakpointPhone, LayoutDirection.Vertical, LayoutDirection.Horizontal)
+                                          LayoutGap: =If(App.Width < BreakpointPhone, Space3, 0)
+                                          LayoutJustifyContent: =LayoutJustifyContent.Center
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =Space4
+                                          PaddingLeft: =Space5
+                                          PaddingRight: =Space5
+                                          PaddingTop: =Space4
+                                          RadiusBottomLeft: =RadiusLarge
+                                          RadiusBottomRight: =RadiusLarge
+                                          RadiusTopLeft: =RadiusLarge
+                                          RadiusTopRight: =RadiusLarge
+                                        Children:
+                                          - cntStep1:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =If(App.Width < BreakpointPhone, StepperCircleSize + Space1, StepperCircleSize + Space1 + 18)
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =If(App.Width < BreakpointPhone, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                                LayoutGap: =Space1
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width < BreakpointPhone, Parent.Width - Space5 * 2, 96)
+                                              Children:
+                                                - cntStepCircle1:
+                                                    Control: GroupContainer
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      BorderColor: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 1, ColorBrand, ColorBorder)
+                                                      BorderThickness: =2
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 1, ColorBrand, ColorSurface)
+                                                      FillPortions: =0
+                                                      Height: =StepperCircleSize
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      RadiusBottomLeft: =StepperCircleSize / 2
+                                                      RadiusBottomRight: =StepperCircleSize / 2
+                                                      RadiusTopLeft: =StepperCircleSize / 2
+                                                      RadiusTopRight: =StepperCircleSize / 2
+                                                      Width: =StepperCircleSize
+                                                    Children:
+                                                      - icoStepCheck1:
+                                                          Control: ModernIcon
+                                                          Properties:
+                                                            AccessibleLabel: ="Completed"
+                                                            AlignInContainer: =AlignInContainer.Center
+                                                            Height: =12
+                                                            Icon: ="Checkmark"
+                                                            IconColor: =ColorTextOnBrand
+                                                            IconStyle: =IconStyle.Filled
+                                                            LayoutMinHeight: =12
+                                                            LayoutMinWidth: =12
+                                                            Visible: =If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 1
+                                                            Width: =12
+                                                - lblStep1:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: |-
+                                                        ="Step 1 of 4, New: " & If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 1, "completed", If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 1, "current", "upcoming")
+                                                      Align: =If(App.Width < BreakpointPhone, Align.Left, Align.Center)
+                                                      AlignInContainer: =If(App.Width < BreakpointPhone, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                      AutoHeight: =true
+                                                      Color: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 1, ColorTextPrimary, ColorTextTertiary)
+                                                      FillPortions: =If(App.Width < BreakpointPhone, 1, 0)
+                                                      Font: =FontApp
+                                                      FontWeight: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 1, FontWeight.Semibold, FontWeight.Normal)
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="New"
+                                                      Wrap: =false
+                                          - cntStepConn1:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =StepperCircleSize
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Visible: =App.Width >= BreakpointPhone
+                                                Width: =StepperConnectorWidth
+                                              Children:
+                                                - recStepLine1:
+                                                    Control: Rectangle
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 1, ColorBrand, ColorBorder)
+                                                      Height: =2
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                          - cntStep2:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =If(App.Width < BreakpointPhone, StepperCircleSize + Space1, StepperCircleSize + Space1 + 18)
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =If(App.Width < BreakpointPhone, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                                LayoutGap: =Space1
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width < BreakpointPhone, Parent.Width - Space5 * 2, 96)
+                                              Children:
+                                                - cntStepCircle2:
+                                                    Control: GroupContainer
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      BorderColor: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 2, ColorBrand, ColorBorder)
+                                                      BorderThickness: =2
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 2, ColorBrand, ColorSurface)
+                                                      FillPortions: =0
+                                                      Height: =StepperCircleSize
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      RadiusBottomLeft: =StepperCircleSize / 2
+                                                      RadiusBottomRight: =StepperCircleSize / 2
+                                                      RadiusTopLeft: =StepperCircleSize / 2
+                                                      RadiusTopRight: =StepperCircleSize / 2
+                                                      Width: =StepperCircleSize
+                                                    Children:
+                                                      - icoStepCheck2:
+                                                          Control: ModernIcon
+                                                          Properties:
+                                                            AccessibleLabel: ="Completed"
+                                                            AlignInContainer: =AlignInContainer.Center
+                                                            Height: =12
+                                                            Icon: ="Checkmark"
+                                                            IconColor: =ColorTextOnBrand
+                                                            IconStyle: =IconStyle.Filled
+                                                            LayoutMinHeight: =12
+                                                            LayoutMinWidth: =12
+                                                            Visible: =If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 2
+                                                            Width: =12
+                                                - lblStep2:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: |-
+                                                        ="Step 2 of 4, Assigned: " & If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 2, "completed", If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 2, "current", "upcoming")
+                                                      Align: =If(App.Width < BreakpointPhone, Align.Left, Align.Center)
+                                                      AlignInContainer: =If(App.Width < BreakpointPhone, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                      AutoHeight: =true
+                                                      Color: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 2, ColorTextPrimary, ColorTextTertiary)
+                                                      FillPortions: =If(App.Width < BreakpointPhone, 1, 0)
+                                                      Font: =FontApp
+                                                      FontWeight: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 2, FontWeight.Semibold, FontWeight.Normal)
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Assigned"
+                                                      Wrap: =false
+                                          - cntStepConn2:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =StepperCircleSize
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Visible: =App.Width >= BreakpointPhone
+                                                Width: =StepperConnectorWidth
+                                              Children:
+                                                - recStepLine2:
+                                                    Control: Rectangle
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 2, ColorBrand, ColorBorder)
+                                                      Height: =2
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                          - cntStep3:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =If(App.Width < BreakpointPhone, StepperCircleSize + Space1, StepperCircleSize + Space1 + 18)
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =If(App.Width < BreakpointPhone, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                                LayoutGap: =Space1
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width < BreakpointPhone, Parent.Width - Space5 * 2, 96)
+                                              Children:
+                                                - cntStepCircle3:
+                                                    Control: GroupContainer
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      BorderColor: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 3, ColorBrand, ColorBorder)
+                                                      BorderThickness: =2
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 3, ColorBrand, ColorSurface)
+                                                      FillPortions: =0
+                                                      Height: =StepperCircleSize
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      RadiusBottomLeft: =StepperCircleSize / 2
+                                                      RadiusBottomRight: =StepperCircleSize / 2
+                                                      RadiusTopLeft: =StepperCircleSize / 2
+                                                      RadiusTopRight: =StepperCircleSize / 2
+                                                      Width: =StepperCircleSize
+                                                    Children:
+                                                      - icoStepCheck3:
+                                                          Control: ModernIcon
+                                                          Properties:
+                                                            AccessibleLabel: ="Completed"
+                                                            AlignInContainer: =AlignInContainer.Center
+                                                            Height: =12
+                                                            Icon: ="Checkmark"
+                                                            IconColor: =ColorTextOnBrand
+                                                            IconStyle: =IconStyle.Filled
+                                                            LayoutMinHeight: =12
+                                                            LayoutMinWidth: =12
+                                                            Visible: =If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 3
+                                                            Width: =12
+                                                - lblStep3:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: |-
+                                                        ="Step 3 of 4, In Progress: " & If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 3, "completed", If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 3, "current", "upcoming")
+                                                      Align: =If(App.Width < BreakpointPhone, Align.Left, Align.Center)
+                                                      AlignInContainer: =If(App.Width < BreakpointPhone, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                      AutoHeight: =true
+                                                      Color: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 3, ColorTextPrimary, ColorTextTertiary)
+                                                      FillPortions: =If(App.Width < BreakpointPhone, 1, 0)
+                                                      Font: =FontApp
+                                                      FontWeight: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 3, FontWeight.Semibold, FontWeight.Normal)
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="In Progress"
+                                                      Wrap: =false
+                                          - cntStepConn3:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =StepperCircleSize
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Visible: =App.Width >= BreakpointPhone
+                                                Width: =StepperConnectorWidth
+                                              Children:
+                                                - recStepLine3:
+                                                    Control: Rectangle
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) > 3, ColorBrand, ColorBorder)
+                                                      Height: =2
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                          - cntStep4:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Start
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =If(App.Width < BreakpointPhone, StepperCircleSize + Space1, StepperCircleSize + Space1 + 18)
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =If(App.Width < BreakpointPhone, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                                LayoutGap: =Space1
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width < BreakpointPhone, Parent.Width - Space5 * 2, 96)
+                                              Children:
+                                                - cntStepCircle4:
+                                                    Control: GroupContainer
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      BorderColor: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 4, ColorBrand, ColorBorder)
+                                                      BorderThickness: =2
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 4, ColorBrand, ColorSurface)
+                                                      FillPortions: =0
+                                                      Height: =StepperCircleSize
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      RadiusBottomLeft: =StepperCircleSize / 2
+                                                      RadiusBottomRight: =StepperCircleSize / 2
+                                                      RadiusTopLeft: =StepperCircleSize / 2
+                                                      RadiusTopRight: =StepperCircleSize / 2
+                                                      Width: =StepperCircleSize
+                                                    Children:
+                                                      - icoStepCheck4:
+                                                          Control: ModernIcon
+                                                          Properties:
+                                                            AccessibleLabel: ="Completed"
+                                                            AlignInContainer: =AlignInContainer.Center
+                                                            Height: =12
+                                                            Icon: ="Checkmark"
+                                                            IconColor: =ColorTextOnBrand
+                                                            IconStyle: =IconStyle.Filled
+                                                            LayoutMinHeight: =12
+                                                            LayoutMinWidth: =12
+                                                            Visible: =If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 4
+                                                            Width: =12
+                                                - lblStep4:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: |-
+                                                        ="Step 4 of 4, Closed: " & If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 4, "completed", "upcoming")
+                                                      Align: =If(App.Width < BreakpointPhone, Align.Left, Align.Center)
+                                                      AlignInContainer: =If(App.Width < BreakpointPhone, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                      AutoHeight: =true
+                                                      Color: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) >= 4, ColorTextPrimary, ColorTextTertiary)
+                                                      FillPortions: =If(App.Width < BreakpointPhone, 1, 0)
+                                                      Font: =FontApp
+                                                      FontWeight: =If(If(gblSelectedRequest.OverallStatus.Value = "Closed", 4, gblSelectedRequest.OverallStatus.Value = "In Progress", 3, CountRows(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true)) > 0, 2, 1) = 4, FontWeight.Semibold, FontWeight.Normal)
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Closed"
+                                                      Wrap: =false
+                                    - cmpRequestDetailPane2:
+                                        Control: CanvasComponent
+                                        ComponentName: cmpRequestDetailPane
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          FillPortions: =1
+                                          Height: =Parent.Height - cntDetailStepperCard.Height - Space4
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          OnConfirmDueDate: |-
+                                            =IfError(
+                                              Patch('FOIA Pilot Requests', gblSelectedRequest, {DueDateConfirmed: true});
+                                              Set(gblSelectedRequest, LookUp('FOIA Pilot Requests', ID = gblSelectedRequest.ID));
+                                              cmpToastHostRequestDetail.SendToast("Due date confirmed", "Statutory deadline locked for " & Coalesce(gblSelectedRequest.Title, "this request") & ".", "Success"),
+                                              cmpToastHostRequestDetail.SendToast("Couldn't confirm the due date", FirstError.Message, "Error")
+                                            )
+                                          OnOpenCloseout: =Navigate(ResponseCloseout, ScreenTransition.None)
+                                          OnOpenDepartmentWork: |-
+                                            =If(IsBlank(gblSelectedAssignment) || gblSelectedAssignment.Request.Id <> gblSelectedRequest.ID,
+                                              Set(gblSelectedAssignment, First(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true))));
+                                            Set(gblSelectedDepartment, gblSelectedAssignment.Department);
+                                            Navigate(DepartmentWork, ScreenTransition.None)
+                                          ShowQuickActions: =true
+                                          Width: =Parent.Width
+            - cmpRequestDetailNavBottom:
+                Control: CanvasComponent
+                ComponentName: cmpSideNav
+                Properties:
+                  ActiveScreen: ="Home"
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Expanded: =
+                  Height: =BottomNavHeight
+                  LayoutMinHeight: =BottomNavHeight
+                  LayoutMinWidth: =0
+                  Placement: ="Bottom"
+                  Visible: =false
+                  Width: =App.Width
+            - cmpRequestDetailPhoneNav:
+                Control: CanvasComponent
+                ComponentName: cmpPhoneNav
+                Properties:
+                  ActiveKey: ="Home"
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =PhoneNavHeight
+                  Items: =
+                  LayoutMinHeight: =PhoneNavHeight
+                  LayoutMinWidth: =0
+                  OnSelect: =false
+                  Visible: =App.Width < BreakpointPhone
+      - cmpToastHostRequestDetail:
+          Control: CanvasComponent
+          ComponentName: cmpToast
+          Properties:
+            AddToast: =
+            Height: =Self.AutoHeight
+            RemoveToast: =
+            SortOrder: =SortOrder.Ascending
+            ToastTable: =colToasts
+            Width: =If(App.Width < BreakpointPhone, App.Width - 2 * Space4, 300)
+            X: =If(App.Width < BreakpointPhone, Space4, Parent.Width - Self.Width - Space4)
+            Y: =If(App.Width < BreakpointPhone, HeaderHeight + Space4 + Space2, Parent.Height - Self.Height - Space4)

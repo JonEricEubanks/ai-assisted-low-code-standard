@@ -1,0 +1,439 @@
+ComponentDefinitions:
+  cmpAppHeader:
+    DefinitionType: CanvasComponent
+    Description: Shared Fluent app header with optional back, secondary and primary actions.
+    AccessAppScope: true
+    CustomProperties:
+      OnBack:
+        PropertyKind: Event
+        DisplayName: OnBack
+        Description: Raised when the Back button is selected.
+        ReturnType: None
+        Default: =false
+      OnPrimary:
+        PropertyKind: Event
+        DisplayName: OnPrimary
+        Description: Raised when the primary action is selected.
+        ReturnType: None
+        Default: =false
+      OnSecondary:
+        PropertyKind: Event
+        DisplayName: OnSecondary
+        Description: Raised when the secondary action is selected.
+        ReturnType: None
+        Default: =false
+      PrimaryIcon:
+        PropertyKind: Input
+        DisplayName: PrimaryIcon
+        Description: Fluent icon name for the primary action (icon-only on phone).
+        DataType: Text
+        Default: =""
+      PrimaryLabel:
+        PropertyKind: Input
+        DisplayName: PrimaryLabel
+        Description: Text of the primary action. Button hidden when blank.
+        DataType: Text
+        Default: =""
+      SecondaryIcon:
+        PropertyKind: Input
+        DisplayName: SecondaryIcon
+        Description: Fluent icon name for the secondary action (icon-only on phone).
+        DataType: Text
+        Default: =""
+      SecondaryLabel:
+        PropertyKind: Input
+        DisplayName: SecondaryLabel
+        Description: Text of the secondary action. Button hidden when blank.
+        DataType: Text
+        Default: =""
+      ShowBack:
+        PropertyKind: Input
+        DisplayName: ShowBack
+        Description: Shows the Back button when true.
+        DataType: Boolean
+        Default: =false
+      Subtitle:
+        PropertyKind: Input
+        DisplayName: Subtitle
+        Description: Caption under the title. Hidden on phone widths or when blank.
+        DataType: Text
+        Default: =""
+      Title:
+        PropertyKind: Input
+        DisplayName: Title
+        Description: Page title shown in the header.
+        DataType: Text
+        Default: ="FOIA"
+    Properties:
+      Height: =HeaderHeight
+      Width: =App.Width
+    Children:
+      - cntHeaderRoot:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            Fill: =ColorSurface
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =RadiusMedium
+            RadiusBottomRight: =RadiusMedium
+            RadiusTopLeft: =RadiusMedium
+            RadiusTopRight: =RadiusMedium
+            Width: =Parent.Width
+          Children:
+            - cntHeaderBar:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =Space2
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  PaddingLeft: =If(App.Width < BreakpointPhone, Space3, Space4)
+                  PaddingRight: =If(App.Width < BreakpointPhone, Space3, Space4)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - btnHeaderBack:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: ="Go back"
+                        AlignInContainer: =AlignInContainer.Center
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =ControlMinTouch
+                        Icon: ="ArrowLeft"
+                        Layout: =If(App.Width < BreakpointPhone, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: =If(App.Width < BreakpointPhone, ControlMinTouch, 96)
+                        OnSelect: =cmpAppHeader.OnBack()
+                        Size: =FontSizeBody
+                        Text: ="Back"
+                        Tooltip: ="Back"
+                        Visible: =false
+                        Width: =If(App.Width < BreakpointPhone, ControlMinTouch, 96)
+                  - cntHeaderTitles:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =120
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Visible: =false
+                      Children:
+                        - lblHeaderTitle:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =ColorTextPrimary
+                              FontWeight: =FontWeight.Semibold
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =If(App.Width < BreakpointPhone, FontSizeTitlePhone, App.Width < BreakpointDesktop, FontSizeTitleTablet, FontSizeTitleDesktop)
+                              Text: =cmpAppHeader.Title
+                        - lblHeaderSubtitle:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =ColorTextSecondary
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =FontSizeCaption
+                              Text: =cmpAppHeader.Subtitle
+                              Visible: =!(App.Width < BreakpointPhone) && !IsBlank(cmpAppHeader.Subtitle)
+                  - btnHeaderSecondary:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: =cmpAppHeader.SecondaryLabel
+                        AlignInContainer: =AlignInContainer.Center
+                        Appearance: =ButtonAppearance.Secondary
+                        Height: =ControlMinTouch
+                        Icon: =cmpAppHeader.SecondaryIcon
+                        Layout: |-
+                          =If(IsBlank(cmpAppHeader.SecondaryIcon), ButtonLayout.TextOnly,
+                              App.Width < BreakpointPhone, ButtonLayout.IconOnly,
+                              ButtonLayout.IconBefore)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: |-
+                          =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.SecondaryIcon), ControlMinTouch,
+                              Len(cmpAppHeader.SecondaryLabel) * 9 + SpaceLg * 2 + If(IsBlank(cmpAppHeader.SecondaryIcon), 0, 24))
+                        OnSelect: =cmpAppHeader.OnSecondary()
+                        Size: =FontSizeBody
+                        Text: =cmpAppHeader.SecondaryLabel
+                        Tooltip: =cmpAppHeader.SecondaryLabel
+                        Visible: =false
+                        Width: |-
+                          =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.SecondaryIcon), ControlMinTouch,
+                              Len(cmpAppHeader.SecondaryLabel) * 9 + SpaceLg * 2 + If(IsBlank(cmpAppHeader.SecondaryIcon), 0, 24))
+                  - btnHeaderPrimary:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: =cmpAppHeader.PrimaryLabel
+                        AlignInContainer: =AlignInContainer.Center
+                        BasePaletteColor: =ColorBrand
+                        Height: =ControlMinTouch
+                        Icon: =cmpAppHeader.PrimaryIcon
+                        Layout: |-
+                          =If(IsBlank(cmpAppHeader.PrimaryIcon), ButtonLayout.TextOnly,
+                              App.Width < BreakpointPhone, ButtonLayout.IconOnly,
+                              ButtonLayout.IconBefore)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: |-
+                          =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.PrimaryIcon), ControlMinTouch,
+                              Len(cmpAppHeader.PrimaryLabel) * 9 + SpaceLg * 2 + If(IsBlank(cmpAppHeader.PrimaryIcon), 0, 24))
+                        OnSelect: =cmpAppHeader.OnPrimary()
+                        Size: =FontSizeBody
+                        Text: =cmpAppHeader.PrimaryLabel
+                        Tooltip: =cmpAppHeader.PrimaryLabel
+                        Visible: =false
+                        Width: |-
+                          =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.PrimaryIcon), ControlMinTouch,
+                              Len(cmpAppHeader.PrimaryLabel) * 9 + SpaceLg * 2 + If(IsBlank(cmpAppHeader.PrimaryIcon), 0, 24))
+                  - cntHeaderLeft:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =If(App.Width < BreakpointPhone, 0, 1)
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =Space3
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =If(App.Width < BreakpointPhone, If(cmpAppHeader.ShowBack, TouchTarget, 36), 0)
+                      Children:
+                        - btnHeaderBack2:
+                            Control: ModernButton
+                            Properties:
+                              AccessibleLabel: ="Go back"
+                              AlignInContainer: =AlignInContainer.Center
+                              Appearance: =ButtonAppearance.Subtle
+                              Font: =FontApp
+                              Height: =TouchTarget
+                              Icon: ="ArrowLeft"
+                              Layout: =If(App.Width < BreakpointPhone, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                              LayoutMinHeight: =TouchTarget
+                              LayoutMinWidth: =If(App.Width < BreakpointPhone, TouchTarget, 96)
+                              OnSelect: =cmpAppHeader.OnBack()
+                              Size: =FontSizeBody
+                              Text: ="Back"
+                              Tooltip: ="Back"
+                              Visible: =cmpAppHeader.ShowBack
+                              Width: =If(App.Width < BreakpointPhone, TouchTarget, 96)
+                        - cntHeaderLogoChip:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorBrand
+                              FillPortions: =0
+                              Height: =36
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              RadiusBottomLeft: =RadiusMedium
+                              RadiusBottomRight: =RadiusMedium
+                              RadiusTopLeft: =RadiusMedium
+                              RadiusTopRight: =RadiusMedium
+                              Visible: =!cmpAppHeader.ShowBack || App.Width >= BreakpointPhone
+                              Width: =36
+                            Children:
+                              - icoHeaderLogo:
+                                  Control: ModernIcon
+                                  Properties:
+                                    AccessibleLabel: ="FOIA"
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Height: =20
+                                    Icon: ="Document"
+                                    IconColor: =ColorTextOnBrand
+                                    IconStyle: =IconStyle.Filled
+                                    LayoutMinHeight: =20
+                                    LayoutMinWidth: =20
+                                    Width: =20
+                        - lblHeaderWordmark:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              AlignInContainer: =AlignInContainer.Center
+                              AutoHeight: =true
+                              Color: =ColorBrand
+                              Font: =FontApp
+                              FontWeight: =FontWeight.Bold
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =FontSizeSection
+                              Text: ="FOIA"
+                              Visible: =App.Width >= BreakpointDesktop
+                              Wrap: =false
+                  - cntHeaderCenter:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =If(App.Width < BreakpointPhone, 1, 2)
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutJustifyContent: =LayoutJustifyContent.Center
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - lblHeaderTitle2:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              Align: =If(App.Width < BreakpointPhone, Align.Left, Align.Center)
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =ColorTextPrimary
+                              Font: =FontApp
+                              FontWeight: =FontWeight.Semibold
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =If(App.Width < BreakpointPhone, FontSizeTitlePhone, App.Width < BreakpointDesktop, FontSizeTitleTablet, FontSizeTitleDesktop)
+                              Text: =cmpAppHeader.Title
+                              Wrap: =false
+                        - lblHeaderSubtitle2:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              Align: =Align.Center
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =ColorTextSecondary
+                              Font: =FontApp
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =FontSizeCaption
+                              Text: =cmpAppHeader.Subtitle
+                              Visible: =App.Width >= BreakpointPhone && !IsBlank(cmpAppHeader.Subtitle)
+                              Wrap: =false
+                  - cntHeaderRight:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        FillPortions: =If(App.Width < BreakpointPhone, 0, 1)
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =Space2
+                        LayoutJustifyContent: =LayoutJustifyContent.End
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Width: =If(App.Width < BreakpointPhone, If(!IsBlank(cmpAppHeader.SecondaryLabel), TouchTarget + Space2, 0) + If(!IsBlank(cmpAppHeader.PrimaryLabel), TouchTarget, 0), 0)
+                      Children:
+                        - btnHeaderSecondary2:
+                            Control: ModernButton
+                            Properties:
+                              AccessibleLabel: =cmpAppHeader.SecondaryLabel
+                              AlignInContainer: =AlignInContainer.Center
+                              Appearance: =ButtonAppearance.Subtle
+                              Font: =FontApp
+                              Height: =TouchTarget
+                              Icon: =cmpAppHeader.SecondaryIcon
+                              Layout: |-
+                                =If(IsBlank(cmpAppHeader.SecondaryIcon), ButtonLayout.TextOnly,
+                                    App.Width < BreakpointPhone, ButtonLayout.IconOnly,
+                                    ButtonLayout.IconBefore)
+                              LayoutMinHeight: =TouchTarget
+                              LayoutMinWidth: |-
+                                =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.SecondaryIcon), TouchTarget,
+                                    Len(cmpAppHeader.SecondaryLabel) * 9 + Space5 * 2 + If(IsBlank(cmpAppHeader.SecondaryIcon), 0, 24))
+                              OnSelect: =cmpAppHeader.OnSecondary()
+                              Size: =FontSizeBody
+                              Text: =cmpAppHeader.SecondaryLabel
+                              Tooltip: =cmpAppHeader.SecondaryLabel
+                              Visible: =!IsBlank(cmpAppHeader.SecondaryLabel)
+                              Width: |-
+                                =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.SecondaryIcon), TouchTarget,
+                                    Len(cmpAppHeader.SecondaryLabel) * 9 + Space5 * 2 + If(IsBlank(cmpAppHeader.SecondaryIcon), 0, 24))
+                        - btnHeaderPrimary2:
+                            Control: ModernButton
+                            Properties:
+                              AccessibleLabel: =cmpAppHeader.PrimaryLabel
+                              AlignInContainer: =AlignInContainer.Center
+                              BasePaletteColor: =ColorBrand
+                              Font: =FontApp
+                              Height: =TouchTarget
+                              Icon: =cmpAppHeader.PrimaryIcon
+                              Layout: |-
+                                =If(IsBlank(cmpAppHeader.PrimaryIcon), ButtonLayout.TextOnly,
+                                    App.Width < BreakpointPhone, ButtonLayout.IconOnly,
+                                    ButtonLayout.IconBefore)
+                              LayoutMinHeight: =TouchTarget
+                              LayoutMinWidth: |-
+                                =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.PrimaryIcon), TouchTarget,
+                                    Len(cmpAppHeader.PrimaryLabel) * 9 + Space5 * 2 + If(IsBlank(cmpAppHeader.PrimaryIcon), 0, 24))
+                              OnSelect: =cmpAppHeader.OnPrimary()
+                              Size: =FontSizeBody
+                              Text: =cmpAppHeader.PrimaryLabel
+                              Tooltip: =cmpAppHeader.PrimaryLabel
+                              Visible: =!IsBlank(cmpAppHeader.PrimaryLabel)
+                              Width: |-
+                                =If(App.Width < BreakpointPhone && !IsBlank(cmpAppHeader.PrimaryIcon), TouchTarget,
+                                    Len(cmpAppHeader.PrimaryLabel) * 9 + Space5 * 2 + If(IsBlank(cmpAppHeader.PrimaryIcon), 0, 24))
+            - cntHeaderDivider:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorNeutralStroke
+                  FillPortions: =0
+                  Height: =1
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =1
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =false

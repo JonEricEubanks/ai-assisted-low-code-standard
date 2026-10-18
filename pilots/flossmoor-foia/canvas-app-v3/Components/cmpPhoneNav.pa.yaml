@@ -1,0 +1,114 @@
+ComponentDefinitions:
+  cmpPhoneNav:
+    DefinitionType: CanvasComponent
+    Description: Phone bottom tab bar (Items table of Key/Label/Icon). Icon above short label, 2px brand top indicator on the active tab. Navigates itself and raises OnSelect(Key).
+    AccessAppScope: true
+    CustomProperties:
+      ActiveKey:
+        PropertyKind: Input
+        DisplayName: ActiveKey
+        Description: Key of the active tab (Home, NewRequest, DepartmentWork, ResponseCloseout).
+        DataType: Text
+        Default: ="Home"
+      Items:
+        PropertyKind: Input
+        DisplayName: Items
+        Description: Table of Key, Label, Icon.
+        DataType: Table
+        Default: |-
+          =Table({Key: "Home", Label: "Home", Icon: "Home"}, {Key: "NewRequest", Label: "New", Icon: "Add"}, {Key: "DepartmentWork", Label: "Dept work", Icon: "People"}, {Key: "ResponseCloseout", Label: "Closeout", Icon: "CheckmarkCircle"})
+      OnSelect:
+        PropertyKind: Event
+        DisplayName: OnSelect
+        Description: Raised with the selected tab Key after navigation.
+        ReturnType: None
+        Default: =false
+        Parameters:
+          - Key:
+              Description: Key of the selected tab
+              DataType: Text
+              Default: =""
+    Properties:
+      Fill: =ColorSurface
+      Height: =PhoneNavHeight
+      Width: =App.Width
+    Children:
+      - cntPhoneNavRoot:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            Fill: =ColorSurface
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =RadiusMedium
+            RadiusBottomRight: =RadiusMedium
+            RadiusTopLeft: =RadiusMedium
+            RadiusTopRight: =RadiusMedium
+            Width: =Parent.Width
+          Children:
+            - galPhoneNav:
+                Control: Gallery
+                Variant: Horizontal
+                Properties:
+                  AccessibleLabel: ="Primary navigation"
+                  Items: =cmpPhoneNav.Items
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  ShowScrollbar: =false
+                  TemplatePadding: =0
+                  TemplateSize: =Parent.Width / Max(1, CountRows(cmpPhoneNav.Items))
+                Children:
+                  - recNavIndicator:
+                      Control: Rectangle
+                      Properties:
+                        Fill: =If(ThisItem.Key = cmpPhoneNav.ActiveKey, ColorBrand, RGBA(0, 0, 0, 0))
+                        Height: =2
+                        Width: =Parent.TemplateWidth - Space4
+                        X: =Space2
+                  - icoNavTab:
+                      Control: ModernIcon
+                      Properties:
+                        AccessibleLabel: =ThisItem.Label
+                        Height: =24
+                        Icon: =ThisItem.Icon
+                        IconColor: =If(ThisItem.Key = cmpPhoneNav.ActiveKey, ColorBrand, ColorTextSecondary)
+                        IconStyle: =If(ThisItem.Key = cmpPhoneNav.ActiveKey, IconStyle.Filled, IconStyle.Outline)
+                        Width: =24
+                        X: =(Parent.TemplateWidth - 24) / 2
+                        Y: =Space2 + 2
+                  - lblNavTab:
+                      Control: ModernText
+                      Properties:
+                        AccessibleLabel: =ThisItem.Label
+                        Align: =Align.Center
+                        Color: =If(ThisItem.Key = cmpPhoneNav.ActiveKey, ColorBrand, ColorTextSecondary)
+                        Font: =FontApp
+                        FontWeight: =If(ThisItem.Key = cmpPhoneNav.ActiveKey, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =18
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =FontSizeCaption
+                        Text: =ThisItem.Label
+                        Width: =Parent.TemplateWidth
+                        Wrap: =false
+                        Y: =Space2 + 2 + 24 + Space1
+                  - btnNavTab:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: ="Go to " & ThisItem.Label
+                        Appearance: =ButtonAppearance.Transparent
+                        Height: =Parent.TemplateHeight
+                        Layout: =ButtonLayout.TextOnly
+                        OnSelect: |-
+                          =Switch(ThisItem.Key,
+                            "Home", Navigate(Home, ScreenTransition.None),
+                            "NewRequest", Navigate(NewRequest, ScreenTransition.None),
+                            "DepartmentWork", Navigate(DepartmentWork, ScreenTransition.None),
+                            "ResponseCloseout", Navigate(ResponseCloseout, ScreenTransition.None));
+                          cmpPhoneNav.OnSelect(ThisItem.Key)
+                        Text: =""
+                        Tooltip: =ThisItem.Label
+                        Width: =Parent.TemplateWidth
