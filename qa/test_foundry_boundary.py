@@ -64,6 +64,37 @@ class FoundryBoundaryTests(unittest.TestCase):
         errors = validate_boundary(self.configuration, sources)
         self.assertTrue(any("targetScope" in error for error in errors))
 
+    def test_rejects_unapproved_bicep_location(self) -> None:
+        sources = copy.deepcopy(self.sources)
+        sources["main.bicep"] = sources["main.bicep"].replace(
+            "param location string = 'eastus2'",
+            "param location string = 'westus'",
+        )
+        errors = validate_boundary(self.configuration, sources)
+        self.assertTrue(any("location default" in error for error in errors))
+
+        sources = copy.deepcopy(self.sources)
+        sources["main.bicep"] = sources["main.bicep"].replace(
+            "location: location", "location: 'westus'"
+        )
+        errors = validate_boundary(self.configuration, sources)
+        self.assertTrue(any("validated location parameter" in error for error in errors))
+
+    def test_rejects_credential_and_cross_group_scope_in_bicep(self) -> None:
+        sources = copy.deepcopy(self.sources)
+        sources["main.bicep"] += "\nparam clientSecret string\n"
+        errors = validate_boundary(self.configuration, sources)
+        self.assertTrue(any("credential configuration" in error for error in errors))
+
+        sources = copy.deepcopy(self.sources)
+        sources["main.bicep"] += (
+            "\nresource bad 'Example/type@2024-01-01' = {\n"
+            "  scope: resourceGroup('rg-production')\n"
+            "}\n"
+        )
+        errors = validate_boundary(self.configuration, sources)
+        self.assertTrue(any("unapproved deployment scope" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
