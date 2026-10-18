@@ -233,10 +233,11 @@ function renderMarkdown(markdown) {
       continue;
     }
 
-    const ordered = line.match(/^\s*\d+\.\s+(.+)$/);
+    const ordered = line.match(/^\s*(\d+)\.\s+(.+)$/);
     if (ordered) {
       flushParagraph();
       const items = [];
+      const start = Number(ordered[1]);
       while (index < lines.length) {
         const current = lines[index].match(/^\s*\d+\.\s+(.+)$/);
         if (!current) {
@@ -245,7 +246,7 @@ function renderMarkdown(markdown) {
         items.push(`<li>${renderInline(current[1])}</li>`);
         index += 1;
       }
-      output.push(`<ol>${items.join("")}</ol>`);
+      output.push(`<ol${start > 1 ? ` start="${start}"` : ""}>${items.join("")}</ol>`);
       continue;
     }
 

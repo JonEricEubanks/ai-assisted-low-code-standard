@@ -14,6 +14,13 @@ function showStatus(message, isError = false) {
 }
 
 function validateForm() {
+  const defectId = document.querySelector("#defect-id");
+  defectId.setCustomValidity(
+    valueOf("status") === "Failed" && !defectId.value.trim()
+      ? "Enter a Defect ID when the test status is Failed."
+      : "",
+  );
+
   if (form.reportValidity()) {
     return true;
   }

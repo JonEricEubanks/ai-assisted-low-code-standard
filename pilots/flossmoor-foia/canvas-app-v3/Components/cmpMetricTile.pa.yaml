@@ -145,7 +145,7 @@ ComponentDefinitions:
                       Properties:
                         AccessibleLabel: =Self.Text
                         AlignInContainer: =If(cmpMetricTile.Compact, AlignInContainer.Center, AlignInContainer.Stretch)
-                        Color: =If(cmpMetricTile.Compact, ColorTextSecondary, ColorTextTertiary)
+                        Color: =ColorTextSecondary
                         FillPortions: =If(cmpMetricTile.Compact, 1, 0)
                         Font: =FontApp
                         Height: =20

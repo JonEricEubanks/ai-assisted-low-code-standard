@@ -66,10 +66,24 @@ else {
 }
 
 if (Test-CommandAvailable 'az') {
+    $azOutput = & az version --output json 2>$null
     try {
-        $azInfo = (& az version --output json 2>$null | ConvertFrom-Json)
-        $azVersion = $azInfo.'azure-cli'
-        Write-Check PASS "Azure CLI $azVersion is available."
+        if ($LASTEXITCODE -ne 0) {
+            Write-Check WARN "Azure CLI version check failed with exit code $LASTEXITCODE."
+        }
+        elseif ([string]::IsNullOrWhiteSpace(($azOutput -join '').Trim())) {
+            Write-Check WARN 'Azure CLI version check returned no version information.'
+        }
+        else {
+            $azInfo = $azOutput | ConvertFrom-Json
+            $azVersion = $azInfo.'azure-cli'
+            if ([string]::IsNullOrWhiteSpace([string]$azVersion)) {
+                Write-Check WARN 'Azure CLI version information does not include azure-cli.'
+            }
+            else {
+                Write-Check PASS "Azure CLI $azVersion is available."
+            }
+        }
     }
     catch {
         Write-Check WARN "Azure CLI is on PATH, but its version could not be read: $($_.Exception.Message)"

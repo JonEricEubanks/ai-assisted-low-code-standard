@@ -363,7 +363,7 @@
 }
 
 @media (max-width: 620px) {
-  .guide-page nav > a:first-child {
+  .guide-page .site-header nav > a:first-child {
     display: none;
   }
 

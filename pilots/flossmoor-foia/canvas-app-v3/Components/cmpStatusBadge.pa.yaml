@@ -43,7 +43,7 @@ ComponentDefinitions:
                     =Switch(cmpStatusBadge.Status,
                       "New", "Info",
                       "In Progress", "ArrowClockwise",
-                      "On Hold", "Pause",
+                      "On Hold", "Clock",
                       "Ready", "Checkmark",
                       "Delivered", "Send",
                       "Closed", "CheckmarkCircle",

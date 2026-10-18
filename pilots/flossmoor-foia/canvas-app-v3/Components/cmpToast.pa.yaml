@@ -196,7 +196,8 @@ ComponentDefinitions:
                             Properties:
                               DropShadow: =DropShadow.None
                               FillPortions: =0
-                              Height: =32
+                              Height: =If(App.Width < BreakpointPhone, TouchTarget, 32)
+                              LayoutMinHeight: =If(App.Width < BreakpointPhone, TouchTarget, 32)
                               LayoutAlignItems: =LayoutAlignItems.Center
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutGap: =Space2
@@ -231,6 +232,7 @@ ComponentDefinitions:
                                     FontWeight: =FontWeight.Semibold
                                     LayoutMinHeight: =0
                                     LayoutMinWidth: =0
+                                    Live: =Live.Polite
                                     PaddingBottom: =0
                                     PaddingLeft: =0
                                     PaddingRight: =0
@@ -265,12 +267,14 @@ ComponentDefinitions:
                                     Appearance: =ButtonAppearance.Transparent
                                     Icon: ="Dismiss"
                                     Layout: =ButtonLayout.IconOnly
-                                    LayoutMinWidth: =32
+                                    Height: =If(App.Width < BreakpointPhone, TouchTarget, 32)
+                                    LayoutMinHeight: =If(App.Width < BreakpointPhone, TouchTarget, 32)
+                                    LayoutMinWidth: =If(App.Width < BreakpointPhone, TouchTarget, 32)
                                     OnSelect: =cmpToast.RemoveToast(ThisItem)
                                     Text: ="Dismiss"
                                     Tooltip: ="Dismiss"
                                     Visible: =ThisItem.ShowDismiss
-                                    Width: =32
+                                    Width: =If(App.Width < BreakpointPhone, TouchTarget, 32)
                         - txtToastBody:
                             Control: ModernText
                             Properties:
