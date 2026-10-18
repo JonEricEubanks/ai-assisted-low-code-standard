@@ -1,0 +1,11 @@
+{
+  "subscription_id": "b8f90e47-b8ee-45f1-9442-d3b4f8fd0695",
+  "resource_group": "rg-mgp-foundry-qa-dev",
+  "location": "eastus2",
+  "github_environment": "foundry-dev",
+  "deployment_scope": "resourceGroup",
+  "authentication": "OIDC",
+  "credentials": [],
+  "role_assignments": [],
+  "diagnostics_workspace_name": ""
+}
