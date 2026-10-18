@@ -10,7 +10,8 @@ Operationalize the Copilot research package as a versioned delivery system with 
 - Tool layer: Canvas authoring MCP, Flow MCP, Playwright, approved Microsoft/Azure tools
 - Artifact format: Markdown, CSV, JSON/YAML, Mermaid, retained Word source package
 - Release authority: deterministic validation plus named human approval
-- Initial pilots: Glencoe ELM and Glencoe Early Check
+- Initial pilots: Glencoe ELM and Glencoe Early Check (reconstruction; blocked on owner/ID confirmation)
+- Live pilot: Flossmoor FOIA (new build; executing now — see Phase 5A)
 - Evidence boundary: approved repository, synthetic/non-production data, source citations, no inferred unknowns
 
 ## Constitution Check
@@ -71,7 +72,7 @@ Operationalize the Copilot research package as a versioned delivery system with 
 - [x] T019 [P] [Plan:3.1] Publish intake and architecture skills under `skills/solution-intake/` and `skills/architecture-and-impact/`.
 - [x] T020 [P] [Plan:3.1] Publish platform skills under `skills/power-apps-delivery/`, `skills/power-automate-delivery/`, and `skills/sharepoint-delivery/`.
 - [x] T021 [P] [Plan:3.1] Publish QA, handoff, and retrospective skills under `skills/`.
-- [ ] T022 [Plan:3.1] Run controlled examples and version the first three skills after reviewer feedback.
+- [x] T022 [Plan:3.1] Run controlled examples and version the first three skills after reviewer feedback. *(Intake, Power Apps delivery, and Power Automate delivery each ran on the Flossmoor pilot; see Phase 5A. Reviewer sign-off pending.)*
 
 #### Plan 3.2 - Configure role-based agents (REQ-004, REQ-005, REQ-007)
 
@@ -86,8 +87,8 @@ Operationalize the Copilot research package as a versioned delivery system with 
 
 - [x] T027 [P] [Plan:4.1] Publish `qa/qa-strategy.md` and `qa/evidence-schema.md`.
 - [x] T028 [P] [Plan:4.1] Publish `qa/screenshot-plan.md` and `qa/screenshot-register.csv`.
-- [ ] T029 [Plan:4.1] Create synthetic personas, approved test data, and deterministic checks for the first vertical slice.
-- [ ] T030 [Plan:4.1] Implement Playwright only for stable, approved journeys and retain traces/screenshots.
+- [x] T029 [Plan:4.1] Create synthetic personas, approved test data, and deterministic checks for the first vertical slice. *(QA workstream PR #10; Flossmoor pilot runs on synthetic data in Community Essentials.)*
+- [x] T030 [Plan:4.1] Implement Playwright only for stable, approved journeys and retain traces/screenshots. *(Visual verification loop via shared browser, `standards/visual-verification.md`; evidence under `pilots/flossmoor-foia/evidence/visual/`.)*
 
 #### Plan 4.2 - Add vision and bounded computer use (REQ-006, REQ-007)
 
@@ -100,12 +101,45 @@ Operationalize the Copilot research package as a versioned delivery system with 
 
 #### Plan 5.1 - Complete ELM evidence and execute the standard (REQ-009, REQ-010, REQ-011)
 
-- [ ] T035 [Plan:5.1] Confirm ELM app URL/ID, owners, connections, lists, flows, permissions, retention, licensing, and support without inference.
+- [ ] T035 [Plan:5.1] Confirm ELM app URL/ID, owners, connections, lists, flows, permissions, retention, licensing, and support without inference. *(Blocked: Pilot Gap Closure found app ID and owners not recorded; see `workstreams/evidence-gap-backlog.md`.)*
 - [ ] T036 [Plan:5.1] Baseline a representative ELM activity in `metrics/baseline-and-outcomes.csv`.
 - [ ] T037 [Plan:5.1] Execute one approved ELM change using the lifecycle and skills.
 - [ ] T038 [Plan:5.1] Run the ELM critical regression, recovery, rollback, and evidence pack.
 - [ ] T039 [Plan:5.1] Conduct successor walkthrough and independent regression.
 - [ ] T040 [Plan:5.1] Retrospect and publish standard/skill version updates.
+
+### Phase 5A: Live pilot - Flossmoor FOIA (new build)
+
+Added 2026-10-17. ELM and Early Check are reconstruction pilots blocked on human confirmations; Flossmoor is a new client request that lets the standard run from intake forward with no dependency on missing facts. All work is in the Community Essentials dev environment on synthetic data. Branch `feature/flossmoor-foia-pilot`.
+
+#### Plan 5A.1 - Intake and data layer (REQ-002, REQ-003, REQ-004)
+
+- [x] T057 [Plan:5A.1] Run the intake skill on the real scope form, meeting transcript, and public website; record facts, implied requirements, unknowns, and routing decisions. *(`pilots/flossmoor-foia/`, intake standard v1.)*
+- [x] T058 [Plan:5A.1] Design and provision the SharePoint data layer (Requests, Assignments, Departments, Records) with stable internal names. *(`sharepoint-schema.md`, `scripts/provision-flossmoor-foia-pilot.ps1`; provisioned manually after Graph write scope was denied.)*
+- [x] T059 [Plan:5A.1] Extract the live connected schema from the saved app package for builders to use. *(`datasource-schema.md`.)*
+
+#### Plan 5A.2 - Canvas app (REQ-003, REQ-004, REQ-005, REQ-006, REQ-008)
+
+- [x] T060 [Plan:5A.2] Build v1 with components, Fluent tokens, AutoLayout; discover and record the Canvas MCP sync rules through visual verification. *(App `afe38862`; 15 sync rules in `standards/power-apps.md`.)*
+- [x] T061 [Plan:5A.2] Fix silent save failure (required `OverallStatus`, `IfError` on all writes); publish and confirm a row lands.
+- [x] T062 [Plan:5A.2] Diagnose Phone app type as the root cause of unreadable wide-screen and non-firing phone layouts; codify Tablet-type prerequisite and the adaptive layout tier matrix.
+- [x] T063 [Plan:5A.2] Rebuild as v2 Tablet-type with `cmpRequestDetailPane`, desktop master-detail, stat strip, distribution bar, phone bottom nav; publish to dev. *(App `6ea0c73b`; desktop and phone tiers verified in `evidence/visual/`.)*
+- [ ] T064 [Plan:5A.2] Confirm phone and tablet tiers on a real device or maker browser at 100% zoom; capture evidence; run App Checker and accessibility on v2.
+- [ ] T065 [Plan:5A.2] End-to-end CRUD journey in v2 Player: create request → confirm due date → assignment save/complete → closeout; record results against the test plan.
+- [ ] T066 [Plan:5A.2] Delete v1 (`afe38862`) after v2 acceptance; record rollback reference.
+
+#### Plan 5A.3 - Public intake flow (REQ-003, REQ-004, REQ-005)
+
+- [x] T067 [Plan:5A.3] Design the Survey123 → Power Automate → SharePoint intake flow: XLSForm schema, 47-action definition, routing, suggest-and-confirm due date, idempotency, attachments, receipts, error paths, 18-case test plan. *(`pilots/flossmoor-foia/flows/intake/`.)*
+- [ ] T068 [Plan:5A.3] Build the Survey123 survey from `survey123-schema.md`; share publicly in the dev ArcGIS org.
+- [ ] T069 [Plan:5A.3] Deploy the flow (MCP after `PA_TENANT_ID` restart, or maker portal per README); bind connection references; run PF-01…05 and TC-01…18.
+- [ ] T070 [Plan:5A.3] Visual verification of designer and one run detail per `standards/visual-verification.md`.
+
+#### Plan 5A.4 - Pilot close (REQ-009, REQ-010, REQ-011)
+
+- [ ] T071 [Plan:5A.4] Record actual effort by phase in `metrics/baseline-and-outcomes.csv` (AI generation, review, rework, waiting, deployment) — this is the first realized measurement.
+- [ ] T072 [Plan:5A.4] Second developer completes one bounded change in v2 using only the standard and skill; record assistance required.
+- [ ] T073 [Plan:5A.4] Retrospective: promote rules from `evidence/STANDARD-CHANGE-CAPTURE.md` into versioned standard/skill releases; close the pilot with a sanitized case study.
 
 ### Phase 6: Pilot two - Glencoe Early Check
 
@@ -146,15 +180,15 @@ The root README links governance, standards, skills, agents, templates, QA, metr
 |---|---|---|---|
 | REQ-001 | Goal and scorecard | P1.1 | `governance/goal-charter.md`, `governance/advanced-scorecard.md` |
 | REQ-002 | Common lifecycle | P2.1 | `standards/common-delivery-lifecycle.md` |
-| REQ-003 | Platform standards | P2.1 | `standards/power-apps.md`, `standards/power-automate.md`, `standards/sharepoint.md`, `standards/integrated-solutions.md` |
-| REQ-004 | Skills, instructions, templates, agents | P2.2, P3.1, P3.2 | `skills/`, `templates/`, `agents/` |
-| REQ-005 | MCP as bounded tool layer | P3.1, P3.2 | Platform skills and orchestrator routing |
-| REQ-006 | Multi-lane QA | P4.1, P4.2 | `qa/qa-strategy.md`, validation runs |
+| REQ-003 | Platform standards | P2.1, P5A.2, P5A.3 | `standards/power-apps.md`, `standards/power-automate.md`, `standards/sharepoint.md`, `standards/integrated-solutions.md`, `standards/visual-verification.md`, `standards/intake-and-triage.md` |
+| REQ-004 | Skills, instructions, templates, agents | P2.2, P3.1, P3.2, P5A.1 | `skills/`, `templates/`, `agents/` |
+| REQ-005 | MCP as bounded tool layer | P3.1, P3.2, P5A.2, P5A.3 | Platform skills, orchestrator routing, Canvas MCP sync rules |
+| REQ-006 | Multi-lane QA | P4.1, P4.2, P5A.2 | `qa/qa-strategy.md`, `standards/visual-verification.md`, validation runs |
 | REQ-007 | Safe Foundry validation | P3.2, P4.2 | `agents/foundry-validation-architecture.md`, threat review |
-| REQ-008 | Traceability and screenshots | P1.1, P2.2, P4.1 | `qa/evidence-schema.md`, test and screenshot registers |
-| REQ-009 | ELM and Early Check pilots | P5.1, P6.1 | Pilot inventories, regression packs, evidence |
-| REQ-010 | Independent reuse | P5.1, P6.1, P7.1 | Successor observations, challenge results |
-| REQ-011 | Measured improvement | P5.1, P6.1, P7.2 | `metrics/baseline-and-outcomes.csv`, analysis |
+| REQ-008 | Traceability and screenshots | P1.1, P2.2, P4.1, P5A.2 | `qa/evidence-schema.md`, test and screenshot registers, `pilots/flossmoor-foia/evidence/` |
+| REQ-009 | ELM and Early Check pilots; Flossmoor live pilot | P5.1, P6.1, P5A | Pilot inventories, regression packs, evidence |
+| REQ-010 | Independent reuse | P5.1, P6.1, P5A.4, P7.1 | Successor observations, challenge results |
+| REQ-011 | Measured improvement | P5.1, P6.1, P5A.4, P7.2 | `metrics/baseline-and-outcomes.csv`, analysis |
 | REQ-012 | Portfolio and blog | P7.2 | `portfolio/`, `blog/`, sanitized case studies |
 | REQ-013 | Governance and controls | P1.1, P2.1, P2.2 | Charter, standards, decisions, release evidence |
 | REQ-014 | Preserve sources | P1.2 | `source-material/copilot-package/`, source register |

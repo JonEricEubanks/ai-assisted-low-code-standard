@@ -1,0 +1,183 @@
+ComponentDefinitions:
+  cmpSideNav:
+    DefinitionType: CanvasComponent
+    Description: Shared navigation. Placement "Rail" = left rail (desktop/tablet); "Bottom" = phone tab bar.
+    AccessAppScope: true
+    CustomProperties:
+      ActiveScreen:
+        PropertyKind: Input
+        DisplayName: ActiveScreen
+        Description: Name of the current screen used to highlight the active item (Home, NewRequest, DepartmentWork, ResponseCloseout).
+        DataType: Text
+        Default: ="Home"
+      Placement:
+        PropertyKind: Input
+        DisplayName: Placement
+        Description: Rail (vertical left rail) or Bottom (horizontal phone bar).
+        DataType: Text
+        Default: ="Rail"
+    Properties:
+      Fill: =ColorSurface
+      Height: =If(cmpSideNav.Placement = "Bottom", BottomNavHeight, App.Height - HeaderHeight)
+      Width: =If(cmpSideNav.Placement = "Bottom", App.Width, If(App.Width >= BreakpointDesktop, NavRailWidthDesktop, NavRailWidthTablet))
+    Children:
+      - cntNavRoot:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorSurface
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =If(cmpSideNav.Placement = "Bottom", LayoutDirection.Vertical, LayoutDirection.Horizontal)
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - cntNavDividerTop:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorNeutralStroke
+                  FillPortions: =0
+                  Height: =1
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =1
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =cmpSideNav.Placement = "Bottom"
+            - cntNavItems:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutAlignItems: =If(cmpSideNav.Placement = "Bottom", LayoutAlignItems.Center, LayoutAlignItems.Stretch)
+                  LayoutDirection: =If(cmpSideNav.Placement = "Bottom", LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                  LayoutGap: =SpaceXs
+                  LayoutJustifyContent: =If(cmpSideNav.Placement = "Bottom", LayoutJustifyContent.SpaceBetween, LayoutJustifyContent.Start)
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  PaddingBottom: =If(cmpSideNav.Placement = "Bottom", SpaceXs, SpaceSm)
+                  PaddingLeft: =SpaceSm
+                  PaddingRight: =SpaceSm
+                  PaddingTop: =If(cmpSideNav.Placement = "Bottom", SpaceXs, SpaceSm)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - btnNavHome:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: ="Go to Home"
+                        Align: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, Align.Left, Align.Center)
+                        AlignInContainer: =If(cmpSideNav.Placement = "Bottom", AlignInContainer.Center, AlignInContainer.Stretch)
+                        Appearance: =If(cmpSideNav.ActiveScreen = "Home", ButtonAppearance.Secondary, ButtonAppearance.Subtle)
+                        Color: =If(cmpSideNav.ActiveScreen = "Home", ColorBrand, ColorTextPrimary)
+                        FontWeight: =If(cmpSideNav.ActiveScreen = "Home", FontWeight.Semibold, FontWeight.Normal)
+                        Height: =ControlMinTouch
+                        Icon: ="Home"
+                        IconStyle: =If(cmpSideNav.ActiveScreen = "Home", IconStyle.Filled, IconStyle.Outline)
+                        Layout: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, ButtonLayout.IconBefore, ButtonLayout.IconOnly)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: =ControlMinTouch
+                        OnSelect: =Navigate(Home, ScreenTransition.None)
+                        Size: =FontSizeBody
+                        Text: ="Home"
+                        Tooltip: ="Home"
+                        Width: |-
+                          =If(cmpSideNav.Placement = "Bottom",
+                              (Parent.Width - SpaceSm * 2 - SpaceXs * 3) / 4,
+                              Parent.Width - SpaceSm * 2)
+                  - btnNavNewRequest:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: ="Go to New request"
+                        Align: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, Align.Left, Align.Center)
+                        AlignInContainer: =If(cmpSideNav.Placement = "Bottom", AlignInContainer.Center, AlignInContainer.Stretch)
+                        Appearance: =If(cmpSideNav.ActiveScreen = "NewRequest", ButtonAppearance.Secondary, ButtonAppearance.Subtle)
+                        Color: =If(cmpSideNav.ActiveScreen = "NewRequest", ColorBrand, ColorTextPrimary)
+                        FontWeight: =If(cmpSideNav.ActiveScreen = "NewRequest", FontWeight.Semibold, FontWeight.Normal)
+                        Height: =ControlMinTouch
+                        Icon: ="Add"
+                        IconStyle: =If(cmpSideNav.ActiveScreen = "NewRequest", IconStyle.Filled, IconStyle.Outline)
+                        Layout: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, ButtonLayout.IconBefore, ButtonLayout.IconOnly)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: =ControlMinTouch
+                        OnSelect: =Navigate(NewRequest, ScreenTransition.None)
+                        Size: =FontSizeBody
+                        Text: ="New request"
+                        Tooltip: ="New request"
+                        Width: |-
+                          =If(cmpSideNav.Placement = "Bottom",
+                              (Parent.Width - SpaceSm * 2 - SpaceXs * 3) / 4,
+                              Parent.Width - SpaceSm * 2)
+                  - btnNavDepartmentWork:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: ="Go to Department work"
+                        Align: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, Align.Left, Align.Center)
+                        AlignInContainer: =If(cmpSideNav.Placement = "Bottom", AlignInContainer.Center, AlignInContainer.Stretch)
+                        Appearance: =If(cmpSideNav.ActiveScreen = "DepartmentWork", ButtonAppearance.Secondary, ButtonAppearance.Subtle)
+                        Color: =If(cmpSideNav.ActiveScreen = "DepartmentWork", ColorBrand, ColorTextPrimary)
+                        FontWeight: =If(cmpSideNav.ActiveScreen = "DepartmentWork", FontWeight.Semibold, FontWeight.Normal)
+                        Height: =ControlMinTouch
+                        Icon: ="People"
+                        IconStyle: =If(cmpSideNav.ActiveScreen = "DepartmentWork", IconStyle.Filled, IconStyle.Outline)
+                        Layout: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, ButtonLayout.IconBefore, ButtonLayout.IconOnly)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: =ControlMinTouch
+                        OnSelect: =Navigate(DepartmentWork, ScreenTransition.None)
+                        Size: =FontSizeBody
+                        Text: ="Department work"
+                        Tooltip: ="Department work"
+                        Width: |-
+                          =If(cmpSideNav.Placement = "Bottom",
+                              (Parent.Width - SpaceSm * 2 - SpaceXs * 3) / 4,
+                              Parent.Width - SpaceSm * 2)
+                  - btnNavResponseCloseout:
+                      Control: ModernButton
+                      Properties:
+                        AccessibleLabel: ="Go to Closeout"
+                        Align: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, Align.Left, Align.Center)
+                        AlignInContainer: =If(cmpSideNav.Placement = "Bottom", AlignInContainer.Center, AlignInContainer.Stretch)
+                        Appearance: =If(cmpSideNav.ActiveScreen = "ResponseCloseout", ButtonAppearance.Secondary, ButtonAppearance.Subtle)
+                        Color: =If(cmpSideNav.ActiveScreen = "ResponseCloseout", ColorBrand, ColorTextPrimary)
+                        FontWeight: =If(cmpSideNav.ActiveScreen = "ResponseCloseout", FontWeight.Semibold, FontWeight.Normal)
+                        Height: =ControlMinTouch
+                        Icon: ="CheckmarkCircle"
+                        IconStyle: =If(cmpSideNav.ActiveScreen = "ResponseCloseout", IconStyle.Filled, IconStyle.Outline)
+                        Layout: =If(cmpSideNav.Placement = "Rail" && App.Width >= BreakpointDesktop, ButtonLayout.IconBefore, ButtonLayout.IconOnly)
+                        LayoutMinHeight: =ControlMinTouch
+                        LayoutMinWidth: =ControlMinTouch
+                        OnSelect: =Navigate(ResponseCloseout, ScreenTransition.None)
+                        Size: =FontSizeBody
+                        Text: ="Closeout"
+                        Tooltip: ="Closeout"
+                        Width: |-
+                          =If(cmpSideNav.Placement = "Bottom",
+                              (Parent.Width - SpaceSm * 2 - SpaceXs * 3) / 4,
+                              Parent.Width - SpaceSm * 2)
+            - cntNavDividerSide:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorNeutralStroke
+                  FillPortions: =0
+                  Height: =Parent.Height
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =1
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Visible: =cmpSideNav.Placement = "Rail"
+                  Width: =1

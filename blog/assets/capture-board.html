@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Synthetic low-code delivery illustrations</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px; background: #e7edf4; color: #172b42; font-family: "Segoe UI", Arial, sans-serif; }
+    main { display: grid; gap: 32px; width: 1200px; }
+    figure { margin: 0; width: 1200px; height: 675px; padding: 48px 56px; background: #f8fafc; border-top: 8px solid #166a65; display: flex; flex-direction: column; }
+    .eyebrow { margin: 0 0 14px; color: #166a65; font-size: 16px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    h1 { margin: 0; font-size: 40px; line-height: 1.15; letter-spacing: -1px; }
+    .intro { margin: 14px 0 28px; font-size: 21px; line-height: 1.45; color: #42546a; max-width: 1000px; }
+    .grid { display: grid; gap: 20px; }
+    .two { grid-template-columns: 1fr 1fr; }
+    .three { grid-template-columns: repeat(3, 1fr); }
+    .card { padding: 24px; background: #fff; border: 1px solid #c7d3df; border-radius: 14px; }
+    .accent { background: #eaf5f2; border-color: #82b5ab; }
+    h2 { font-size: 23px; margin: 0 0 16px; }
+    h3 { font-size: 20px; margin: 0 0 10px; }
+    p, li { font-size: 19px; line-height: 1.5; }
+    .card p { margin: 8px 0; }
+    ul, ol { margin: 0; padding-left: 23px; }
+    li + li { margin-top: 8px; }
+    .step { display: block; color: #166a65; font-weight: 700; font-size: 15px; letter-spacing: 1px; margin-bottom: 10px; }
+    .gate { margin-top: 20px; padding: 16px 22px; border-radius: 10px; background: #172b42; color: #fff; font-size: 20px; line-height: 1.4; }
+    figcaption { margin-top: auto; border-top: 1px solid #c7d3df; padding-top: 16px; font-size: 15px; line-height: 1.5; color: #42546a; }
+    .badge { font-weight: 700; color: #172b42; }
+    .flow { display: flex; gap: 12px; align-items: stretch; }
+    .node { flex: 1; padding: 22px 18px; border-radius: 12px; background: #fff; border: 1px solid #c7d3df; }
+    .arrow { align-self: center; font-size: 28px; color: #166a65; }
+    .note { font-size: 18px; color: #42546a; }
+  </style>
+</head>
+<body>
+<main aria-label="Six original synthetic illustrations for the article series">
+  <figure id="governed-standard" aria-labelledby="title-01">
+    <p class="eyebrow">01 / Governed AI-assisted delivery</p>
+    <h1 id="title-01">Make the next decision visible.</h1>
+    <p class="intro">A fictional training-request workflow compares informal intake with explicit checks and human ownership.</p>
+    <div class="grid two">
+      <section class="card"><h2>Before: informal intake</h2><ol><li>An unstructured request arrives.</li><li>Someone re-enters it into a tracker.</li><li>Status requires repeated follow-up.</li></ol></section>
+      <section class="card accent"><h2>After: a structured path</h2><ol><li>Capture a structured request.</li><li>Validate against acceptance criteria.</li><li>A human owner reviews; status is visible.</li></ol></section>
+    </div>
+    <div class="gate">AI can assist with drafting. A human remains accountable for the decision.</div>
+    <figcaption><span class="badge">SYNTHETIC ILLUSTRATION</span> / Original fictional scenario. No measured improvement is asserted.<br>Draft visual / External publication approval pending.</figcaption>
+  </figure>
+  <figure id="delivery-lifecycle" aria-labelledby="title-02">
+    <p class="eyebrow">02 / Delivery lifecycle</p>
+    <h1 id="title-02">A gate is a decision, not a checkbox.</h1>
+    <p class="intro">For a fictional request form, every stage answers a question before the next stage begins.</p>
+    <div class="grid three">
+      <section class="card"><span class="step">01 / DEFINE</span><h2>What must work?</h2><p>Intake, required fields, error states, and acceptance criteria.</p></section>
+      <section class="card"><span class="step">02 / DESIGN AND BUILD</span><h2>What may change?</h2><p>Human-reviewed design, followed by a bounded implementation.</p></section>
+      <section class="card accent"><span class="step">03 / VERIFY AND HAND OFF</span><h2>What supports release?</h2><p>Deterministic checks, accessibility review, and recorded results.</p></section>
+    </div>
+    <div class="gate">Correct failed checks and rerun them. A human authorizes release; a retrospective informs the next revision.</div>
+    <figcaption><span class="badge">SYNTHETIC ILLUSTRATION</span> / Proposed workflow, not evidence of a completed delivery.<br>Draft visual / External publication approval pending.</figcaption>
+  </figure>
+  <figure id="reusable-skills" aria-labelledby="title-03">
+    <p class="eyebrow">03 / Reusable skills</p>
+    <h1 id="title-03">A reusable skill is a bounded contract.</h1>
+    <p class="intro">In a fictional form-and-workflow exercise, repeat the preparation without hiding the decisions.</p>
+    <div class="grid three">
+      <section class="card"><h2>Inputs</h2><ul><li>Acceptance criteria</li><li>Approved design</li><li>Explicit constraints</li></ul></section>
+      <section class="card"><h2>Bounded assistance</h2><ul><li>Propose an edit plan</li><li>Use allowed tools</li><li>Flag unknown rules</li></ul></section>
+      <section class="card accent"><h2>Verified output</h2><ul><li>Developer review</li><li>Validation results</li><li>Version and action log</li></ul></section>
+    </div>
+    <div class="gate">The skill must not invent a business rule or approve its own output.</div>
+    <figcaption><span class="badge">SYNTHETIC ILLUSTRATION</span> / Generic contract, not a tool execution or adoption result.<br>Draft visual / External publication approval pending.</figcaption>
+  </figure>
+  <figure id="data-contract" aria-labelledby="title-04">
+    <p class="eyebrow">04 / Data and view design</p>
+    <h1 id="title-04">Design the data and the view together.</h1>
+    <p class="intro">A minimal fictional request workflow shows the data-to-view path, without real records or external integrations.</p>
+    <div class="flow">
+      <section class="node"><h2>Request form</h2><p>Synthetic input</p></section><span class="arrow" aria-hidden="true">&rarr;</span>
+      <section class="node"><h2>Structured list</h2><p>Defined fields</p></section><span class="arrow" aria-hidden="true">&rarr;</span>
+      <section class="node"><h2>Validation</h2><p>Expected values</p></section><span class="arrow" aria-hidden="true">&rarr;</span>
+      <section class="node"><h2>Human review</h2><p>Explicit decision</p></section>
+    </div>
+    <div class="gate">Status view: show what the workflow knows, including an intentional empty state.</div>
+    <p class="note">A real deployment still needs separate privacy, permissions, records, licensing, and support review.</p>
+    <figcaption><span class="badge">SYNTHETIC ILLUSTRATION</span> / Conceptual architecture, not a SharePoint product screenshot.<br>Draft visual / External publication approval pending.</figcaption>
+  </figure>
+  <figure id="layered-qa" aria-labelledby="title-05">
+    <p class="eyebrow">05 / Layered quality assurance</p>
+    <h1 id="title-05">A screenshot complements a test.</h1>
+    <p class="intro">For a fictional check-in flow, keep repeatable assertions, visual review, and release authority distinct.</p>
+    <div class="grid three">
+      <section class="card"><span class="step">ASSERT</span><h2>Deterministic checks</h2><p>Check the empty state, valid submission, and duplicate attempt with synthetic records.</p></section>
+      <section class="card"><span class="step">REVIEW</span><h2>Accessibility and visuals</h2><p>Review feedback, reading order, and the presentation of expected states.</p></section>
+      <section class="card accent"><span class="step">DECIDE</span><h2>Human release gate</h2><p>Review results and unresolved findings. A passing illustration is not release evidence.</p></section>
+    </div>
+    <div class="gate">If a check fails: record the finding, correct the behavior, and rerun the relevant checks.</div>
+    <figcaption><span class="badge">SYNTHETIC ILLUSTRATION</span> / Method only; no platform tests or production readiness claimed.<br>Draft visual / External publication approval pending.</figcaption>
+  </figure>
+  <figure id="measurement" aria-labelledby="title-06">
+    <p class="eyebrow">06 / Measurement and claims</p>
+    <h1 id="title-06">Measure first. Claim only what is supported.</h1>
+    <p class="intro">Separate the evidence needed for a realized result from an estimate or an illustrative example.</p>
+    <div class="grid three">
+      <section class="card"><h2>Define the comparison</h2><ul><li>Same activity and scope</li><li>Same start and stop</li><li>Baseline before change</li></ul></section>
+      <section class="card"><h2>Report the evidence</h2><ul><li>Sample, median, range</li><li>Exclusions and source</li><li>Review, rework, waiting</li></ul></section>
+      <section class="card accent"><h2>Classify the claim</h2><ul><li>Synthetic: illustration</li><li>Projected: assumptions</li><li>Realized: approved data</li></ul></section>
+    </div>
+    <div class="gate">Faster is not automatically better. Consider defects, accessibility, adoption, and maintainability.</div>
+    <figcaption><span class="badge">SYNTHETIC ILLUSTRATION</span> / Measurement controls only. No savings or outcomes asserted.<br>Draft visual / External publication approval pending.</figcaption>
+  </figure>
+</main>
+</body>
+</html>

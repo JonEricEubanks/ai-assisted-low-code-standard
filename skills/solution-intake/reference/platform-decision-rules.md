@@ -8,6 +8,20 @@ Each rule maps an observable requirement to a component choice. Never select a c
 
 ---
 
+## Intake form selection
+
+**If** the request requires a public-facing or external intake form
+**then** select the form tool from this table
+**because** attachment support and external authentication differ by product.
+
+| Audience | Attachments required | Tool |
+|---|---|---|
+| External (public) | Yes | Survey123 |
+| External (public) | No | Microsoft Forms |
+| Internal | Yes or No | Microsoft Forms |
+
+**Unless** the client already runs a web form platform that must remain the public entry point — in which case record the integration contract (webhook, email parse, or export) as a Phase-1 risk and prefer replacing it with the table above.
+
 ## Data layer
 
 **If** the solution tracks a business entity with a lifecycle and status

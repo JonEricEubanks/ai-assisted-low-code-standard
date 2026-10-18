@@ -1,0 +1,688 @@
+Screens:
+  DepartmentWork:
+    Properties:
+      Fill: =ColorNeutralBg
+      LoadingSpinnerColor: =ColorBrand
+      OnVisible: |-
+        =Set(gblIsLoading, true);
+        Set(gblLoadError, false);
+        Set(gblPermissionDenied, false);
+        Set(gblSaveSuccess, false);
+        If(IsBlank(gblSelectedAssignment), Set(gblSelectedAssignment, First(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true))));
+        Set(gblSelectedDepartment, If(IsBlank(gblSelectedAssignment), Blank(), gblSelectedAssignment.Department));
+        Set(gblIsLoading, false)
+    Children:
+      - cntDepartmentWorkShell:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            Fill: =ColorNeutralBg
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            Width: =Parent.Width
+          Children:
+            - cmpDepartmentWorkHeader:
+                Control: CanvasComponent
+                ComponentName: cmpAppHeader
+                Properties:
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =HeaderHeight
+                  LayoutMinHeight: =HeaderHeight
+                  LayoutMinWidth: =0
+                  OnBack: =Navigate(RequestDetail, ScreenTransition.None)
+                  OnPrimary: =false
+                  OnSecondary: =false
+                  PrimaryIcon: =""
+                  PrimaryLabel: =""
+                  SecondaryIcon: =""
+                  SecondaryLabel: =""
+                  ShowBack: =true
+                  Subtitle: =If(IsBlank(gblSelectedRequest), "No request selected", "Request " & gblSelectedRequest.Title)
+                  Title: ="Department work"
+            - cntDepartmentWorkBody:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                Children:
+                  - cmpDepartmentWorkNavRail:
+                      Control: CanvasComponent
+                      ComponentName: cmpSideNav
+                      Properties:
+                        ActiveScreen: ="DepartmentWork"
+                        AlignInContainer: =AlignInContainer.Stretch
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =If(App.Width >= BreakpointDesktop, 220, 64)
+                        Placement: ="Rail"
+                        Visible: =!(App.Width < BreakpointPhone)
+                        Width: =If(App.Width >= BreakpointDesktop, 220, 64)
+                  - cntDepartmentWorkContent:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =SpaceMd
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        LayoutOverflowY: =LayoutOverflow.Scroll
+                        PaddingBottom: =SpaceLg
+                        PaddingLeft: =If(App.Width < BreakpointPhone, SpaceMd, SpaceLg)
+                        PaddingRight: =If(App.Width < BreakpointPhone, SpaceMd, SpaceLg)
+                        PaddingTop: =If(App.Width < BreakpointPhone, SpaceMd, SpaceLg)
+                      Children:
+                        - lblDepartmentWorkState:
+                            Control: ModernText
+                            Properties:
+                              AccessibleLabel: =Self.Text
+                              AlignInContainer: =AlignInContainer.Stretch
+                              AutoHeight: =true
+                              Color: =If(gblLoadError || gblPermissionDenied, ColorCritical, If(gblSaveSuccess, ColorSuccess, ColorTextSecondary))
+                              Fill: =If(gblLoadError || gblPermissionDenied, ColorCriticalBg, If(gblSaveSuccess, ColorSuccessBg, ColorWarningBg))
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =SpaceSm
+                              PaddingLeft: =SpaceSm
+                              PaddingRight: =SpaceSm
+                              PaddingTop: =SpaceSm
+                              RadiusBottomLeft: =RadiusSm
+                              RadiusBottomRight: =RadiusSm
+                              RadiusTopLeft: =RadiusSm
+                              RadiusTopRight: =RadiusSm
+                              Size: =FontSizeBody
+                              Text: =If(gblIsLoading, "Loading assignments...", If(gblPermissionDenied, "You do not have permission to view department assignments.", If(gblLoadError, "Assignments could not be loaded. Refresh and try again.", If(gblSaveSuccess, "Assignment saved successfully.", If(IsBlank(gblSelectedAssignment), "No active assignment is available for this request.", "Changes remain in this assignment until saved.")))))
+                              Visible: =gblIsLoading || gblLoadError || gblPermissionDenied || gblSaveSuccess || IsBlank(gblSelectedAssignment)
+                        - cntDepartmentWorkSelector:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =ColorNeutralStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorSurface
+                              FillPortions: =0
+                              Height: =lblAssignmentSelector.Height + SpaceSm + 112 + SpaceMd * 2
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =SpaceSm
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =SpaceMd
+                              PaddingLeft: =SpaceMd
+                              PaddingRight: =SpaceMd
+                              PaddingTop: =SpaceMd
+                              RadiusBottomLeft: =RadiusSm
+                              RadiusBottomRight: =RadiusSm
+                              RadiusTopLeft: =RadiusSm
+                              RadiusTopRight: =RadiusSm
+                            Children:
+                              - lblAssignmentSelector:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeSection
+                                    Text: ="Active department assignments"
+                              - galDepartmentAssignments:
+                                  Control: Gallery
+                                  Variant: Horizontal
+                                  Properties:
+                                    AccessibleLabel: ="Active department assignments"
+                                    FillPortions: =0
+                                    Height: =112
+                                    Items: =SortByColumns(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true), "AssignmentDueDate", SortOrder.Ascending)
+                                    LayoutMinHeight: =112
+                                    LayoutMinWidth: =0
+                                    ShowNavigation: =!(App.Width < BreakpointPhone)
+                                    TabIndex: =0
+                                    TemplatePadding: =SpaceXs
+                                    TemplateSize: =If((App.Width < BreakpointPhone), 240, 272)
+                                  Children:
+                                    - cntAssignmentCard:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          BorderColor: =If(ThisItem.ID = gblSelectedAssignment.ID, ColorBrand, ColorNeutralStroke)
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =If(ThisItem.ID = gblSelectedAssignment.ID, ColorBrandTint, ColorSurface)
+                                          Height: =Parent.TemplateHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =SpaceXs
+                                          PaddingBottom: =SpaceSm
+                                          PaddingLeft: =If((App.Width < BreakpointPhone), SpaceXs, SpaceSm)
+                                          PaddingRight: =If((App.Width < BreakpointPhone), SpaceXs, SpaceSm)
+                                          PaddingTop: =SpaceSm
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                          Width: =Parent.TemplateWidth
+                                        Children:
+                                          - lblAssignmentCardTitle:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextPrimary
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeBody
+                                                Text: =ThisItem.Title
+                                                Wrap: =false
+                                          - lblAssignmentCardDept:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: =If(IsBlank(ThisItem.Department), "Department not assigned", ThisItem.Department.Value)
+                                                Wrap: =false
+                                          - cntAssignmentCardFooter:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                FillPortions: =0
+                                                Height: =ControlMinTouch - 8
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =SpaceSm
+                                                LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                                                LayoutMinHeight: =ControlMinTouch - 8
+                                                LayoutMinWidth: =0
+                                              Children:
+                                                - bdgAssignmentCardStatus:
+                                                    Control: ModernBadge
+                                                    Properties:
+                                                      AccessibleLabel: |-
+                                                        ="Status: " & Coalesce(ThisItem.AssignmentStatus.Value, "Not set")
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Content: =Coalesce(ThisItem.AssignmentStatus.Value, "Not set")
+                                                      FontWeight: =FontWeight.Semibold
+                                                      Height: =24
+                                                      Icon: |-
+                                                        =Switch(ThisItem.AssignmentStatus.Value,
+                                                          "New", "Info",
+                                                          "Accepted", "Checkmark",
+                                                          "In Progress", "ArrowClockwise",
+                                                          "Awaiting Clarification", "Pause",
+                                                          "Redaction", "Edit",
+                                                          "Complete", "CheckmarkCircle",
+                                                          "Cancelled", "Dismiss",
+                                                          "Circle")
+                                                      Intent: |-
+                                                        =Switch(ThisItem.AssignmentStatus.Value,
+                                                          "New", BadgeIntent.Informative,
+                                                          "Accepted", BadgeIntent.Informative,
+                                                          "In Progress", BadgeIntent.Highlight,
+                                                          "Awaiting Clarification", BadgeIntent.Caution,
+                                                          "Redaction", BadgeIntent.Attention,
+                                                          "Complete", BadgeIntent.Positive,
+                                                          "Cancelled", BadgeIntent.Neutral,
+                                                          BadgeIntent.Neutral)
+                                                      LayoutMinHeight: =24
+                                                      LayoutMinWidth: =112
+                                                      Shape: =BadgeShape.Rounded
+                                                      Size: =12
+                                                      Width: =112
+                                                - btnAssignmentCardSelect:
+                                                    Control: ModernButton
+                                                    Properties:
+                                                      AccessibleLabel: ="Select assignment " & ThisItem.Title
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Appearance: =If(ThisItem.ID = gblSelectedAssignment.ID, ButtonAppearance.Primary, ButtonAppearance.Secondary)
+                                                      BasePaletteColor: =ColorBrand
+                                                      Height: =36
+                                                      Icon: =If(ThisItem.ID = gblSelectedAssignment.ID, "Checkmark", "")
+                                                      Layout: =If(ThisItem.ID = gblSelectedAssignment.ID, ButtonLayout.IconBefore, ButtonLayout.TextOnly)
+                                                      LayoutMinHeight: =36
+                                                      LayoutMinWidth: =110
+                                                      OnSelect: |-
+                                                        =Set(gblSelectedAssignment, ThisItem);
+                                                        Set(gblSelectedDepartment, ThisItem.Department);
+                                                        Set(gblSaveSuccess, false)
+                                                      Size: =FontSizeBody
+                                                      Text: =If(ThisItem.ID = gblSelectedAssignment.ID, "Selected", "Select")
+                                                      Tooltip: ="Select this assignment"
+                                                      Width: =110
+                        - cntDepartmentWorkEditor:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =ColorNeutralStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorSurface
+                              FillPortions: =0
+                              Height: =lblAssignmentEditorTitle.Height + cntAssignmentEditorRow.Height + lblAssignmentGuidance.Height + 96 + cntAssignmentActions.Height + SpaceMd * 4 + SpaceMd * 2
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =SpaceMd
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =SpaceMd
+                              PaddingLeft: =SpaceMd
+                              PaddingRight: =SpaceMd
+                              PaddingTop: =SpaceMd
+                              RadiusBottomLeft: =RadiusSm
+                              RadiusBottomRight: =RadiusSm
+                              RadiusTopLeft: =RadiusSm
+                              RadiusTopRight: =RadiusSm
+                            Children:
+                              - lblAssignmentEditorTitle:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeSection
+                                    Text: =If(IsBlank(gblSelectedDepartment), "Assignment details", "Assignment details - " & gblSelectedDepartment.Value)
+                              - cntAssignmentEditorRow:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =If((App.Width < BreakpointPhone), 3, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) * FieldHeight + (If((App.Width < BreakpointPhone), 3, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) - 1) * SpaceMd
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =SpaceMd
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    LayoutWrap: =true
+                                  Children:
+                                    - cntAssignmentStatusField:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 2) / 3 - 1))
+                                        Children:
+                                          - lblAssignmentStatusField:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Assignment status"
+                                                Wrap: =false
+                                          - cmbAssignmentStatus:
+                                              Control: ModernDropdown
+                                              Properties:
+                                                AccessibleLabel: ="Assignment status"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Default: =If(IsBlank(gblSelectedAssignment), Blank(), gblSelectedAssignment.AssignmentStatus)
+                                                Height: =InputHeight
+                                                ItemDisplayText: =ThisItem.Value
+                                                Items: =Choices('FOIA Pilot Assignments'.AssignmentStatus)
+                                                LayoutMinHeight: =InputHeight
+                                                LayoutMinWidth: =0
+                                    - cntAssignmentDueDateField:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 2) / 3 - 1))
+                                        Children:
+                                          - lblAssignmentDueDateField:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Assignment due date"
+                                                Wrap: =false
+                                          - datAssignmentDueDate:
+                                              Control: ModernDatePicker
+                                              Properties:
+                                                AccessibleLabel: ="Assignment due date"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                DefaultDate: =If(IsBlank(gblSelectedAssignment), Blank(), gblSelectedAssignment.AssignmentDueDate)
+                                                Format: ="mm/dd/yyyy"
+                                                Height: =InputHeight
+                                                IsEditable: =true
+                                                LayoutMinHeight: =InputHeight
+                                                LayoutMinWidth: =0
+                                    - cntRedactionRequiredField:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 2) / 3 - 1))
+                                        Children:
+                                          - lblRedactionRequiredField:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Redaction required"
+                                                Wrap: =false
+                                          - tglRedactionRequired:
+                                              Control: ModernToggle
+                                              Properties:
+                                                AccessibleLabel: ="Redaction required"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Default: =If(IsBlank(gblSelectedAssignment), false, gblSelectedAssignment.RedactionRequired.Value = "Yes")
+                                                Height: =InputHeight
+                                                Label: ="Required"
+                                                LayoutMinHeight: =InputHeight
+                                                LayoutMinWidth: =0
+                                                ToggleSize: =24
+                              - lblAssignmentGuidance:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextSecondary
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeCaption
+                                    Text: ="Confirm the human-entered due date before saving. Use response notes to describe records found, exemptions, or follow-up needed."
+                              - txtResponseNotes:
+                                  Control: ModernTextInput
+                                  Properties:
+                                    AccessibleLabel: ="Response notes"
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    Default: =If(IsBlank(gblSelectedAssignment), "", Coalesce(gblSelectedAssignment.ResponseNotes, ""))
+                                    Height: =96
+                                    LayoutMinHeight: =96
+                                    LayoutMinWidth: =0
+                                    MaxLength: =4000
+                                    Placeholder: ="Add department response notes"
+                                    Required: =true
+                                    Type: =TextInputType.Multiline
+                              - cntAssignmentActions:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =If((App.Width < BreakpointPhone), ControlMinTouch * 2 + SpaceSm, ControlMinTouch)
+                                    LayoutAlignItems: =If((App.Width < BreakpointPhone), LayoutAlignItems.Stretch, LayoutAlignItems.Center)
+                                    LayoutDirection: =If((App.Width < BreakpointPhone), LayoutDirection.Vertical, LayoutDirection.Horizontal)
+                                    LayoutGap: =If((App.Width < BreakpointPhone), SpaceSm, SpaceMd)
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - btnSaveAssignment:
+                                        Control: ModernButton
+                                        Properties:
+                                          AccessibleLabel: ="Save assignment changes"
+                                          BasePaletteColor: =ColorBrand
+                                          DisplayMode: =If(IsBlank(gblSelectedAssignment) || IsBlank(cmbAssignmentStatus.Selected) || IsBlank(datAssignmentDueDate.SelectedDate) || IsBlank(Trim(txtResponseNotes.Text)) || gblPermissionDenied, DisplayMode.Disabled, DisplayMode.Edit)
+                                          Height: =ControlMinTouch
+                                          LayoutMinHeight: =ControlMinTouch
+                                          LayoutMinWidth: =180
+                                          OnSelect: |-
+                                            =Set(gblSaveSuccess, false);
+                                            If(IsBlank(cmbAssignmentStatus.Selected) || IsBlank(datAssignmentDueDate.SelectedDate) || IsBlank(Trim(txtResponseNotes.Text)),
+                                              Notify("Status, due date, and response notes are required.", NotificationType.Error),
+                                              IfError(
+                                                Patch('FOIA Pilot Assignments', gblSelectedAssignment, {AssignmentStatus: cmbAssignmentStatus.Selected, AssignmentDueDate: datAssignmentDueDate.SelectedDate, RedactionRequired: {Value: If(tglRedactionRequired.Checked, "Yes", "No")}, ResponseNotes: txtResponseNotes.Text});
+                                                Set(gblSelectedAssignment, LookUp('FOIA Pilot Assignments', ID = gblSelectedAssignment.ID));
+                                                Set(gblSaveSuccess, true);
+                                                Notify("Assignment saved.", NotificationType.Success),
+                                                Notify("The assignment could not be saved: " & FirstError.Message, NotificationType.Error)
+                                              )
+                                            )
+                                          Size: =FontSizeBody
+                                          Text: ="Save assignment"
+                                          Width: =180
+                                    - btnMarkComplete:
+                                        Control: ModernButton
+                                        Properties:
+                                          AccessibleLabel: ="Mark assignment complete"
+                                          Appearance: =ButtonAppearance.Secondary
+                                          DisplayMode: =If(IsBlank(gblSelectedAssignment) || IsBlank(Trim(txtResponseNotes.Text)) || gblPermissionDenied, DisplayMode.Disabled, DisplayMode.Edit)
+                                          Height: =ControlMinTouch
+                                          Icon: ="CheckmarkCircle"
+                                          LayoutMinHeight: =ControlMinTouch
+                                          LayoutMinWidth: =190
+                                          OnSelect: |-
+                                            =If(IsBlank(Trim(txtResponseNotes.Text)),
+                                              Notify("Add response notes before marking the assignment complete.", NotificationType.Error),
+                                              IfError(
+                                                Patch('FOIA Pilot Assignments', gblSelectedAssignment, {AssignmentStatus: {Value: "Complete"}, DepartmentCompleteDate: Today(), ResponseNotes: txtResponseNotes.Text, RedactionRequired: {Value: If(tglRedactionRequired.Checked, "Yes", "No")}});
+                                                Set(gblSelectedAssignment, LookUp('FOIA Pilot Assignments', ID = gblSelectedAssignment.ID));
+                                                Set(gblSaveSuccess, true);
+                                                Notify("Assignment marked complete.", NotificationType.Success),
+                                                Notify("The assignment could not be marked complete: " & FirstError.Message, NotificationType.Error)
+                                              )
+                                            )
+                                          Size: =FontSizeBody
+                                          Text: ="Mark complete"
+                                          Width: =190
+                        - cntDepartmentRecords:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =ColorNeutralStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorSurface
+                              FillPortions: =0
+                              Height: =lblDepartmentRecordsTitle.Height + lblDepartmentRecordsMeta.Height + galDepartmentRecords.Height + lblDepartmentRecordsEmpty.Height + SpaceSm * 3 + SpaceMd * 2
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =SpaceSm
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =SpaceMd
+                              PaddingLeft: =SpaceMd
+                              PaddingRight: =SpaceMd
+                              PaddingTop: =SpaceMd
+                              RadiusBottomLeft: =RadiusSm
+                              RadiusBottomRight: =RadiusSm
+                              RadiusTopLeft: =RadiusSm
+                              RadiusTopRight: =RadiusSm
+                            Children:
+                              - lblDepartmentRecordsTitle:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeSection
+                                    Text: ="Records summary"
+                              - lblDepartmentRecordsMeta:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextSecondary
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeCaption
+                                    Text: =If(IsBlank(gblSelectedAssignment), "Select an assignment to view records.", CountRows(Filter('FOIA Pilot Records', Request.Id = gblSelectedRequest.ID && Department.Id = gblSelectedAssignment.Department.Id)) & " record(s) associated with this department")
+                              - galDepartmentRecords:
+                                  Control: Gallery
+                                  Variant: Vertical
+                                  Properties:
+                                    AccessibleLabel: ="Department records"
+                                    FillPortions: =0
+                                    Height: =If(Self.AllItemsCount = 0, 32, Min(6, Self.AllItemsCount) * (52 + SpaceXs * 2))
+                                    Items: =If(IsBlank(gblSelectedAssignment), Blank(), Filter('FOIA Pilot Records', Request.Id = gblSelectedRequest.ID && Department.Id = gblSelectedAssignment.Department.Id))
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    TabIndex: =0
+                                    TemplatePadding: =SpaceXs
+                                    TemplateSize: =52
+                                  Children:
+                                    - cntDepartmentRecordRow:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          BorderColor: =ColorNeutralStroke
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =ColorSurface
+                                          Height: =Parent.TemplateHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =SpaceMd
+                                          PaddingBottom: =SpaceSm
+                                          PaddingLeft: =SpaceMd
+                                          PaddingRight: =SpaceSm
+                                          PaddingTop: =SpaceSm
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                          Width: =Parent.TemplateWidth
+                                        Children:
+                                          - lblDepartmentRecordTitle:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Center
+                                                AutoHeight: =true
+                                                Color: =ColorTextPrimary
+                                                FillPortions: =1
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =100
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeBody
+                                                Text: =ThisItem.Title
+                                                Wrap: =false
+                                          - badgeDepartmentRecordStatus:
+                                              Control: ModernBadge
+                                              Properties:
+                                                AccessibleLabel: ="Record status"
+                                                AlignInContainer: =AlignInContainer.Center
+                                                Content: =If(ThisItem.IsFinalResponse, "Final response", "Working record")
+                                                Height: =24
+                                                Icon: =If(ThisItem.IsFinalResponse, "CheckmarkCircle", "Document")
+                                                Intent: =If(ThisItem.IsFinalResponse, BadgeIntent.Positive, BadgeIntent.Informative)
+                                                LayoutMinHeight: =24
+                                                LayoutMinWidth: =140
+                                                Shape: =BadgeShape.Rounded
+                                                Size: =FontSizeCaption
+                                                Width: =140
+                              - lblDepartmentRecordsEmpty:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextSecondary
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeCaption
+                                    Text: ="No records are linked to this department yet."
+                                    Visible: =galDepartmentRecords.AllItemsCount = 0 && !IsBlank(gblSelectedAssignment)
+            - cmpDepartmentWorkNavBottom:
+                Control: CanvasComponent
+                ComponentName: cmpSideNav
+                Properties:
+                  ActiveScreen: ="DepartmentWork"
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =BottomNavHeight
+                  LayoutMinHeight: =BottomNavHeight
+                  LayoutMinWidth: =0
+                  Placement: ="Bottom"
+                  Visible: =(App.Width < BreakpointPhone)
+                  Width: =If(cmpDepartmentWorkNavBottom.Placement = "Bottom", App.Width, If(App.Width >= BreakpointDesktop, 220, 64))

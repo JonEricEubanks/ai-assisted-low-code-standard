@@ -1,0 +1,1259 @@
+Screens:
+  Home:
+    Properties:
+      Fill: =ColorNeutralBg
+      LoadingSpinnerColor: =ColorBrand
+      OnVisible: |-
+        =Set(gblIsLoading, false);
+        Set(gblLoadError, false);
+        Set(gblPermissionDenied, false);
+        Set(gblSearchText, "");
+        Set(gblStatusFilter, "All");
+        Set(gblDepartmentFilter, "All")
+    Children:
+      - cntHomeShell:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =ColorNeutralBg
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =0
+            RadiusTopLeft: =0
+            RadiusTopRight: =0
+            Width: =Parent.Width
+          Children:
+            - cmpHomeHeader:
+                Control: CanvasComponent
+                ComponentName: cmpAppHeader
+                Properties:
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =HeaderHeight
+                  LayoutMinHeight: =HeaderHeight
+                  LayoutMinWidth: =0
+                  OnBack: =false
+                  OnPrimary: =Navigate(NewRequest, ScreenTransition.Fade)
+                  OnSecondary: |-
+                    =Set(gblIsLoading, true);
+                    Set(gblLoadError, false);
+                    Refresh('FOIA Pilot Requests');
+                    Set(gblIsLoading, false)
+                  PrimaryIcon: ="Add"
+                  PrimaryLabel: ="New request"
+                  SecondaryIcon: ="ArrowClockwise"
+                  SecondaryLabel: ="Refresh"
+                  ShowBack: =false
+                  Subtitle: ="Village of Flossmoor · Request queue and response readiness"
+                  Title: ="FOIA requests"
+            - cntHomeBody:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =ColorNeutralBg
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - cmpHomeNavRail:
+                      Control: CanvasComponent
+                      ComponentName: cmpSideNav
+                      Properties:
+                        ActiveScreen: ="Home"
+                        AlignInContainer: =AlignInContainer.Stretch
+                        Height: =Parent.Height
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        Placement: ="Rail"
+                        Visible: =App.Width >= BreakpointPhone
+                        Width: =If(App.Width >= BreakpointDesktop, NavRailWidthDesktop, NavRailWidthTablet)
+                  - cntHomeContentOuter:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =ColorNeutralBg
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - cntHomeContent:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.Center
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorNeutralBg
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =SpaceMd
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              LayoutOverflowY: =If(App.Width >= BreakpointDesktop, LayoutOverflow.Hide, LayoutOverflow.Scroll)
+                              PaddingBottom: =If(App.Width < BreakpointPhone, PagePaddingPhone, PagePaddingWide)
+                              PaddingLeft: =If(App.Width < BreakpointPhone, PagePaddingPhone, PagePaddingWide)
+                              PaddingRight: =If(App.Width < BreakpointPhone, PagePaddingPhone, PagePaddingWide)
+                              PaddingTop: =If(App.Width < BreakpointPhone, PagePaddingPhone, PagePaddingWide)
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Min(Parent.Width, ContentMaxWidth)
+                            Children:
+                              - cntHomeKpis:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    Height: =If(App.Width < BreakpointPhone, TileHeight * 4 + SpaceMd * 3, App.Width < BreakpointDesktop, TileHeight * 2 + SpaceMd, StatStripHeight)
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =SpaceMd
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    LayoutWrap: =true
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - cntTileTotal:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          BorderColor: =ColorNeutralStroke
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =ColorSurface
+                                          FillPortions: =0
+                                          Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
+                                          LayoutAlignItems: =If(App.Width >= BreakpointDesktop, LayoutAlignItems.Center, LayoutAlignItems.Stretch)
+                                          LayoutDirection: =If(App.Width >= BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                          LayoutGap: =If(App.Width >= BreakpointDesktop, SpaceMd, 2)
+                                          LayoutMaxWidth: =If(App.Width >= BreakpointDesktop, TileMaxWidth, 0)
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          PaddingLeft: =SpaceMd
+                                          PaddingRight: =SpaceMd
+                                          PaddingTop: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                          Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1)
+                                        Children:
+                                          - cntTileTotalHead:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =20
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =SpaceSm
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width >= BreakpointDesktop, 150, Parent.Width - SpaceMd * 2)
+                                              Children:
+                                                - icoTileTotal:
+                                                    Control: ModernIcon
+                                                    Properties:
+                                                      AccessibleLabel: ="Total requests"
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Height: =20
+                                                      Icon: ="Document"
+                                                      IconColor: =ColorBrand
+                                                      LayoutMinHeight: =20
+                                                      LayoutMinWidth: =20
+                                                      Width: =20
+                                                - lblTileTotalCaption:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: =Self.Text
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      AutoHeight: =true
+                                                      Color: =ColorTextSecondary
+                                                      FillPortions: =1
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Total"
+                                                      Wrap: =false
+                                          - lblTileTotalValue:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Total requests: " & Self.Text
+                                                Align: =If(App.Width >= BreakpointDesktop, Align.Right, Align.Left)
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                AutoHeight: =true
+                                                Color: =ColorTextPrimary
+                                                FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeKpiPhone, App.Width < BreakpointDesktop, FontSizeKpiTablet, FontSizeKpiDesktop)
+                                                Text: =Text(CountRows('FOIA Pilot Requests'))
+                                                Wrap: =false
+                                          - lblTileTotalNote:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="All requests"
+                                                Visible: =App.Width < BreakpointDesktop
+                                                Wrap: =false
+                                    - cntTileOpen:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          BorderColor: =ColorNeutralStroke
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =ColorSurface
+                                          FillPortions: =0
+                                          Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
+                                          LayoutAlignItems: =If(App.Width >= BreakpointDesktop, LayoutAlignItems.Center, LayoutAlignItems.Stretch)
+                                          LayoutDirection: =If(App.Width >= BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                          LayoutGap: =If(App.Width >= BreakpointDesktop, SpaceMd, 2)
+                                          LayoutMaxWidth: =If(App.Width >= BreakpointDesktop, TileMaxWidth, 0)
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          PaddingLeft: =SpaceMd
+                                          PaddingRight: =SpaceMd
+                                          PaddingTop: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                          Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1)
+                                        Children:
+                                          - cntTileOpenHead:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =20
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =SpaceSm
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width >= BreakpointDesktop, 150, Parent.Width - SpaceMd * 2)
+                                              Children:
+                                                - icoTileOpen:
+                                                    Control: ModernIcon
+                                                    Properties:
+                                                      AccessibleLabel: ="Open requests"
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Height: =20
+                                                      Icon: ="ArrowClockwise"
+                                                      IconColor: =ColorInfo
+                                                      LayoutMinHeight: =20
+                                                      LayoutMinWidth: =20
+                                                      Width: =20
+                                                - lblTileOpenCaption:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: =Self.Text
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      AutoHeight: =true
+                                                      Color: =ColorTextSecondary
+                                                      FillPortions: =1
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Open"
+                                                      Wrap: =false
+                                          - lblTileOpenValue:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Open requests: " & Self.Text
+                                                Align: =If(App.Width >= BreakpointDesktop, Align.Right, Align.Left)
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                AutoHeight: =true
+                                                Color: =ColorTextPrimary
+                                                FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeKpiPhone, App.Width < BreakpointDesktop, FontSizeKpiTablet, FontSizeKpiDesktop)
+                                                Text: =Text(CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value <> "Closed")))
+                                                Wrap: =false
+                                          - lblTileOpenNote:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Open / in progress"
+                                                Visible: =App.Width < BreakpointDesktop
+                                                Wrap: =false
+                                    - cntTileDueSoon:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          BorderColor: =ColorNeutralStroke
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =ColorSurface
+                                          FillPortions: =0
+                                          Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
+                                          LayoutAlignItems: =If(App.Width >= BreakpointDesktop, LayoutAlignItems.Center, LayoutAlignItems.Stretch)
+                                          LayoutDirection: =If(App.Width >= BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                          LayoutGap: =If(App.Width >= BreakpointDesktop, SpaceMd, 2)
+                                          LayoutMaxWidth: =If(App.Width >= BreakpointDesktop, TileMaxWidth, 0)
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          PaddingLeft: =SpaceMd
+                                          PaddingRight: =SpaceMd
+                                          PaddingTop: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                          Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1)
+                                        Children:
+                                          - cntTileDueSoonHead:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =20
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =SpaceSm
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width >= BreakpointDesktop, 150, Parent.Width - SpaceMd * 2)
+                                              Children:
+                                                - icoTileDueSoon:
+                                                    Control: ModernIcon
+                                                    Properties:
+                                                      AccessibleLabel: ="Due within 7 days"
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Height: =20
+                                                      Icon: ="Warning"
+                                                      IconColor: =ColorWarning
+                                                      LayoutMinHeight: =20
+                                                      LayoutMinWidth: =20
+                                                      Width: =20
+                                                - lblTileDueSoonCaption:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: =Self.Text
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      AutoHeight: =true
+                                                      Color: =ColorTextSecondary
+                                                      FillPortions: =1
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Due within 7 days"
+                                                      Wrap: =false
+                                          - lblTileDueSoonValue:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Due within 7 days: " & Self.Text
+                                                Align: =If(App.Width >= BreakpointDesktop, Align.Right, Align.Left)
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                AutoHeight: =true
+                                                Color: =ColorTextPrimary
+                                                FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeKpiPhone, App.Width < BreakpointDesktop, FontSizeKpiTablet, FontSizeKpiDesktop)
+                                                Text: =Text(CountRows(Filter('FOIA Pilot Requests', DueDateConfirmed = true && DueDate <= DateAdd(Today(), 7, TimeUnit.Days))))
+                                                Wrap: =false
+                                          - lblTileDueSoonNote:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Confirmed working due dates only"
+                                                Visible: =App.Width < BreakpointDesktop
+                                                Wrap: =false
+                                    - cntTileClosed:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          BorderColor: =ColorNeutralStroke
+                                          BorderThickness: =1
+                                          DropShadow: =DropShadow.None
+                                          Fill: =ColorSurface
+                                          FillPortions: =0
+                                          Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
+                                          LayoutAlignItems: =If(App.Width >= BreakpointDesktop, LayoutAlignItems.Center, LayoutAlignItems.Stretch)
+                                          LayoutDirection: =If(App.Width >= BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                          LayoutGap: =If(App.Width >= BreakpointDesktop, SpaceMd, 2)
+                                          LayoutMaxWidth: =If(App.Width >= BreakpointDesktop, TileMaxWidth, 0)
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          PaddingLeft: =SpaceMd
+                                          PaddingRight: =SpaceMd
+                                          PaddingTop: =If(App.Width >= BreakpointDesktop, SpaceSm, SpaceSm + SpaceXs)
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                          Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1)
+                                        Children:
+                                          - cntTileClosedHead:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =20
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =SpaceSm
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                                Width: =If(App.Width >= BreakpointDesktop, 150, Parent.Width - SpaceMd * 2)
+                                              Children:
+                                                - icoTileClosed:
+                                                    Control: ModernIcon
+                                                    Properties:
+                                                      AccessibleLabel: ="Closed requests"
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Height: =20
+                                                      Icon: ="CheckmarkCircle"
+                                                      IconColor: =ColorSuccess
+                                                      LayoutMinHeight: =20
+                                                      LayoutMinWidth: =20
+                                                      Width: =20
+                                                - lblTileClosedCaption:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: =Self.Text
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      AutoHeight: =true
+                                                      Color: =ColorTextSecondary
+                                                      FillPortions: =1
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Closed"
+                                                      Wrap: =false
+                                          - lblTileClosedValue:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Closed requests: " & Self.Text
+                                                Align: =If(App.Width >= BreakpointDesktop, Align.Right, Align.Left)
+                                                AlignInContainer: =If(App.Width >= BreakpointDesktop, AlignInContainer.Center, AlignInContainer.Stretch)
+                                                AutoHeight: =true
+                                                Color: =ColorTextPrimary
+                                                FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeKpiPhone, App.Width < BreakpointDesktop, FontSizeKpiTablet, FontSizeKpiDesktop)
+                                                Text: =Text(CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "Closed")))
+                                                Wrap: =false
+                                          - lblTileClosedNote:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Closed requests"
+                                                Visible: =App.Width < BreakpointDesktop
+                                                Wrap: =false
+                              - cntHomeDistribution:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =0
+                                    Height: =SpaceSm + SpaceXs + 20
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =SpaceXs
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                    Visible: =App.Width >= BreakpointDesktop
+                                  Children:
+                                    - cntDistributionBar:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          Height: =SpaceSm
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =2
+                                          LayoutMinHeight: =SpaceSm
+                                          LayoutMinWidth: =0
+                                          RadiusBottomLeft: =RadiusSm
+                                          RadiusBottomRight: =RadiusSm
+                                          RadiusTopLeft: =RadiusSm
+                                          RadiusTopRight: =RadiusSm
+                                        Children:
+                                          - cntSegNew:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =ColorInfo
+                                                FillPortions: =CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "New"))
+                                                Height: =Parent.Height
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =RadiusSm
+                                                RadiusBottomRight: =RadiusSm
+                                                RadiusTopLeft: =RadiusSm
+                                                RadiusTopRight: =RadiusSm
+                                          - cntSegInProgress:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =ColorBrand
+                                                FillPortions: =CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "In Progress"))
+                                                Height: =Parent.Height
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =RadiusSm
+                                                RadiusBottomRight: =RadiusSm
+                                                RadiusTopLeft: =RadiusSm
+                                                RadiusTopRight: =RadiusSm
+                                          - cntSegOnHold:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =ColorWarning
+                                                FillPortions: =CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "On Hold"))
+                                                Height: =Parent.Height
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =RadiusSm
+                                                RadiusBottomRight: =RadiusSm
+                                                RadiusTopLeft: =RadiusSm
+                                                RadiusTopRight: =RadiusSm
+                                          - cntSegClosed:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =ColorSuccess
+                                                FillPortions: =CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "Closed"))
+                                                Height: =Parent.Height
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                RadiusBottomLeft: =RadiusSm
+                                                RadiusBottomRight: =RadiusSm
+                                                RadiusTopLeft: =RadiusSm
+                                                RadiusTopRight: =RadiusSm
+                                    - cntDistributionLegend:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          Height: =20
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =SpaceMd
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                        Children:
+                                          - lblLegendNew:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Status distribution: " & Self.Text
+                                                AlignInContainer: =AlignInContainer.Center
+                                                AutoHeight: =true
+                                                Color: =ColorInfo
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="New " & CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "New"))
+                                                Width: =120
+                                                Wrap: =false
+                                          - lblLegendInProgress:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Status distribution: " & Self.Text
+                                                AlignInContainer: =AlignInContainer.Center
+                                                AutoHeight: =true
+                                                Color: =ColorBrand
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="In Progress " & CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "In Progress"))
+                                                Width: =140
+                                                Wrap: =false
+                                          - lblLegendOnHold:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Status distribution: " & Self.Text
+                                                AlignInContainer: =AlignInContainer.Center
+                                                AutoHeight: =true
+                                                Color: =ColorWarning
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="On Hold " & CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "On Hold"))
+                                                Width: =120
+                                                Wrap: =false
+                                          - lblLegendClosed:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: |-
+                                                  ="Status distribution: " & Self.Text
+                                                AlignInContainer: =AlignInContainer.Center
+                                                AutoHeight: =true
+                                                Color: =ColorSuccess
+                                                FontWeight: =FontWeight.Semibold
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Closed " & CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "Closed"))
+                                                Width: =120
+                                                Wrap: =false
+                              - cntHomeMasterDetail:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
+                                    Height: |-
+                                      =If(App.Width >= BreakpointDesktop,
+                                        Parent.Height,
+                                        cntHomeFilters.Height +
+                                        If(lblQueueLoading.Visible, lblQueueLoading.Height, 0) +
+                                        If(lblQueueError.Visible, lblQueueError.Height, 0) +
+                                        If(lblQueuePermission.Visible, lblQueuePermission.Height, 0) +
+                                        If(lblQueueEmpty.Visible, lblQueueEmpty.Height, 0) +
+                                        Max(0, galRequests.AllItemsCount * (If(App.Width < BreakpointPhone, 92, 76) + SpaceXs * 2)) +
+                                        SpaceSm * 5)
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =If(App.Width >= BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                    LayoutGap: =SpaceMd
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    RadiusBottomLeft: =0
+                                    RadiusBottomRight: =0
+                                    RadiusTopLeft: =0
+                                    RadiusTopRight: =0
+                                  Children:
+                                    - cntHomeListPane:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          FillPortions: =0
+                                          Height: |-
+                                            =If(App.Width >= BreakpointDesktop,
+                                              Parent.Height,
+                                              cntHomeFilters.Height +
+                                              If(lblQueueLoading.Visible, lblQueueLoading.Height, 0) +
+                                              If(lblQueueError.Visible, lblQueueError.Height, 0) +
+                                              If(lblQueuePermission.Visible, lblQueuePermission.Height, 0) +
+                                              If(lblQueueEmpty.Visible, lblQueueEmpty.Height, 0) +
+                                              Max(0, galRequests.AllItemsCount * (If(App.Width < BreakpointPhone, 92, 76) + SpaceXs * 2)) +
+                                              SpaceSm * 5)
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =SpaceSm
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =320
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Width: =If(App.Width >= BreakpointDesktop, Parent.Width * ListPaneRatio, Parent.Width)
+                                        Children:
+                                          - cntHomeFilters:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                FillPortions: =0
+                                                Height: =If(App.Width < BreakpointPhone, InputHeight * 2 + SpaceSm, App.Width < BreakpointDesktop, InputHeight, InputHeight * 3 + SpaceSm * 2)
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                                LayoutGap: =SpaceSm
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                LayoutWrap: =true
+                                                RadiusBottomLeft: =0
+                                                RadiusBottomRight: =0
+                                                RadiusTopLeft: =0
+                                                RadiusTopRight: =0
+                                              Children:
+                                                - txtSearch:
+                                                    Control: ModernTextInput
+                                                    Properties:
+                                                      AccessibleLabel: ="Search requests"
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      FillPortions: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 1, 0)
+                                                      Height: =InputHeight
+                                                      LayoutMinHeight: =InputHeight
+                                                      LayoutMinWidth: =200
+                                                      OnChange: =Set(gblSearchText, Self.Text)
+                                                      Placeholder: ="Search title, requester, or description"
+                                                      Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                      TriggerOutput: =TriggerOutput.Delayed
+                                                      Type: =TextInputType.Search
+                                                - cmbStatusFilter:
+                                                    Control: ModernDropdown
+                                                    Properties:
+                                                      AccessibleLabel: ="Filter requests by status"
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      Default: =First(["All", "New", "In Progress", "On Hold", "Closed"])
+                                                      Height: =InputHeight
+                                                      ItemDisplayText: =ThisItem.Value
+                                                      Items: =["All", "New", "In Progress", "On Hold", "Closed"]
+                                                      LayoutMinHeight: =InputHeight
+                                                      LayoutMinWidth: =160
+                                                      OnChange: =Set(gblStatusFilter, Self.Selected.Value)
+                                                      Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                      Width: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 180, Parent.Width)
+                                                - cmbDepartmentFilter:
+                                                    Control: ModernDropdown
+                                                    Properties:
+                                                      AccessibleLabel: ="Filter requests by department"
+                                                      AlignInContainer: =AlignInContainer.Stretch
+                                                      Default: |-
+                                                        =First(Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options))
+                                                      Height: =InputHeight
+                                                      ItemDisplayText: =ThisItem.Value
+                                                      Items: |-
+                                                        =Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options)
+                                                      LayoutMinHeight: =InputHeight
+                                                      LayoutMinWidth: =160
+                                                      OnChange: =Set(gblDepartmentFilter, Self.Selected.Value)
+                                                      Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                      Visible: =App.Width >= BreakpointPhone
+                                                      Width: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 220, Parent.Width)
+                                          - lblQueueLoading:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                Text: ="Loading requests…"
+                                                Visible: =gblIsLoading
+                                          - lblQueueError:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorCritical
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                Text: ="We couldn't load the request queue. Select Refresh to try again."
+                                                Visible: =gblLoadError && !gblPermissionDenied
+                                          - lblQueuePermission:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorWarning
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                Text: ="You don't have permission to view FOIA requests. Contact a site owner for access."
+                                                Visible: =gblPermissionDenied
+                                          - lblQueueEmpty:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                Text: ="No requests match these filters."
+                                                Visible: =!gblIsLoading && !gblLoadError && !gblPermissionDenied && galRequests.AllItemsCount = 0
+                                          - galRequests:
+                                              Control: Gallery
+                                              Variant: Vertical
+                                              Properties:
+                                                AccessibleLabel: ="FOIA requests"
+                                                FillPortions: =0
+                                                Height: |-
+                                                  =If(App.Width >= BreakpointDesktop,
+                                                    Max(0,
+                                                      Parent.Height - cntHomeFilters.Height -
+                                                      If(lblQueueLoading.Visible, lblQueueLoading.Height, 0) -
+                                                      If(lblQueueError.Visible, lblQueueError.Height, 0) -
+                                                      If(lblQueuePermission.Visible, lblQueuePermission.Height, 0) -
+                                                      If(lblQueueEmpty.Visible, lblQueueEmpty.Height, 0) -
+                                                      SpaceSm * 5),
+                                                    Max(0, Self.AllItemsCount * (If(App.Width < BreakpointPhone, 92, 76) + SpaceXs * 2)))
+                                                Items: |-
+                                                  =SortByColumns(
+                                                    Filter(
+                                                      'FOIA Pilot Requests',
+                                                      (gblStatusFilter = "All" || OverallStatus.Value = gblStatusFilter) &&
+                                                      (gblDepartmentFilter = "All" || PrimaryDepartment.Value = gblDepartmentFilter) &&
+                                                      (IsBlank(gblSearchText) ||
+                                                        StartsWith(Title, gblSearchText) ||
+                                                        StartsWith(RequesterLastName, gblSearchText) ||
+                                                        StartsWith(RequestDescription, gblSearchText))
+                                                    ),
+                                                    "ReceivedDate",
+                                                    SortOrder.Descending
+                                                  )
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                LoadingSpinner: =LoadingSpinner.Controls
+                                                LoadingSpinnerColor: =ColorBrand
+                                                OnSelect: |-
+                                                  =Set(gblSelectedRequest, ThisItem);
+                                                  If(App.Width < BreakpointDesktop, Navigate(RequestDetail, ScreenTransition.Fade))
+                                                ShowScrollbar: =App.Width >= BreakpointDesktop
+                                                TabIndex: =0
+                                                TemplatePadding: =SpaceXs
+                                                TemplateSize: =If(App.Width < BreakpointPhone, 92, 76)
+                                                Visible: =!gblIsLoading && !gblLoadError && !gblPermissionDenied
+                                                Width: =Parent.Width
+                                              Children:
+                                                - cntRequestRow:
+                                                    Control: GroupContainer
+                                                    Variant: AutoLayout
+                                                    Properties:
+                                                      BorderColor: =ColorNeutralStroke
+                                                      BorderThickness: =1
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =If(App.Width >= BreakpointDesktop && ThisItem.ID = gblSelectedRequest.ID, ColorBrandTint, ColorSurface)
+                                                      Height: =Parent.TemplateHeight
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Horizontal
+                                                      LayoutGap: =SpaceMd
+                                                      PaddingBottom: =SpaceSm
+                                                      PaddingLeft: =SpaceMd
+                                                      PaddingRight: =SpaceMd
+                                                      PaddingTop: =SpaceSm
+                                                      RadiusBottomLeft: =RadiusSm
+                                                      RadiusBottomRight: =RadiusSm
+                                                      RadiusTopLeft: =RadiusSm
+                                                      RadiusTopRight: =RadiusSm
+                                                      Width: =Parent.TemplateWidth
+                                                    Children:
+                                                      - cntRequestRowText:
+                                                          Control: GroupContainer
+                                                          Variant: AutoLayout
+                                                          Properties:
+                                                            DropShadow: =DropShadow.None
+                                                            LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                            LayoutDirection: =LayoutDirection.Vertical
+                                                            LayoutGap: =SpaceXs
+                                                            LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                            LayoutMinHeight: =0
+                                                            LayoutMinWidth: =120
+                                                            RadiusBottomLeft: =0
+                                                            RadiusBottomRight: =0
+                                                            RadiusTopLeft: =0
+                                                            RadiusTopRight: =0
+                                                          Children:
+                                                            - lblRequestRowTitle:
+                                                                Control: ModernText
+                                                                Properties:
+                                                                  AccessibleLabel: =Self.Text
+                                                                  AlignInContainer: =AlignInContainer.Stretch
+                                                                  AutoHeight: =true
+                                                                  Color: =ColorTextPrimary
+                                                                  FontWeight: =FontWeight.Semibold
+                                                                  LayoutMinHeight: =0
+                                                                  LayoutMinWidth: =0
+                                                                  OnSelect: |-
+                                                                    =Set(gblSelectedRequest, ThisItem);
+                                                                      If(App.Width < BreakpointDesktop, Navigate(RequestDetail, ScreenTransition.Fade))
+                                                                  PaddingBottom: =0
+                                                                  PaddingLeft: =0
+                                                                  PaddingRight: =0
+                                                                  PaddingTop: =0
+                                                                  Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                                  Text: =Coalesce(ThisItem.Title, "Untitled request")
+                                                                  Wrap: =false
+                                                            - lblRequestRowMeta:
+                                                                Control: ModernText
+                                                                Properties:
+                                                                  AccessibleLabel: =Self.Text
+                                                                  AlignInContainer: =AlignInContainer.Stretch
+                                                                  AutoHeight: =true
+                                                                  Color: =ColorTextSecondary
+                                                                  LayoutMinHeight: =0
+                                                                  LayoutMinWidth: =0
+                                                                  OnSelect: |-
+                                                                    =Set(gblSelectedRequest, ThisItem);
+                                                                      If(App.Width < BreakpointDesktop, Navigate(RequestDetail, ScreenTransition.Fade))
+                                                                  PaddingBottom: =0
+                                                                  PaddingLeft: =0
+                                                                  PaddingRight: =0
+                                                                  PaddingTop: =0
+                                                                  Size: =FontSizeCaption
+                                                                  Text: |-
+                                                                    =ThisItem.RequesterFirstName & " " & ThisItem.RequesterLastName &
+                                                                    " · Received " & If(IsBlank(ThisItem.ReceivedDate), "—", Text(ThisItem.ReceivedDate, "mmm d, yyyy")) &
+                                                                    If(App.Width < BreakpointPhone, " · " & Coalesce(ThisItem.OverallStatus.Value, "Not set"), "")
+                                                      - bdgRequestRowStatus:
+                                                          Control: ModernBadge
+                                                          Properties:
+                                                            AccessibleLabel: |-
+                                                              ="Status: " & Coalesce(ThisItem.OverallStatus.Value, "Not set")
+                                                            AlignInContainer: =AlignInContainer.Center
+                                                            Content: =Coalesce(ThisItem.OverallStatus.Value, "Not set")
+                                                            FontWeight: =FontWeight.Semibold
+                                                            Height: =24
+                                                            Icon: |-
+                                                              =Switch(ThisItem.OverallStatus.Value,
+                                                                "New", "Info",
+                                                                "In Progress", "ArrowClockwise",
+                                                                "On Hold", "Pause",
+                                                                "Ready", "Checkmark",
+                                                                "Delivered", "Send",
+                                                                "Closed", "CheckmarkCircle",
+                                                                "Complete", "CheckmarkCircle",
+                                                                "Overdue", "Warning",
+                                                                "Circle")
+                                                            Intent: |-
+                                                              =Switch(ThisItem.OverallStatus.Value,
+                                                                "New", BadgeIntent.Informative,
+                                                                "In Progress", BadgeIntent.Highlight,
+                                                                "On Hold", BadgeIntent.Caution,
+                                                                "Ready", BadgeIntent.Attention,
+                                                                "Delivered", BadgeIntent.Positive,
+                                                                "Closed", BadgeIntent.Positive,
+                                                                "Complete", BadgeIntent.Positive,
+                                                                "Overdue", BadgeIntent.Critical,
+                                                                BadgeIntent.Neutral)
+                                                            LayoutMinHeight: =24
+                                                            LayoutMinWidth: =112
+                                                            Shape: =BadgeShape.Rounded
+                                                            Size: =12
+                                                            Visible: =App.Width >= BreakpointPhone
+                                                            Width: =112
+                                                      - btnRequestRowOpen:
+                                                          Control: ModernButton
+                                                          Properties:
+                                                            AccessibleLabel: ="Open request " & ThisItem.Title
+                                                            AlignInContainer: =AlignInContainer.Center
+                                                            Appearance: =ButtonAppearance.Subtle
+                                                            Height: =ControlMinTouch
+                                                            Icon: ="ChevronRight"
+                                                            Layout: =ButtonLayout.IconOnly
+                                                            LayoutMinHeight: =ControlMinTouch
+                                                            LayoutMinWidth: =ControlMinTouch
+                                                            OnSelect: |-
+                                                              =Set(gblSelectedRequest, ThisItem);
+                                                                If(App.Width < BreakpointDesktop, Navigate(RequestDetail, ScreenTransition.Fade))
+                                                            Text: ="Open"
+                                                            Tooltip: ="Open request"
+                                                            Visible: =App.Width < BreakpointDesktop
+                                                            Width: =ControlMinTouch
+                                    - cntHomeDetailPane:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          RadiusBottomLeft: =0
+                                          RadiusBottomRight: =0
+                                          RadiusTopLeft: =0
+                                          RadiusTopRight: =0
+                                          Visible: =App.Width >= BreakpointDesktop
+                                        Children:
+                                          - cntHomeDetailEmpty:
+                                              Control: GroupContainer
+                                              Variant: AutoLayout
+                                              Properties:
+                                                BorderColor: =ColorNeutralStroke
+                                                BorderThickness: =1
+                                                DropShadow: =DropShadow.None
+                                                Fill: =ColorSurface
+                                                LayoutAlignItems: =LayoutAlignItems.Center
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutGap: =SpaceSm
+                                                LayoutJustifyContent: =LayoutJustifyContent.Center
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                PaddingBottom: =PagePaddingWide
+                                                PaddingLeft: =PagePaddingWide
+                                                PaddingRight: =PagePaddingWide
+                                                PaddingTop: =PagePaddingWide
+                                                RadiusBottomLeft: =RadiusSm
+                                                RadiusBottomRight: =RadiusSm
+                                                RadiusTopLeft: =RadiusSm
+                                                RadiusTopRight: =RadiusSm
+                                                Visible: =IsBlank(gblSelectedRequest)
+                                              Children:
+                                                - icoDetailEmpty:
+                                                    Control: ModernIcon
+                                                    Properties:
+                                                      AccessibleLabel: ="No request selected"
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      Height: =48
+                                                      Icon: ="DocumentSearch"
+                                                      IconColor: =ColorTextSecondary
+                                                      LayoutMinHeight: =48
+                                                      LayoutMinWidth: =48
+                                                      Width: =48
+                                                - lblDetailEmptyTitle:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: =Self.Text
+                                                      Align: =Align.Center
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      AutoHeight: =true
+                                                      Color: =ColorTextPrimary
+                                                      FontWeight: =FontWeight.Semibold
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeSection
+                                                      Text: ="Select a request"
+                                                      Width: =320
+                                                      Wrap: =false
+                                                - lblDetailEmptyHint:
+                                                    Control: ModernText
+                                                    Properties:
+                                                      AccessibleLabel: =Self.Text
+                                                      Align: =Align.Center
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      AutoHeight: =true
+                                                      Color: =ColorTextSecondary
+                                                      LayoutMinHeight: =0
+                                                      LayoutMinWidth: =0
+                                                      PaddingBottom: =0
+                                                      PaddingLeft: =0
+                                                      PaddingRight: =0
+                                                      PaddingTop: =0
+                                                      Size: =FontSizeCaption
+                                                      Text: ="Summary, department assignments, and a dated activity timeline will appear here."
+                                                      Width: =320
+                                                - btnDetailEmptyNew:
+                                                    Control: ModernButton
+                                                    Properties:
+                                                      AccessibleLabel: ="New request"
+                                                      AlignInContainer: =AlignInContainer.Center
+                                                      BasePaletteColor: =ColorBrand
+                                                      Height: =ControlMinTouch
+                                                      Icon: ="Add"
+                                                      LayoutMinHeight: =ControlMinTouch
+                                                      LayoutMinWidth: =0
+                                                      OnSelect: =Navigate(NewRequest, ScreenTransition.Fade)
+                                                      Text: ="New request"
+                                                      Tooltip: =Self.Text
+                                                      Width: =Len(Self.Text) * 9 + SpaceLg * 2 + 24
+                                          - cmpHomeDetailPane:
+                                              Control: CanvasComponent
+                                              ComponentName: cmpRequestDetailPane
+                                              Properties:
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                FillPortions: =1
+                                                Height: =Parent.Height
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                                OnConfirmDueDate: |-
+                                                  =IfError(
+                                                    Patch('FOIA Pilot Requests', gblSelectedRequest, {DueDateConfirmed: true});
+                                                    Set(gblSelectedRequest, LookUp('FOIA Pilot Requests', ID = gblSelectedRequest.ID));
+                                                    Notify("Due date confirmed.", NotificationType.Success),
+                                                    Notify("The due date could not be confirmed: " & FirstError.Message, NotificationType.Error)
+                                                  )
+                                                OnOpenCloseout: =Navigate(ResponseCloseout, ScreenTransition.None)
+                                                OnOpenDepartmentWork: |-
+                                                  =If(IsBlank(gblSelectedAssignment) || gblSelectedAssignment.Request.Id <> gblSelectedRequest.ID,
+                                                    Set(gblSelectedAssignment, First(Filter('FOIA Pilot Assignments', Request.Id = gblSelectedRequest.ID && Active = true))));
+                                                  Set(gblSelectedDepartment, gblSelectedAssignment.Department);
+                                                  Navigate(DepartmentWork, ScreenTransition.None)
+                                                ShowQuickActions: =true
+                                                Visible: =!IsBlank(gblSelectedRequest)
+                                                Width: =Parent.Width
+            - cmpHomeNavBottom:
+                Control: CanvasComponent
+                ComponentName: cmpSideNav
+                Properties:
+                  ActiveScreen: ="Home"
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =BottomNavHeight
+                  LayoutMinHeight: =BottomNavHeight
+                  LayoutMinWidth: =0
+                  Placement: ="Bottom"
+                  Visible: =App.Width < BreakpointPhone
+                  Width: =App.Width

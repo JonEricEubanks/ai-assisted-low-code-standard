@@ -22,6 +22,7 @@ Complete one record per asset. Keep confidential source identifiers and approval
 |---|---|---|---|---|---|---|
 | Six article drafts | Synthetic scenarios and diagrams in this repository | Synthetic | Authored from scratch; no pilot media or records used | Synthetic; no realized benefit claimed | Draft; review incomplete | Pending |
 | Portfolio diagrams | `portfolio/synthetic-visuals.md` | Synthetic | Original diagrams created from fictional workflows | Illustrative only | Draft; review incomplete | Pending |
+| Six captured blog illustrations (EVD-BLOG-001 through EVD-BLOG-006) | [Local synthetic capture board and asset notes](assets/README.md) | Synthetic | Original fictional article concepts rendered with local HTML/CSS and captured by Playwright; no pilot media used | Illustrative only; not platform test evidence | Capture/layout checks complete; independent reviews incomplete | Pending |
 
 For an asset based on approved internal evidence, use a non-sensitive evidence reference and record the source-to-public transformation in the approved internal system. Do not copy the source, source location, identifiers, or excluded details into this public-facing workspace.
 
@@ -31,6 +32,7 @@ For an asset based on approved internal evidence, use a non-sensitive evidence r
 |---|---|---|---|---|---|---|
 | Article series and synthetic visuals | Pending | Pending | Pending | Pending | Pending | Not approved for external publication |
 | Synthetic case studies and demo outline | Pending | Pending | Pending | Pending | Pending | Not approved for external publication |
+| Six captured blog illustrations | Pending | Pending | Pending | Pending | Pending | Not approved for external publication |
 
 ## Unresolved publication decisions
 

@@ -1,0 +1,815 @@
+Screens:
+  NewRequest:
+    Properties:
+      Fill: =ColorNeutralBg
+      LoadingSpinnerColor: =ColorBrand
+      OnVisible: |-
+        =Set(gblIsLoading, false);
+        Set(gblSaveSuccess, false);
+        Set(gblDueDateConfirmed, false);
+        Reset(txtRequesterFirstName);
+        Reset(txtRequesterLastName);
+        Reset(txtRequesterEmail);
+        Reset(txtRequesterPhone);
+        Reset(txtRequestDescription);
+        Reset(cmbPrimaryDepartment);
+        Reset(cmbIntakeMethod);
+        Reset(cmbRequestRoute);
+        Reset(cmbDeliveryFormat);
+        Reset(datReceivedDate);
+        Reset(datDueDate);
+        Reset(chkDueDateConfirmed);
+        Reset(chkCertifiedCopies);
+        Reset(chkFeeWaiverRequested)
+    Children:
+      - cntNewRequestShell:
+          Control: GroupContainer
+          Variant: AutoLayout
+          Properties:
+            Fill: =ColorNeutralBg
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Vertical
+            Width: =Parent.Width
+          Children:
+            - cmpNewRequestHeader:
+                Control: CanvasComponent
+                ComponentName: cmpAppHeader
+                Properties:
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =HeaderHeight
+                  LayoutMinHeight: =HeaderHeight
+                  LayoutMinWidth: =0
+                  OnBack: =Navigate(Dashboard, ScreenTransition.None)
+                  OnPrimary: =false
+                  OnSecondary: =false
+                  PrimaryIcon: =""
+                  PrimaryLabel: =""
+                  SecondaryIcon: =""
+                  SecondaryLabel: =""
+                  ShowBack: =true
+                  Subtitle: ="Manual intake · confirm the working due date before saving"
+                  Title: ="New request"
+            - cntNewRequestBody:
+                Control: GroupContainer
+                Variant: AutoLayout
+                Properties:
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutMinHeight: =0
+                  LayoutMinWidth: =0
+                Children:
+                  - cmpNewRequestNavRail:
+                      Control: CanvasComponent
+                      ComponentName: cmpSideNav
+                      Properties:
+                        ActiveScreen: ="NewRequest"
+                        AlignInContainer: =AlignInContainer.Stretch
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =If(App.Width >= BreakpointDesktop, 220, 64)
+                        Placement: ="Rail"
+                        Visible: =!(App.Width < BreakpointPhone)
+                        Width: =If(App.Width >= BreakpointDesktop, 220, 64)
+                  - cntNewRequestContent:
+                      Control: GroupContainer
+                      Variant: AutoLayout
+                      Properties:
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =SpaceMd
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        PaddingBottom: =SpaceLg
+                        PaddingLeft: =If(App.Width < BreakpointPhone, SpaceMd, SpaceLg)
+                        PaddingRight: =If(App.Width < BreakpointPhone, SpaceMd, SpaceLg)
+                        PaddingTop: =If(App.Width < BreakpointPhone, SpaceMd, SpaceLg)
+                      Children:
+                        - cntRequestFormShell:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =ColorNeutralStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorSurface
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =SpaceMd
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              LayoutOverflowY: =LayoutOverflow.Scroll
+                              PaddingBottom: =If((App.Width < BreakpointPhone), SpaceMd, SpaceLg)
+                              PaddingLeft: =If((App.Width < BreakpointPhone), SpaceMd, SpaceLg)
+                              PaddingRight: =If((App.Width < BreakpointPhone), SpaceMd, SpaceLg)
+                              PaddingTop: =If((App.Width < BreakpointPhone), SpaceMd, SpaceLg)
+                              RadiusBottomLeft: =RadiusSm
+                              RadiusBottomRight: =RadiusSm
+                              RadiusTopLeft: =RadiusSm
+                              RadiusTopRight: =RadiusSm
+                            Children:
+                              - lblRequesterSection:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: ="Requester information"
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeSection
+                                    Text: ="Requester information"
+                              - cntRequesterFields:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =If((App.Width < BreakpointPhone), 4, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) * FieldHeight + (If((App.Width < BreakpointPhone), 4, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) - 1) * SpaceMd
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =SpaceMd
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    LayoutWrap: =true
+                                  Children:
+                                    - cntFirstName:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblRequesterFirstName:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="First name label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="First name *"
+                                          - txtRequesterFirstName:
+                                              Control: ModernTextInput
+                                              Properties:
+                                                AccessibleLabel: ="Requester first name"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                Placeholder: ="Enter first name"
+                                                Required: =true
+                                    - cntLastName:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblRequesterLastName:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Last name label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Last name *"
+                                          - txtRequesterLastName:
+                                              Control: ModernTextInput
+                                              Properties:
+                                                AccessibleLabel: ="Requester last name"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                Placeholder: ="Enter last name"
+                                                Required: =true
+                                    - cntEmail:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblRequesterEmail:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Email label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Email"
+                                          - txtRequesterEmail:
+                                              Control: ModernTextInput
+                                              Properties:
+                                                AccessibleLabel: ="Requester email"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                Placeholder: ="name@example.org"
+                                    - cntPhone:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblRequesterPhone:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Phone label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Phone"
+                                          - txtRequesterPhone:
+                                              Control: ModernTextInput
+                                              Properties:
+                                                AccessibleLabel: ="Requester phone"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                Placeholder: ="(555) 555-0100"
+                              - lblRequestSection:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: ="Request details"
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeSection
+                                    Text: ="Request details"
+                              - cntRequestDetails:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =22 + 6 + 120
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =6
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - lblRequestDescription:
+                                        Control: ModernText
+                                        Properties:
+                                          AccessibleLabel: ="Request description label"
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          AutoHeight: =true
+                                          Color: =ColorTextSecondary
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                          Size: =FontSizeCaption
+                                          Text: ="What records are being requested? *"
+                                    - txtRequestDescription:
+                                        Control: ModernTextInput
+                                        Properties:
+                                          AccessibleLabel: ="FOIA request description"
+                                          AlignInContainer: =AlignInContainer.Stretch
+                                          Height: =120
+                                          MaxLength: =4000
+                                          Placeholder: ="Describe the records, date range, and any helpful context"
+                                          Required: =true
+                                          Type: =TextInputType.Multiline
+                              - cntRoutingFields:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =If((App.Width < BreakpointPhone), 4, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) * FieldHeight + (If((App.Width < BreakpointPhone), 4, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) - 1) * SpaceMd
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =SpaceMd
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    LayoutWrap: =true
+                                  Children:
+                                    - cntDepartment:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblPrimaryDepartment:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Primary department label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Primary department *"
+                                          - cmbPrimaryDepartment:
+                                              Control: ModernCombobox
+                                              Properties:
+                                                AccessibleLabel: ="Primary department"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                InputTextPlaceholder: ="Select a department"
+                                                ItemDisplayText: =ThisItem.Title
+                                                Items: =SortByColumns(Filter('FOIA Pilot Departments', Active = true), "SortOrder", SortOrder.Ascending)
+                                                Required: =true
+                                                SelectMultiple: =false
+                                    - cntIntakeMethod:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblIntakeMethod:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Intake method label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Intake method"
+                                          - cmbIntakeMethod:
+                                              Control: ModernCombobox
+                                              Properties:
+                                                AccessibleLabel: ="Intake method"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                DefaultSelectedItems: =LookUp(Choices('FOIA Pilot Requests'.IntakeMethod), Value = "Online Form")
+                                                Height: =InputHeight
+                                                InputTextPlaceholder: ="Select an intake method"
+                                                IsSearchable: =false
+                                                ItemDisplayText: =ThisItem.Value
+                                                Items: =Choices('FOIA Pilot Requests'.IntakeMethod)
+                                                SelectMultiple: =false
+                                    - cntRequestRoute:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblRequestRoute:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Request route label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Request route *"
+                                          - cmbRequestRoute:
+                                              Control: ModernCombobox
+                                              Properties:
+                                                AccessibleLabel: ="Request route"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                InputTextPlaceholder: ="Select a route"
+                                                IsSearchable: =false
+                                                ItemDisplayText: =ThisItem.Value
+                                                Items: =Choices('FOIA Pilot Requests'.RequestRoute)
+                                                Required: =true
+                                                SelectMultiple: =false
+                                    - cntDeliveryFormat:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 3) / 4 - 1))
+                                        Children:
+                                          - lblDeliveryFormat:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Delivery format label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Delivery format"
+                                          - cmbDeliveryFormat:
+                                              Control: ModernCombobox
+                                              Properties:
+                                                AccessibleLabel: ="Delivery format"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                InputTextPlaceholder: ="Select a format"
+                                                IsSearchable: =false
+                                                ItemDisplayText: =ThisItem.Value
+                                                Items: =Choices('FOIA Pilot Requests'.DeliveryFormat)
+                                                SelectMultiple: =false
+                              - lblDatesSection:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: ="Intake dates and confirmation"
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeSection
+                                    Text: ="Dates and confirmations"
+                              - cntDateFields:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =If((App.Width < BreakpointPhone), 3, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) * 80 + (If((App.Width < BreakpointPhone), 3, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), 2, 1)) - 1) * SpaceMd
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =SpaceMd
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                    LayoutWrap: =true
+                                  Children:
+                                    - cntReceivedDate:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 2) / 3 - 1))
+                                        Children:
+                                          - lblReceivedDate:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Received date label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Received date"
+                                          - datReceivedDate:
+                                              Control: ModernDatePicker
+                                              Properties:
+                                                AccessibleLabel: ="Request received date"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                DefaultDate: =Today()
+                                                Format: ="mm/dd/yyyy"
+                                                Height: =InputHeight
+                                                IsEditable: =true
+                                                Placeholder: ="Select date"
+                                    - cntDueDate:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =FieldHeight
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =FieldHeight
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 2) / 3 - 1))
+                                        Children:
+                                          - lblDueDate:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: ="Working due date label"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="Working due date *"
+                                          - datDueDate:
+                                              Control: ModernDatePicker
+                                              Properties:
+                                                AccessibleLabel: ="Human-confirmed working due date"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                DefaultDate: =Blank()
+                                                Format: ="mm/dd/yyyy"
+                                                Height: =InputHeight
+                                                IsEditable: =true
+                                    - cntDueDateConfirm:
+                                        Control: GroupContainer
+                                        Variant: AutoLayout
+                                        Properties:
+                                          AlignInContainer: =AlignInContainer.Start
+                                          FillPortions: =0
+                                          Height: =80
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
+                                          LayoutDirection: =LayoutDirection.Vertical
+                                          LayoutGap: =6
+                                          LayoutMinHeight: =80
+                                          LayoutMinWidth: =200
+                                          Width: =If((App.Width < BreakpointPhone), Parent.Width, If((App.Width >= BreakpointPhone && App.Width < BreakpointDesktop), (Parent.Width - SpaceMd) / 2 - 1, (Parent.Width - SpaceMd * 2) / 3 - 1))
+                                        Children:
+                                          - chkDueDateConfirmed:
+                                              Control: ModernCheckbox
+                                              Properties:
+                                                AccessibleLabel: ="Confirm the displayed due date"
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                Height: =InputHeight
+                                                Label: ="I confirm this working due date"
+                                                OnCheck: =Set(gblDueDateConfirmed, true)
+                                                OnUncheck: =Set(gblDueDateConfirmed, false)
+                                          - lblDueDateHelp:
+                                              Control: ModernText
+                                              Properties:
+                                                AccessibleLabel: =Self.Text
+                                                AlignInContainer: =AlignInContainer.Stretch
+                                                AutoHeight: =true
+                                                Color: =ColorTextSecondary
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Size: =FontSizeCaption
+                                                Text: ="No statutory deadline is calculated by this app."
+                              - cntOptionalFlags:
+                                  Control: GroupContainer
+                                  Variant: AutoLayout
+                                  Properties:
+                                    FillPortions: =0
+                                    Height: =If((App.Width < BreakpointPhone), InputHeight * 2 + SpaceSm, InputHeight)
+                                    LayoutAlignItems: =If((App.Width < BreakpointPhone), LayoutAlignItems.Stretch, LayoutAlignItems.Center)
+                                    LayoutDirection: =If((App.Width < BreakpointPhone), LayoutDirection.Vertical, LayoutDirection.Horizontal)
+                                    LayoutGap: =If((App.Width < BreakpointPhone), SpaceSm, SpaceLg)
+                                    LayoutMinHeight: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - chkCertifiedCopies:
+                                        Control: ModernCheckbox
+                                        Properties:
+                                          AccessibleLabel: ="Certified copies requested"
+                                          Height: =InputHeight
+                                          Label: ="Certified copies requested"
+                                          LayoutMinWidth: =260
+                                          Width: =260
+                                    - chkFeeWaiverRequested:
+                                        Control: ModernCheckbox
+                                        Properties:
+                                          AccessibleLabel: ="Fee waiver requested"
+                                          Height: =InputHeight
+                                          Label: ="Fee waiver requested"
+                                          LayoutMinWidth: =260
+                                          Width: =260
+                              - lblRequestValidation:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorCritical
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeBody
+                                    Text: |-
+                                      =If(
+                                        IsBlank(txtRequesterFirstName.Text) || IsBlank(txtRequesterLastName.Text) || IsBlank(txtRequestDescription.Text) || IsBlank(cmbPrimaryDepartment.Selected) || IsBlank(cmbRequestRoute.Selected) || IsBlank(datDueDate.SelectedDate),
+                                        "Complete all required fields before saving.",
+                                        If(!gblDueDateConfirmed, "Confirm the working due date before saving.", "")
+                                      )
+                                    Visible: =!IsBlank(Self.Text)
+                              - lblRequestError:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorCritical
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeBody
+                                    Text: ="The request could not be saved. Check your access and try again."
+                                    Visible: =gblLoadError
+                              - lblRequestPermission:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorWarning
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeBody
+                                    Text: ="You do not have permission to create requests in the connected SharePoint list."
+                                    Visible: =gblPermissionDenied
+                              - lblRequestSuccess:
+                                  Control: ModernText
+                                  Properties:
+                                    AccessibleLabel: =Self.Text
+                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AutoHeight: =true
+                                    Color: =ColorSuccess
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =FontSizeBody
+                                    Text: ="Request saved successfully."
+                                    Visible: =gblSaveSuccess
+                        - cntRequestActions:
+                            Control: GroupContainer
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =ColorNeutralStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =ColorSurface
+                              FillPortions: =0
+                              Height: =If((App.Width < BreakpointPhone), ControlMinTouch * 2 + SpaceSm + SpaceMd * 2, ControlMinTouch + SpaceMd * 2)
+                              LayoutAlignItems: =If((App.Width < BreakpointPhone), LayoutAlignItems.Stretch, LayoutAlignItems.Center)
+                              LayoutDirection: =If((App.Width < BreakpointPhone), LayoutDirection.Vertical, LayoutDirection.Horizontal)
+                              LayoutGap: =If((App.Width < BreakpointPhone), SpaceSm, SpaceMd)
+                              LayoutJustifyContent: =LayoutJustifyContent.End
+                              LayoutMinHeight: =0
+                              LayoutMinWidth: =0
+                              PaddingBottom: =SpaceMd
+                              PaddingLeft: =SpaceMd
+                              PaddingRight: =SpaceMd
+                              PaddingTop: =SpaceMd
+                              RadiusBottomLeft: =RadiusSm
+                              RadiusBottomRight: =RadiusSm
+                              RadiusTopLeft: =RadiusSm
+                              RadiusTopRight: =RadiusSm
+                            Children:
+                              - btnCancelRequest:
+                                  Control: ModernButton
+                                  Properties:
+                                    AccessibleLabel: ="Cancel new request"
+                                    Appearance: =ButtonAppearance.Secondary
+                                    Height: =ControlMinTouch
+                                    LayoutMinHeight: =ControlMinTouch
+                                    LayoutMinWidth: =120
+                                    OnSelect: =Navigate(Dashboard, ScreenTransition.None)
+                                    Size: =FontSizeBody
+                                    Text: ="Cancel"
+                                    Width: =120
+                              - btnSaveRequest:
+                                  Control: ModernButton
+                                  Properties:
+                                    AccessibleLabel: ="Save new FOIA request"
+                                    BasePaletteColor: =ColorBrand
+                                    DisplayMode: |-
+                                      =If(
+                                        IsBlank(txtRequesterFirstName.Text) || IsBlank(txtRequesterLastName.Text) || IsBlank(txtRequestDescription.Text) || IsBlank(cmbPrimaryDepartment.Selected) || IsBlank(cmbRequestRoute.Selected) || IsBlank(cmbIntakeMethod.Selected) || IsBlank(datReceivedDate.SelectedDate) || IsBlank(datDueDate.SelectedDate) || !gblDueDateConfirmed || gblPermissionDenied,
+                                        DisplayMode.Disabled,
+                                        DisplayMode.Edit
+                                      )
+                                    Height: =ControlMinTouch
+                                    LayoutMinHeight: =ControlMinTouch
+                                    LayoutMinWidth: =150
+                                    OnSelect: |-
+                                      =Set(gblIsLoading, true);
+                                      Set(gblLoadError, false);
+                                      Set(gblSaveSuccess, false);
+                                      IfError(
+                                        Set(
+                                          gblSelectedRequest,
+                                          Patch(
+                                            'FOIA Pilot Requests',
+                                            Defaults('FOIA Pilot Requests'),
+                                            {
+                                              Title: Concatenate(txtRequesterLastName.Text, ", ", txtRequesterFirstName.Text),
+                                              RequesterFirstName: txtRequesterFirstName.Text,
+                                              RequesterLastName: txtRequesterLastName.Text,
+                                              RequesterEmail: txtRequesterEmail.Text,
+                                              RequesterPhone: txtRequesterPhone.Text,
+                                              RequestDescription: txtRequestDescription.Text,
+                                              PrimaryDepartment: {Id: cmbPrimaryDepartment.Selected.ID, Value: cmbPrimaryDepartment.Selected.Title},
+                                              IntakeMethod: cmbIntakeMethod.Selected,
+                                              RequestRoute: cmbRequestRoute.Selected,
+                                              DeliveryFormat: cmbDeliveryFormat.Selected,
+                                              OverallStatus: LookUp(Choices('FOIA Pilot Requests'.OverallStatus), Value = "New"),
+                                              ReceivedDate: datReceivedDate.SelectedDate,
+                                              DueDate: datDueDate.SelectedDate,
+                                              DueDateConfirmed: gblDueDateConfirmed,
+                                              CertifiedCopies: LookUp(Choices('FOIA Pilot Requests'.CertifiedCopies), Value = If(chkCertifiedCopies.Checked, "Yes", "No")),
+                                              FeeWaiverRequested: LookUp(Choices('FOIA Pilot Requests'.FeeWaiverRequested), Value = If(chkFeeWaiverRequested.Checked, "Yes", "No"))
+                                            }
+                                          )
+                                        );
+                                        Set(gblIsLoading, false);
+                                        Set(gblSaveSuccess, true);
+                                        Navigate(RequestDetail, ScreenTransition.Fade),
+                                        Set(gblIsLoading, false);
+                                        Set(gblLoadError, true);
+                                        Notify("The request could not be saved: " & FirstError.Message, NotificationType.Error)
+                                      )
+                                    Size: =FontSizeBody
+                                    Text: ="Save request"
+                                    Width: =150
+            - cmpNewRequestNavBottom:
+                Control: CanvasComponent
+                ComponentName: cmpSideNav
+                Properties:
+                  ActiveScreen: ="NewRequest"
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Height: =BottomNavHeight
+                  LayoutMinHeight: =BottomNavHeight
+                  LayoutMinWidth: =0
+                  Placement: ="Bottom"
+                  Visible: =(App.Width < BreakpointPhone)
+                  Width: =If(cmpNewRequestNavBottom.Placement = "Bottom", App.Width, If(App.Width >= BreakpointDesktop, 220, 64))

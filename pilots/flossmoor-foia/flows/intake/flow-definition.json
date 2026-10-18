@@ -1,0 +1,604 @@
+{
+  "_todo": [
+    "Remove every '_todo' key before import (see README.md for the one-line strip command); the flow schema does not allow unknown properties.",
+    "Replace <SURVEY123_FORM_ITEM_ID> if the ArcGIS trigger rejects an environment-variable reference for surveyId (dynamic dropdown).",
+    "Confirm trigger payload casing (feature.attributes.<FieldName>, feature.attachments.FeeWaiverStatement[]) against the first real trigger sample.",
+    "Confirm choice values exist on the SharePoint list/library: RequestRoute (Police, Non-Police, Multi-Department, Unassigned), IntakeMethod (Online Form), OverallStatus (New), DocumentType (Request), RedactionStatus (Not Reviewed), Sensitivity (Internal).",
+    "Confirm result() on a skipped scope returns [] (TC-12). If it throws, replace Filter_array_FailedActions' 'from' with per-scope Compose actions that run after Skipped."
+  ],
+  "schemaVersion": "1.0.0.0",
+  "properties": {
+    "displayName": "FOIA Pilot - Public Intake (Survey123 to SharePoint)",
+    "description": "Creates one FOIA Pilot Requests row per Survey123 submission, files fee-waiver attachments, sends requester receipt and FOIA officer notification. Design per pilots/flossmoor-foia/flows/intake/flow-design.md.",
+    "connectionReferences": {
+      "shared_arcgis": {
+        "runtimeSource": "embedded",
+        "connection": { "connectionReferenceLogicalName": "mgp_FOIA_ArcGIS" },
+        "api": { "name": "shared_arcgis" }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": { "connectionReferenceLogicalName": "mgp_FOIA_SharePoint" },
+        "api": { "name": "shared_sharepointonline" }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": { "connectionReferenceLogicalName": "mgp_FOIA_Office365Outlook" },
+        "api": { "name": "shared_office365" }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": { "defaultValue": {}, "type": "Object" },
+        "$authentication": { "defaultValue": {}, "type": "SecureObject" },
+        "mgp_FOIASiteUrl (mgp_FOIASiteUrl)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIASiteUrl", "description": "SharePoint site URL hosting the FOIA Pilot lists" }
+        },
+        "mgp_FOIARequestsListId (mgp_FOIARequestsListId)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIARequestsListId", "description": "GUID of FOIA Pilot Requests" }
+        },
+        "mgp_FOIADepartmentsListId (mgp_FOIADepartmentsListId)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIADepartmentsListId", "description": "GUID of FOIA Pilot Departments" }
+        },
+        "mgp_FOIARecordsLibraryId (mgp_FOIARecordsLibraryId)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIARecordsLibraryId", "description": "GUID of FOIA Pilot Records library" }
+        },
+        "mgp_FOIARecordsLibraryFolderPath (mgp_FOIARecordsLibraryFolderPath)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIARecordsLibraryFolderPath", "description": "Server-relative folder path for Create file, e.g. /FOIA Pilot Records" }
+        },
+        "mgp_FOIASharedMailbox (mgp_FOIASharedMailbox)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIASharedMailbox", "description": "FOIA shared mailbox address used as sender" }
+        },
+        "mgp_FOIAOfficerEmail (mgp_FOIAOfficerEmail)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIAOfficerEmail", "description": "FOIA officer notification and error-alert recipient" }
+        },
+        "mgp_FOIAAppDeepLinkBaseUrl (mgp_FOIAAppDeepLinkBaseUrl)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIAAppDeepLinkBaseUrl", "description": "Canvas app play URL including ?tenantId=; flow appends &RequestId=" }
+        },
+        "mgp_FOIATimeZone (mgp_FOIATimeZone)": {
+          "defaultValue": "Central Standard Time",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIATimeZone", "description": "Windows time zone ID for ReceivedDate" }
+        },
+        "mgp_FOIASurvey123FormItemId (mgp_FOIASurvey123FormItemId)": {
+          "defaultValue": "",
+          "type": "String",
+          "metadata": { "schemaName": "mgp_FOIASurvey123FormItemId", "description": "Survey123 form item ID for the trigger" }
+        }
+      },
+      "triggers": {
+        "When_a_survey_response_is_submitted": {
+          "type": "OpenApiConnectionWebhook",
+          "description": "ArcGIS connector (not the deprecated Survey123 connector). Public form; user info excluded.",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_arcgis",
+              "operationId": "AddData",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_arcgis"
+            },
+            "parameters": {
+              "surveyId": "@parameters('mgp_FOIASurvey123FormItemId (mgp_FOIASurvey123FormItemId)')",
+              "events": [ "addData" ],
+              "includePortalInfo": false,
+              "includeUserInfo": false,
+              "includeSurveyInfo": true,
+              "includeServiceRequest": true,
+              "includeServiceResponse": false
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runtimeConfiguration": {
+            "concurrency": { "runs": 1 }
+          },
+          "_todo": "surveyId is a dynamic dropdown in the designer; if the env-var reference is rejected, paste the literal form item ID <SURVEY123_FORM_ITEM_ID>."
+        }
+      },
+      "actions": {
+        "Compose_CorrelationId": {
+          "type": "Compose",
+          "runAfter": {},
+          "inputs": "@{workflow()?['run']?['name']}"
+        },
+        "Compose_Attributes": {
+          "type": "Compose",
+          "runAfter": { "Compose_CorrelationId": [ "Succeeded" ] },
+          "inputs": "@triggerBody()?['feature']?['attributes']"
+        },
+        "Compose_SubmissionId": {
+          "type": "Compose",
+          "runAfter": { "Compose_Attributes": [ "Succeeded" ] },
+          "inputs": "@{coalesce(outputs('Compose_Attributes')?['globalid'], outputs('Compose_Attributes')?['GlobalID'], triggerBody()?['feature']?['result']?['globalId'], if(empty(outputs('Compose_Attributes')?['objectid']), '', string(outputs('Compose_Attributes')?['objectid'])))}"
+        },
+        "Compose_ReceivedDate": {
+          "type": "Compose",
+          "runAfter": { "Compose_SubmissionId": [ "Succeeded" ] },
+          "inputs": "@{convertFromUtc(utcNow(), parameters('mgp_FOIATimeZone (mgp_FOIATimeZone)'), 'yyyy-MM-dd')}"
+        },
+        "Compose_DueDateSuggested": {
+          "type": "Compose",
+          "description": "5 business days skipping Sat/Sun only. Weekday +7; Sat +9; Sun +8. No holidays - human confirms (DueDateConfirmed=false).",
+          "runAfter": { "Compose_ReceivedDate": [ "Succeeded" ] },
+          "inputs": "@{addDays(outputs('Compose_ReceivedDate'), if(equals(dayOfWeek(outputs('Compose_ReceivedDate')), 6), 9, if(equals(dayOfWeek(outputs('Compose_ReceivedDate')), 0), 8, 7)), 'yyyy-MM-dd')}"
+        },
+        "Compose_RequesterFirstName": {
+          "type": "Compose",
+          "runAfter": { "Compose_DueDateSuggested": [ "Succeeded" ] },
+          "inputs": "@{trim(coalesce(outputs('Compose_Attributes')?['RequesterFirstName'], ''))}"
+        },
+        "Compose_RequesterLastName": {
+          "type": "Compose",
+          "runAfter": { "Compose_RequesterFirstName": [ "Succeeded" ] },
+          "inputs": "@{trim(coalesce(outputs('Compose_Attributes')?['RequesterLastName'], ''))}"
+        },
+        "Compose_RequestTitle": {
+          "type": "Compose",
+          "runAfter": { "Compose_RequesterLastName": [ "Succeeded" ] },
+          "inputs": "@{if(and(empty(outputs('Compose_RequesterLastName')), empty(outputs('Compose_RequesterFirstName'))), 'Anonymous request', if(empty(outputs('Compose_RequesterFirstName')), outputs('Compose_RequesterLastName'), if(empty(outputs('Compose_RequesterLastName')), outputs('Compose_RequesterFirstName'), concat(outputs('Compose_RequesterLastName'), ', ', outputs('Compose_RequesterFirstName')))))}"
+        },
+        "Compose_RequesterEmail": {
+          "type": "Compose",
+          "runAfter": { "Compose_RequestTitle": [ "Succeeded" ] },
+          "inputs": "@{toLower(trim(coalesce(outputs('Compose_Attributes')?['RequesterEmail'], '')))}"
+        },
+        "Compose_IsRequesterEmailValid": {
+          "type": "Compose",
+          "description": "Heuristic format check (no regex in expressions). Receipt is sent only when true.",
+          "runAfter": { "Compose_RequesterEmail": [ "Succeeded" ] },
+          "inputs": "@and(not(empty(outputs('Compose_RequesterEmail'))), greater(length(outputs('Compose_RequesterEmail')), 5), equals(length(split(outputs('Compose_RequesterEmail'), '@')), 2), not(contains(outputs('Compose_RequesterEmail'), ' ')), not(startsWith(outputs('Compose_RequesterEmail'), '@')), contains(last(split(outputs('Compose_RequesterEmail'), '@')), '.'), not(startsWith(last(split(outputs('Compose_RequesterEmail'), '@')), '.')), not(endsWith(outputs('Compose_RequesterEmail'), '.')))"
+        },
+        "Select_DepartmentTitles": {
+          "type": "Select",
+          "description": "Survey123 select_multiple stores comma-separated choice names with underscores; convert back to SharePoint Titles.",
+          "runAfter": { "Compose_IsRequesterEmailValid": [ "Succeeded" ] },
+          "inputs": {
+            "from": "@split(coalesce(outputs('Compose_Attributes')?['Departments'], ''), ',')",
+            "select": "@replace(trim(item()), '_', ' ')"
+          }
+        },
+        "Filter_array_DepartmentTitles": {
+          "type": "Query",
+          "runAfter": { "Select_DepartmentTitles": [ "Succeeded" ] },
+          "inputs": {
+            "from": "@body('Select_DepartmentTitles')",
+            "where": "@not(empty(item()))"
+          }
+        },
+        "Compose_RouteDecision": {
+          "type": "Compose",
+          "description": "0 depts -> Unassigned; >1 -> Multi-Department; only Police Department -> Police; else Non-Police.",
+          "runAfter": { "Filter_array_DepartmentTitles": [ "Succeeded" ] },
+          "inputs": "@{if(equals(length(body('Filter_array_DepartmentTitles')), 0), 'Unassigned', if(greater(length(body('Filter_array_DepartmentTitles')), 1), 'Multi-Department', if(equals(first(body('Filter_array_DepartmentTitles')), 'Police Department'), 'Police', 'Non-Police')))}"
+        },
+        "Compose_PrimaryDepartmentTitle": {
+          "type": "Compose",
+          "runAfter": { "Compose_RouteDecision": [ "Succeeded" ] },
+          "inputs": "@{if(equals(outputs('Compose_RouteDecision'), 'Non-Police'), first(body('Filter_array_DepartmentTitles')), if(equals(outputs('Compose_RouteDecision'), 'Police'), 'Police Department', 'Administration'))}"
+        },
+
+        "Scope_Try_Prepare": {
+          "type": "Scope",
+          "runAfter": { "Compose_PrimaryDepartmentTitle": [ "Succeeded" ] },
+          "actions": {
+            "Condition_HasSubmissionId": {
+              "type": "If",
+              "runAfter": {},
+              "expression": { "not": { "equals": [ "@empty(outputs('Compose_SubmissionId'))", true ] } },
+              "actions": {},
+              "else": {
+                "actions": {
+                  "Compose_RaiseError_MissingSubmissionId": {
+                    "type": "Compose",
+                    "description": "Deliberate failure: int() of text throws, so the single Catch scope handles it. Without a submission id the flow cannot be idempotent and must not create anything.",
+                    "runAfter": {},
+                    "inputs": "@{int(concat('MissingSubmissionId: payload had no globalid or objectid. Correlation ', outputs('Compose_CorrelationId')))}"
+                  }
+                }
+              }
+            },
+            "Get_items_ExistingBySubmissionId": {
+              "type": "OpenApiConnection",
+              "runAfter": { "Condition_HasSubmissionId": [ "Succeeded" ] },
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "GetItems",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('mgp_FOIASiteUrl (mgp_FOIASiteUrl)')",
+                  "table": "@parameters('mgp_FOIARequestsListId (mgp_FOIARequestsListId)')",
+                  "$filter": "SourceSubmissionId eq '@{outputs('Compose_SubmissionId')}'",
+                  "$top": 1
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Condition_IsDuplicate": {
+              "type": "If",
+              "runAfter": { "Get_items_ExistingBySubmissionId": [ "Succeeded" ] },
+              "expression": { "greater": [ "@length(body('Get_items_ExistingBySubmissionId')?['value'])", 0 ] },
+              "actions": {
+                "Compose_Log_DuplicateSkipped": {
+                  "type": "Compose",
+                  "runAfter": {},
+                  "inputs": {
+                    "outcome": "DuplicateSkipped",
+                    "correlationId": "@{outputs('Compose_CorrelationId')}",
+                    "submissionId": "@{outputs('Compose_SubmissionId')}",
+                    "existingRequestId": "@{first(body('Get_items_ExistingBySubmissionId')?['value'])?['ID']}"
+                  }
+                },
+                "Terminate_DuplicateSkipped": {
+                  "type": "Terminate",
+                  "runAfter": { "Compose_Log_DuplicateSkipped": [ "Succeeded" ] },
+                  "inputs": { "runStatus": "Succeeded" }
+                }
+              },
+              "else": { "actions": {} }
+            }
+          }
+        },
+
+        "Scope_Try_CreateRequest": {
+          "type": "Scope",
+          "runAfter": { "Scope_Try_Prepare": [ "Succeeded" ] },
+          "actions": {
+            "Get_items_PrimaryDepartment": {
+              "type": "OpenApiConnection",
+              "runAfter": {},
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "GetItems",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('mgp_FOIASiteUrl (mgp_FOIASiteUrl)')",
+                  "table": "@parameters('mgp_FOIADepartmentsListId (mgp_FOIADepartmentsListId)')",
+                  "$filter": "Title eq '@{replace(outputs('Compose_PrimaryDepartmentTitle'), '''', '''''')}'",
+                  "$top": 1
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Condition_PrimaryDepartmentFound": {
+              "type": "If",
+              "runAfter": { "Get_items_PrimaryDepartment": [ "Succeeded" ] },
+              "expression": { "greater": [ "@length(body('Get_items_PrimaryDepartment')?['value'])", 0 ] },
+              "actions": {},
+              "else": {
+                "actions": {
+                  "Compose_RaiseError_DepartmentNotFound": {
+                    "type": "Compose",
+                    "description": "Deliberate failure -> Catch. Department titles are resolved at run time; nothing is hardcoded. Fix the Departments list or survey choice and resubmit the run.",
+                    "runAfter": {},
+                    "inputs": "@{int(concat('DepartmentNotFound: no FOIA Pilot Departments item with Title = ', outputs('Compose_PrimaryDepartmentTitle')))}"
+                  }
+                }
+              }
+            },
+            "Compose_PrimaryDepartmentId": {
+              "type": "Compose",
+              "runAfter": { "Condition_PrimaryDepartmentFound": [ "Succeeded" ] },
+              "inputs": "@first(body('Get_items_PrimaryDepartment')?['value'])?['ID']"
+            },
+            "Create_item_FOIARequest": {
+              "type": "OpenApiConnection",
+              "description": "retryPolicy none: a retried POST after a timed-out success would create a duplicate row. Resubmits are idempotent via SourceSubmissionId.",
+              "runAfter": { "Compose_PrimaryDepartmentId": [ "Succeeded" ] },
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "PostItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('mgp_FOIASiteUrl (mgp_FOIASiteUrl)')",
+                  "table": "@parameters('mgp_FOIARequestsListId (mgp_FOIARequestsListId)')",
+                  "item/Title": "@outputs('Compose_RequestTitle')",
+                  "item/ReceivedDate": "@outputs('Compose_ReceivedDate')",
+                  "item/IntakeMethod/Value": "Online Form",
+                  "item/RequestRoute/Value": "@outputs('Compose_RouteDecision')",
+                  "item/RequestDescription": "@outputs('Compose_Attributes')?['RequestDescription']",
+                  "item/OverallStatus/Value": "New",
+                  "item/CommercialPurpose/Value": "@coalesce(outputs('Compose_Attributes')?['CommercialPurpose'], 'No')",
+                  "item/RequesterFirstName": "@outputs('Compose_RequesterFirstName')",
+                  "item/RequesterLastName": "@outputs('Compose_RequesterLastName')",
+                  "item/RequesterStreetAddress": "@outputs('Compose_Attributes')?['RequesterStreetAddress']",
+                  "item/RequesterCity": "@outputs('Compose_Attributes')?['RequesterCity']",
+                  "item/RequesterState": "@outputs('Compose_Attributes')?['RequesterState']",
+                  "item/RequesterZip": "@outputs('Compose_Attributes')?['RequesterZip']",
+                  "item/RequesterEmail": "@outputs('Compose_RequesterEmail')",
+                  "item/RequesterPhone": "@outputs('Compose_Attributes')?['RequesterPhone']",
+                  "item/DeliveryFormat/Value": "@coalesce(outputs('Compose_Attributes')?['DeliveryFormat'], 'Electronic')",
+                  "item/CertifiedCopies/Value": "@coalesce(outputs('Compose_Attributes')?['CertifiedCopies'], 'No')",
+                  "item/FeeWaiverRequested/Value": "@coalesce(outputs('Compose_Attributes')?['FeeWaiverRequested'], 'No')",
+                  "item/DueDate": "@outputs('Compose_DueDateSuggested')",
+                  "item/DueDateConfirmed": false,
+                  "item/PrimaryDepartment/Id": "@outputs('Compose_PrimaryDepartmentId')",
+                  "item/SourceSubmissionId": "@outputs('Compose_SubmissionId')",
+                  "item/CurrentStageNotes": "Created by online intake flow. Correlation @{outputs('Compose_CorrelationId')}. Departments selected: @{join(body('Filter_array_DepartmentTitles'), '; ')}. Due date is a suggestion (5 business days, no holidays) pending staff confirmation."
+                },
+                "authentication": "@parameters('$authentication')",
+                "retryPolicy": { "type": "none" }
+              },
+              "_todo": "Verify choice values and that SourceSubmissionId column exists on the list (present in sharepoint-schema.md, absent from the app's datasource-schema.md extract)."
+            },
+            "Compose_RequestNumber": {
+              "type": "Compose",
+              "runAfter": { "Create_item_FOIARequest": [ "Succeeded" ] },
+              "inputs": "@body('Create_item_FOIARequest')?['ID']"
+            }
+          }
+        },
+
+        "Scope_Try_Attachments": {
+          "type": "Scope",
+          "runAfter": { "Scope_Try_CreateRequest": [ "Succeeded" ] },
+          "actions": {
+            "Compose_AttachmentList": {
+              "type": "Compose",
+              "description": "Only the FeeWaiverStatement attachment question is read. Empty array when none.",
+              "runAfter": {},
+              "inputs": "@coalesce(triggerBody()?['feature']?['attachments']?['FeeWaiverStatement'], json('[]'))",
+              "_todo": "Confirm the attachments object key equals the survey question name exactly (case) in the first trigger sample."
+            },
+            "Apply_to_each_Attachment": {
+              "type": "Foreach",
+              "runAfter": { "Compose_AttachmentList": [ "Succeeded" ] },
+              "foreach": "@outputs('Compose_AttachmentList')",
+              "runtimeConfiguration": { "concurrency": { "repetitions": 1 } },
+              "actions": {
+                "Get_attachment_from_URL": {
+                  "type": "OpenApiConnection",
+                  "runAfter": {},
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_arcgis",
+                      "operationId": "GetAttachmentFromUrl",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_arcgis"
+                    },
+                    "parameters": {
+                      "attachmentUrl": "@items('Apply_to_each_Attachment')?['url']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  },
+                  "limit": { "timeout": "PT2M" }
+                },
+                "Create_file_RecordsLibrary": {
+                  "type": "OpenApiConnection",
+                  "runAfter": { "Get_attachment_from_URL": [ "Succeeded" ] },
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_sharepointonline",
+                      "operationId": "CreateFile",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                    },
+                    "parameters": {
+                      "dataset": "@parameters('mgp_FOIASiteUrl (mgp_FOIASiteUrl)')",
+                      "folderPath": "@parameters('mgp_FOIARecordsLibraryFolderPath (mgp_FOIARecordsLibraryFolderPath)')",
+                      "name": "@{outputs('Compose_RequestNumber')}-FeeWaiver-@{items('Apply_to_each_Attachment')?['id']}-@{items('Apply_to_each_Attachment')?['name']}",
+                      "body": "@body('Get_attachment_from_URL')"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  },
+                  "limit": { "timeout": "PT2M" },
+                  "_todo": "Confirm folderPath form expected by Create file for this library (server-relative, e.g. /FOIA Pilot Records)."
+                },
+                "Update_file_properties_RecordMetadata": {
+                  "type": "OpenApiConnection",
+                  "runAfter": { "Create_file_RecordsLibrary": [ "Succeeded" ] },
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_sharepointonline",
+                      "operationId": "PatchFileItem",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                    },
+                    "parameters": {
+                      "dataset": "@parameters('mgp_FOIASiteUrl (mgp_FOIASiteUrl)')",
+                      "table": "@parameters('mgp_FOIARecordsLibraryId (mgp_FOIARecordsLibraryId)')",
+                      "id": "@body('Create_file_RecordsLibrary')?['ItemId']",
+                      "item/Title": "@body('Create_file_RecordsLibrary')?['Name']",
+                      "item/Request/Id": "@outputs('Compose_RequestNumber')",
+                      "item/DocumentType/Value": "Request",
+                      "item/RedactionStatus/Value": "Not Reviewed",
+                      "item/Sensitivity/Value": "Internal",
+                      "item/IsFinalResponse": false,
+                      "item/Notes": "Fee waiver statement submitted with the online request. Source attachment id @{items('Apply_to_each_Attachment')?['id']}. Correlation @{outputs('Compose_CorrelationId')}."
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "Scope_Try_Notify": {
+          "type": "Scope",
+          "description": "Reached only after the item exists and attachments are filed, so a receipt is never sent for a failed create.",
+          "runAfter": { "Scope_Try_Attachments": [ "Succeeded" ] },
+          "actions": {
+            "Condition_SendReceipt": {
+              "type": "If",
+              "runAfter": {},
+              "expression": { "equals": [ "@outputs('Compose_IsRequesterEmailValid')", true ] },
+              "actions": {
+                "Send_an_email_from_a_shared_mailbox_Receipt": {
+                  "type": "OpenApiConnection",
+                  "description": "Plain text. No links. No internal names.",
+                  "runAfter": {},
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_office365",
+                      "operationId": "SharedMailboxSendEmailV2",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                    },
+                    "parameters": {
+                      "emailMessage/MailboxAddress": "@parameters('mgp_FOIASharedMailbox (mgp_FOIASharedMailbox)')",
+                      "emailMessage/To": "@outputs('Compose_RequesterEmail')",
+                      "emailMessage/Subject": "FOIA request received - #@{outputs('Compose_RequestNumber')}",
+                      "emailMessage/Body": "<p>Thank you. Your Freedom of Information Act request has been received.</p><p>Request number: @{outputs('Compose_RequestNumber')}<br>Received: @{outputs('Compose_ReceivedDate')}<br>Summary: @{substring(coalesce(outputs('Compose_Attributes')?['RequestDescription'], ''), 0, min(300, length(coalesce(outputs('Compose_Attributes')?['RequestDescription'], ''))))}</p><p>Staff will review your request and confirm the response date. Please reference your request number in any follow-up.</p><p>This mailbox is monitored by the FOIA officer.</p>",
+                      "emailMessage/Importance": "Normal"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Compose_Log_ReceiptSkipped": {
+                    "type": "Compose",
+                    "runAfter": {},
+                    "inputs": {
+                      "outcome": "ReceiptSkipped",
+                      "reason": "RequesterEmail blank or failed format check",
+                      "correlationId": "@{outputs('Compose_CorrelationId')}",
+                      "requestNumber": "@{outputs('Compose_RequestNumber')}"
+                    }
+                  }
+                }
+              }
+            },
+            "Send_an_email_from_a_shared_mailbox_StaffNotification": {
+              "type": "OpenApiConnection",
+              "description": "FOIA officer only. No department CCs in Phase 1.",
+              "runAfter": { "Condition_SendReceipt": [ "Succeeded" ] },
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SharedMailboxSendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/MailboxAddress": "@parameters('mgp_FOIASharedMailbox (mgp_FOIASharedMailbox)')",
+                  "emailMessage/To": "@parameters('mgp_FOIAOfficerEmail (mgp_FOIAOfficerEmail)')",
+                  "emailMessage/Subject": "New FOIA request #@{outputs('Compose_RequestNumber')} - @{outputs('Compose_RouteDecision')} - @{outputs('Compose_PrimaryDepartmentTitle')}",
+                  "emailMessage/Body": "<p>A new public FOIA request was created by the online intake flow.</p><p>Request number: @{outputs('Compose_RequestNumber')}<br>Requester: @{outputs('Compose_RequestTitle')}<br>Route: @{outputs('Compose_RouteDecision')}<br>Primary department: @{outputs('Compose_PrimaryDepartmentTitle')}<br>Received: @{outputs('Compose_ReceivedDate')}<br>Suggested due date (unconfirmed, 5 business days, no holidays): @{outputs('Compose_DueDateSuggested')}<br>Attachments filed: @{length(outputs('Compose_AttachmentList'))}<br>Receipt email: @{if(equals(outputs('Compose_IsRequesterEmailValid'), true), 'Sent', 'Skipped - no valid requester email')}</p><p>Open in app: <a href=\"@{parameters('mgp_FOIAAppDeepLinkBaseUrl (mgp_FOIAAppDeepLinkBaseUrl)')}&amp;RequestId=@{outputs('Compose_RequestNumber')}\">Request #@{outputs('Compose_RequestNumber')}</a></p><p>Correlation: @{outputs('Compose_CorrelationId')}</p>",
+                  "emailMessage/Importance": "Normal"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          }
+        },
+
+        "Scope_Catch_NotifyFailure": {
+          "type": "Scope",
+          "description": "Runs when any Try scope failed. 'Skipped' is included so a Prepare/Create failure (which skips the later scopes) still reaches here.",
+          "runAfter": { "Scope_Try_Notify": [ "Failed", "Skipped", "TimedOut" ] },
+          "actions": {
+            "Filter_array_FailedActions": {
+              "type": "Query",
+              "runAfter": {},
+              "inputs": {
+                "from": "@union(result('Scope_Try_Prepare'), result('Scope_Try_CreateRequest'), result('Scope_Try_Attachments'), result('Scope_Try_Notify'))",
+                "where": "@or(equals(item()?['status'], 'Failed'), equals(item()?['status'], 'TimedOut'))"
+              },
+              "_todo": "Confirm result() of a skipped scope returns [] (TC-12). Otherwise split into four Compose actions with run-after Skipped and union their outputs."
+            },
+            "Select_FailedActionSummary": {
+              "type": "Select",
+              "runAfter": { "Filter_array_FailedActions": [ "Succeeded" ] },
+              "inputs": {
+                "from": "@body('Filter_array_FailedActions')",
+                "select": {
+                  "action": "@item()?['name']",
+                  "status": "@item()?['status']",
+                  "code": "@item()?['error']?['code']",
+                  "message": "@item()?['error']?['message']"
+                }
+              }
+            },
+            "Send_an_email_from_a_shared_mailbox_ErrorAlert": {
+              "type": "OpenApiConnection",
+              "description": "Correlation ID and raw submission ID only. Never requester PII.",
+              "runAfter": { "Select_FailedActionSummary": [ "Succeeded" ] },
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SharedMailboxSendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/MailboxAddress": "@parameters('mgp_FOIASharedMailbox (mgp_FOIASharedMailbox)')",
+                  "emailMessage/To": "@parameters('mgp_FOIAOfficerEmail (mgp_FOIAOfficerEmail)')",
+                  "emailMessage/Subject": "FOIA intake flow FAILED - correlation @{outputs('Compose_CorrelationId')}",
+                  "emailMessage/Body": "<p>The online FOIA intake flow failed and needs attention.</p><p>Correlation ID (run): @{outputs('Compose_CorrelationId')}<br>Source submission ID: @{outputs('Compose_SubmissionId')}<br>Request number: @{coalesce(actions('Create_item_FOIARequest')?['outputs']?['body']?['ID'], 'not created')}<br>Route / primary department (computed): @{outputs('Compose_RouteDecision')} / @{outputs('Compose_PrimaryDepartmentTitle')}</p><p>Failed actions:<br>@{string(body('Select_FailedActionSummary'))}</p><p>Run detail: https://make.powerautomate.com/environments/@{workflow()?['tags']?['environmentName']}/flows/@{workflow()?['name']}/runs/@{workflow()?['run']?['name']}</p><p>If the request number is \"not created\", the submission is still in Survey123; fix the cause and resubmit the run. If a request number is shown, the row exists - check attachments and notifications manually before resubmitting (a resubmit is skipped as a duplicate).</p>",
+                  "emailMessage/Importance": "High"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          }
+        },
+
+        "Scope_Finally_Log": {
+          "type": "Scope",
+          "runAfter": { "Scope_Catch_NotifyFailure": [ "Succeeded", "Failed", "Skipped", "TimedOut" ] },
+          "actions": {
+            "Compose_RunSummary": {
+              "type": "Compose",
+              "description": "Single support view of the run. Uses actions() so skipped actions resolve to null instead of erroring.",
+              "runAfter": {},
+              "inputs": {
+                "correlationId": "@{outputs('Compose_CorrelationId')}",
+                "submissionId": "@{outputs('Compose_SubmissionId')}",
+                "receivedDate": "@{outputs('Compose_ReceivedDate')}",
+                "dueDateSuggested": "@{outputs('Compose_DueDateSuggested')}",
+                "route": "@{outputs('Compose_RouteDecision')}",
+                "primaryDepartment": "@{outputs('Compose_PrimaryDepartmentTitle')}",
+                "requestNumber": "@actions('Create_item_FOIARequest')?['outputs']?['body']?['ID']",
+                "attachmentCount": "@length(coalesce(actions('Compose_AttachmentList')?['outputs'], json('[]')))",
+                "receiptStatus": "@actions('Send_an_email_from_a_shared_mailbox_Receipt')?['status']",
+                "staffNotifyStatus": "@actions('Send_an_email_from_a_shared_mailbox_StaffNotification')?['status']",
+                "catchStatus": "@actions('Scope_Catch_NotifyFailure')?['status']",
+                "errorAlertStatus": "@actions('Send_an_email_from_a_shared_mailbox_ErrorAlert')?['status']"
+              }
+            }
+          }
+        },
+
+        "Condition_FailureOccurred": {
+          "type": "If",
+          "description": "Guarantees a handled failure is never reported as Succeeded, even if the alert email itself failed.",
+          "runAfter": { "Scope_Finally_Log": [ "Succeeded", "Failed" ] },
+          "expression": { "not": { "equals": [ "@actions('Scope_Catch_NotifyFailure')?['status']", "Skipped" ] } },
+          "actions": {
+            "Terminate_Failed": {
+              "type": "Terminate",
+              "runAfter": {},
+              "inputs": {
+                "runStatus": "Failed",
+                "runError": {
+                  "code": "FOIAIntakeFailed",
+                  "message": "Intake failed. Correlation @{outputs('Compose_CorrelationId')}. Submission @{outputs('Compose_SubmissionId')}. See error alert email."
+                }
+              }
+            }
+          },
+          "else": { "actions": {} }
+        }
+      },
+      "outputs": {}
+    }
+  }
+}

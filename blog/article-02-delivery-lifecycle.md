@@ -8,10 +8,10 @@ The process is deliberately small. A stage can be tailored when risk is low, but
 
 **Limitation:** This lifecycle is a reusable starting point, not a substitute for solution-specific risk analysis or required governance decisions.
 
-**Visual:** QA and human release path in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md).
+![Three fictional lifecycle stages define what must work, what may change, and what supports release, with correction and human release authority.](assets/2026-10-17_blog_synthetic_delivery-lifecycle_draft.png)
 
-**Alt text:** Acceptance criteria lead to deterministic checks and accessibility review; failures are corrected and rerun before a human release decision.
+**Visual:** Playwright capture EVD-BLOG-002; [source and capture notes](assets/README.md).
 
-**Caption:** Synthetic lifecycle slice with a visible correction loop and human release gate.
+**Caption:** Proposed synthetic lifecycle with explicit stage decisions, correction, and human release authority.
 
 **Source note:** Original synthetic diagram in this repository; external publication approval pending.

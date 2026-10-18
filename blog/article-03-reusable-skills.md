@@ -8,10 +8,10 @@ Reusable instructions are most useful when they reduce repeated setup without hi
 
 **Limitation:** A skill cannot verify every platform or environment condition and must not replace developer review or release checks.
 
-**Visual:** The synthetic architecture in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md) shows only a form, structured synthetic data, validation, human review, and a status view.
+![A generic skill contract separates acceptance criteria and approved design from bounded assistance, developer review, and recorded validation.](assets/2026-10-17_blog_synthetic_reusable-skills_draft.png)
 
-**Alt text:** Synthetic user input passes through a request form and structured list, then validation and human review before appearing in a status view.
+**Visual:** Playwright capture EVD-BLOG-003; [source and capture notes](assets/README.md).
 
-**Caption:** Minimal fictional architecture; no external integration or real environment is represented.
+**Caption:** Generic synthetic skill contract; no execution or independent adoption is claimed.
 
 **Source note:** Original synthetic diagram and example in this repository; external publication approval pending.

@@ -8,9 +8,9 @@ A real result would require approved source evidence and a like-for-like compari
 
 **Limitation:** A small or non-comparable sample cannot support a causal or organization-wide claim, even when the arithmetic is correct.
 
-**Visual:** Outcome evidence path in [`../portfolio/synthetic-visuals.md`](../portfolio/synthetic-visuals.md).
+![Measurement controls define comparable work, require a sample, median, range, exclusions and sources, and distinguish synthetic, projected, and realized claims.](assets/2026-10-17_blog_synthetic_measurement_draft.png)
 
-**Alt text:** A defined baseline and comparable activity lead to reported sample size, median, range, exclusions, source, and approval; projections remain separate and labeled.
+**Visual:** Playwright capture EVD-BLOG-006; [source and capture notes](assets/README.md).
 
 **Caption:** Measurement controls for distinguishing realized outcomes from projections; no results are asserted.
 
