@@ -1,0 +1,210 @@
+{
+  "datasetId": "FDE-2026-001",
+  "cases": [
+    {
+      "caseId": "FDE-CASE-001",
+      "requirementId": "REQ-006",
+      "testId": "TST-FOUNDRY-001",
+      "solutionVersion": "synthetic-1.0",
+      "environment": "synthetic-test",
+      "journeyId": "JNY-CHECKOUT",
+      "scenarioId": "SCN-CHECKOUT-EMPTY-CART",
+      "split": "development",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "state": "empty-cart",
+      "baselineReference": "synthetic://baseline/FDE-CASE-001",
+      "classification": "synthetic-metadata-only",
+      "retentionTag": "synthetic-retain-qa",
+      "labels": [
+        {
+          "annotatorId": "Synthetic-Reviewer-A",
+          "defectPresent": true,
+          "category": "layout"
+        },
+        {
+          "annotatorId": "Synthetic-Reviewer-B",
+          "defectPresent": true,
+          "category": "layout"
+        }
+      ],
+      "adjudication": {
+        "status": "resolved",
+        "adjudicatorId": "Synthetic-Adjudicator-1",
+        "defectPresent": true,
+        "category": "layout",
+        "impact": "high"
+      },
+      "modelPrediction": {
+        "defectPresent": true,
+        "category": "layout"
+      }
+    },
+    {
+      "caseId": "FDE-CASE-002",
+      "requirementId": "REQ-006",
+      "testId": "TST-FOUNDRY-002",
+      "solutionVersion": "synthetic-1.0",
+      "environment": "synthetic-test",
+      "journeyId": "JNY-PROFILE",
+      "scenarioId": "SCN-PROFILE-EDIT",
+      "split": "held-out",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "state": "profile-edit",
+      "baselineReference": "synthetic://baseline/FDE-CASE-002",
+      "classification": "synthetic-metadata-only",
+      "retentionTag": "synthetic-retain-qa",
+      "labels": [
+        {
+          "annotatorId": "Synthetic-Reviewer-A",
+          "defectPresent": false,
+          "category": null
+        },
+        {
+          "annotatorId": "Synthetic-Reviewer-B",
+          "defectPresent": false,
+          "category": null
+        }
+      ],
+      "adjudication": {
+        "status": "resolved",
+        "adjudicatorId": "Synthetic-Adjudicator-1",
+        "defectPresent": false,
+        "category": null,
+        "impact": "none"
+      },
+      "modelPrediction": {
+        "defectPresent": true,
+        "category": "text"
+      }
+    },
+    {
+      "caseId": "FDE-CASE-003",
+      "requirementId": "REQ-006",
+      "testId": "TST-FOUNDRY-003",
+      "solutionVersion": "synthetic-1.0",
+      "environment": "synthetic-test",
+      "journeyId": "JNY-DASHBOARD",
+      "scenarioId": "SCN-DASHBOARD-LOADING",
+      "split": "development",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "state": "dashboard-loaded",
+      "baselineReference": "synthetic://baseline/FDE-CASE-003",
+      "classification": "synthetic-metadata-only",
+      "retentionTag": "synthetic-retain-qa",
+      "labels": [
+        {
+          "annotatorId": "Synthetic-Reviewer-A",
+          "defectPresent": false,
+          "category": null
+        },
+        {
+          "annotatorId": "Synthetic-Reviewer-B",
+          "defectPresent": false,
+          "category": null
+        }
+      ],
+      "adjudication": {
+        "status": "resolved",
+        "adjudicatorId": "Synthetic-Adjudicator-1",
+        "defectPresent": false,
+        "category": null,
+        "impact": "none"
+      },
+      "modelPrediction": {
+        "defectPresent": false,
+        "category": null
+      }
+    },
+    {
+      "caseId": "FDE-CASE-004",
+      "requirementId": "REQ-006",
+      "testId": "TST-FOUNDRY-004",
+      "solutionVersion": "synthetic-1.0",
+      "environment": "synthetic-test",
+      "journeyId": "JNY-ACCESSIBILITY",
+      "scenarioId": "SCN-ACCESSIBILITY-NAVIGATION",
+      "split": "held-out",
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "state": "keyboard-navigation",
+      "baselineReference": "synthetic://baseline/FDE-CASE-004",
+      "classification": "synthetic-metadata-only",
+      "retentionTag": "synthetic-retain-qa",
+      "labels": [
+        {
+          "annotatorId": "Synthetic-Reviewer-A",
+          "defectPresent": true,
+          "category": "accessibility"
+        },
+        {
+          "annotatorId": "Synthetic-Reviewer-B",
+          "defectPresent": true,
+          "category": "accessibility"
+        }
+      ],
+      "adjudication": {
+        "status": "resolved",
+        "adjudicatorId": "Synthetic-Adjudicator-1",
+        "defectPresent": true,
+        "category": "accessibility",
+        "impact": "high"
+      },
+      "modelPrediction": {
+        "defectPresent": false,
+        "category": null
+      }
+    },
+    {
+      "caseId": "FDE-CASE-005",
+      "requirementId": "REQ-006",
+      "testId": "TST-FOUNDRY-005",
+      "solutionVersion": "synthetic-1.0",
+      "environment": "synthetic-test",
+      "journeyId": "JNY-SETTINGS",
+      "scenarioId": "SCN-SETTINGS-SAVED",
+      "split": "development",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "state": "settings-saved",
+      "baselineReference": "synthetic://baseline/FDE-CASE-005",
+      "classification": "synthetic-metadata-only",
+      "retentionTag": "synthetic-retain-qa",
+      "labels": [
+        {
+          "annotatorId": "Synthetic-Reviewer-A",
+          "defectPresent": true,
+          "category": "state"
+        },
+        {
+          "annotatorId": "Synthetic-Reviewer-B",
+          "defectPresent": true,
+          "category": "state"
+        }
+      ],
+      "adjudication": {
+        "status": "resolved",
+        "adjudicatorId": "Synthetic-Adjudicator-1",
+        "defectPresent": true,
+        "category": "state",
+        "impact": "medium"
+      },
+      "modelPrediction": {
+        "defectPresent": "uncertain",
+        "category": null
+      }
+    }
+  ]
+}
