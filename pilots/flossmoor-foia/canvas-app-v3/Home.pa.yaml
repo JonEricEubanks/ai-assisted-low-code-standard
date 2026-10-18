@@ -601,7 +601,7 @@ Screens:
                                           LayoutMinHeight: =0
                                           LayoutMinWidth: =0
                                           Note: ="All requests on record"
-                                          OnSelect: =Set(gblStatusFilter, "All"); Reset(cmbStatusFilter)
+                                          OnSelect: =Set(gblStatusFilter, "All"); Reset(cmbStatusFilterV2)
                                           Value: =Text(CountRows('FOIA Pilot Requests'))
                                           Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - Space4) / 2 - 1, (Parent.Width - Space4 * 3) / 4 - 1)
                                     - cmpTileOpen:
@@ -612,14 +612,14 @@ Screens:
                                           Compact: =App.Width >= BreakpointDesktop
                                           FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
                                           Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
-                                          Icon: ="DocumentSearch"
+                                          Icon: ="TextBulletListSquareClock"
                                           Intent: ="Info"
                                           Label: ="Open"
                                           LayoutMaxWidth: =If(App.Width >= BreakpointDesktop, TileMaxWidth, 0)
                                           LayoutMinHeight: =0
                                           LayoutMinWidth: =0
                                           Note: ="New, in progress or on hold"
-                                          OnSelect: =Set(gblStatusFilter, "All"); Reset(cmbStatusFilter)
+                                          OnSelect: =Set(gblStatusFilter, "All"); Reset(cmbStatusFilterV2)
                                           Value: =Text(CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value <> "Closed")))
                                           Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - Space4) / 2 - 1, (Parent.Width - Space4 * 3) / 4 - 1)
                                     - cmpTileDueSoon:
@@ -637,7 +637,7 @@ Screens:
                                           LayoutMinHeight: =0
                                           LayoutMinWidth: =0
                                           Note: ="Confirmed due dates only"
-                                          OnSelect: =Set(gblStatusFilter, "In Progress"); Reset(cmbStatusFilter)
+                                          OnSelect: =Set(gblStatusFilter, "In Progress"); Reset(cmbStatusFilterV2)
                                           Value: =Text(CountRows(Filter('FOIA Pilot Requests', DueDateConfirmed = true && DueDate <= DateAdd(Today(), 7, TimeUnit.Days))))
                                           Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - Space4) / 2 - 1, (Parent.Width - Space4 * 3) / 4 - 1)
                                     - cmpTileClosed:
@@ -655,7 +655,7 @@ Screens:
                                           LayoutMinHeight: =0
                                           LayoutMinWidth: =0
                                           Note: ="Final response sent"
-                                          OnSelect: =Set(gblStatusFilter, "Closed"); Reset(cmbStatusFilter)
+                                          OnSelect: =Set(gblStatusFilter, "Closed"); Reset(cmbStatusFilterV2)
                                           Value: =Text(CountRows(Filter('FOIA Pilot Requests', OverallStatus.Value = "Closed")))
                                           Width: =If(App.Width < BreakpointPhone, Parent.Width, App.Width < BreakpointDesktop, (Parent.Width - Space4) / 2 - 1, (Parent.Width - Space4 * 3) / 4 - 1)
                               - cntHomeDistribution:
@@ -911,30 +911,38 @@ Screens:
                                               Control: GroupContainer
                                               Variant: AutoLayout
                                               Properties:
-                                                DropShadow: =DropShadow.None
+                                                DropShadow: =DropShadow.Regular
+                                                Fill: =ColorSurface
                                                 FillPortions: =0
-                                                Height: =InputHeight * If(App.Width < BreakpointPhone, 2, 3) + Space2 * 2 + If(btnResetFilters.Visible, InputHeight + Space2, 0)
+                                                Height: =138
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =SpaceSm
                                                 LayoutMinHeight: =0
                                                 LayoutMinWidth: =0
-                                                RadiusBottomLeft: =0
-                                                RadiusBottomRight: =0
-                                                RadiusTopLeft: =0
-                                                RadiusTopRight: =0
+                                                PaddingBottom: =Space3
+                                                PaddingLeft: =Space3
+                                                PaddingRight: =Space3
+                                                PaddingTop: =Space3
+                                                RadiusBottomLeft: =RadiusLarge
+                                                RadiusBottomRight: =RadiusLarge
+                                                RadiusTopLeft: =RadiusLarge
+                                                RadiusTopRight: =RadiusLarge
                                               Children:
                                                 - txtSearch:
                                                     Control: ModernTextInput
                                                     Properties:
                                                       AccessibleLabel: ="Search requests"
                                                       AlignInContainer: =AlignInContainer.Stretch
-                                                      Appearance: =Appearance.FilledLighter
+                                                      Appearance: =Appearance.Outline
+                                                      BorderColor: =ColorBorder
+                                                      BorderThickness: =1
                                                       Font: =FontApp
                                                       Height: =InputHeight
                                                       LayoutMinHeight: =InputHeight
+                                                      LayoutMinWidth: =0
                                                       OnChange: =Set(gblSearchText, Self.Text)
-                                                      Placeholder: ="Search requests…"
+                                                      Placeholder: ="Search by requester or request…"
                                                       RadiusBottomLeft: =RadiusLarge
                                                       RadiusBottomRight: =RadiusLarge
                                                       RadiusTopLeft: =RadiusLarge
@@ -942,66 +950,160 @@ Screens:
                                                       Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
                                                       TriggerOutput: =TriggerOutput.Delayed
                                                       Type: =TextInputType.Search
-                                                - cmbStatusFilter:
-                                                    Control: ModernDropdown
+                                                - cntHomeFilterRow:
+                                                    Control: GroupContainer
+                                                    Variant: AutoLayout
                                                     Properties:
-                                                      AccessibleLabel: ="Filter requests by status"
+                                                      DropShadow: =DropShadow.None
                                                       AlignInContainer: =AlignInContainer.Stretch
-                                                      Default: =LookUp(["All", "New", "In Progress", "On Hold", "Closed"], Value = gblStatusFilter)
-                                                      Font: =FontApp
-                                                      Height: =InputHeight
-                                                      ItemDisplayText: |-
-                                                        ="Status: " & ThisItem.Value
-                                                      Items: =["All", "New", "In Progress", "On Hold", "Closed"]
-                                                      LayoutMinHeight: =InputHeight
-                                                      OnChange: =Set(gblStatusFilter, Self.Selected.Value)
-                                                      RadiusBottomLeft: =RadiusLarge
-                                                      RadiusBottomRight: =RadiusLarge
-                                                      RadiusTopLeft: =RadiusLarge
-                                                      RadiusTopRight: =RadiusLarge
-                                                      Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
-                                                - cmbDepartmentFilter:
-                                                    Control: ModernDropdown
-                                                    Properties:
-                                                      AccessibleLabel: ="Filter requests by department"
-                                                      AlignInContainer: =AlignInContainer.Stretch
-                                                      Default: |-
-                                                        =LookUp(Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options), Value = gblDepartmentFilter)
-                                                      Font: =FontApp
-                                                      Height: =InputHeight
-                                                      ItemDisplayText: |-
-                                                        ="Department: " & ThisItem.Value
-                                                      Items: |-
-                                                        =Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options)
-                                                      LayoutMinHeight: =InputHeight
-                                                      OnChange: =Set(gblDepartmentFilter, Self.Selected.Value)
-                                                      RadiusBottomLeft: =RadiusLarge
-                                                      RadiusBottomRight: =RadiusLarge
-                                                      RadiusTopLeft: =RadiusLarge
-                                                      RadiusTopRight: =RadiusLarge
-                                                      Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
-                                                      Visible: =App.Width >= BreakpointPhone
-                                                - btnResetFilters:
-                                                    Control: ModernButton
-                                                    Properties:
-                                                      AccessibleLabel: ="Reset filters"
-                                                      AlignInContainer: =AlignInContainer.Stretch
-                                                      Appearance: =ButtonAppearance.Subtle
-                                                      Font: =FontApp
-                                                      Height: =InputHeight
-                                                      Icon: ="ArrowReset"
-                                                      LayoutMinHeight: =InputHeight
-                                                      OnSelect: |-
-                                                        =Set(gblStatusFilter, "All");
-                                                        Set(gblDepartmentFilter, "All");
-                                                        Set(gblSearchText, "");
-                                                        Reset(txtSearch);
-                                                        Reset(cmbStatusFilter);
-                                                        Reset(cmbDepartmentFilter)
-                                                      Size: =FontSizeBody
-                                                      Text: ="Reset"
-                                                      Tooltip: ="Clear search and filters"
-                                                      Visible: =gblStatusFilter <> "All" || gblDepartmentFilter <> "All" || !IsBlank(gblSearchText)
+                                                      FillPortions: =0
+                                                      Height: =62
+                                                      LayoutAlignItems: =LayoutAlignItems.End
+                                                      LayoutDirection: =LayoutDirection.Horizontal
+                                                      LayoutGap: =SpaceSm
+                                                      LayoutMinHeight: =62
+                                                      LayoutMinWidth: =0
+                                                      RadiusBottomLeft: =0
+                                                      RadiusBottomRight: =0
+                                                      RadiusTopLeft: =0
+                                                      RadiusTopRight: =0
+                                                    Children:
+                                                      - cntStatusFilterField:
+                                                          Control: GroupContainer
+                                                          Variant: AutoLayout
+                                                          Properties:
+                                                            DropShadow: =DropShadow.None
+                                                            FillPortions: =1
+                                                            Height: =62
+                                                            LayoutDirection: =LayoutDirection.Vertical
+                                                            LayoutGap: =Space1
+                                                            LayoutMinHeight: =62
+                                                            LayoutMinWidth: =0
+                                                            RadiusBottomLeft: =0
+                                                            RadiusBottomRight: =0
+                                                            RadiusTopLeft: =0
+                                                            RadiusTopRight: =0
+                                                          Children:
+                                                            - lblStatusFilter:
+                                                                Control: ModernText
+                                                                Properties:
+                                                                  Color: =ColorTextSecondary
+                                                                  Font: =FontApp
+                                                                  FontWeight: =FontWeight.Semibold
+                                                                  Height: =14
+                                                                  LayoutMinHeight: =14
+                                                                  LayoutMinWidth: =0
+                                                                  PaddingBottom: =0
+                                                                  PaddingLeft: =Space1
+                                                                  PaddingRight: =0
+                                                                  PaddingTop: =0
+                                                                  Size: =FontSizeCaption
+                                                                  Text: ="STATUS"
+                                                                  Wrap: =false
+                                                            - cmbStatusFilterV2:
+                                                                Control: ModernDropdown
+                                                                Properties:
+                                                                  AccessibleLabel: ="Filter requests by status"
+                                                                  AlignInContainer: =AlignInContainer.Stretch
+                                                                  Appearance: =Appearance.Outline
+                                                                  BorderColor: =ColorBorder
+                                                                  BorderThickness: =1
+                                                                  Default: =LookUp(["All", "New", "In Progress", "On Hold", "Closed"], Value = gblStatusFilter)
+                                                                  Font: =FontApp
+                                                                  Height: =InputHeight
+                                                                  ItemDisplayText: =ThisItem.Value
+                                                                  Items: =["All", "New", "In Progress", "On Hold", "Closed"]
+                                                                  LayoutMinHeight: =InputHeight
+                                                                  LayoutMinWidth: =0
+                                                                  OnChange: =Set(gblStatusFilter, Self.Selected.Value)
+                                                                  RadiusBottomLeft: =RadiusLarge
+                                                                  RadiusBottomRight: =RadiusLarge
+                                                                  RadiusTopLeft: =RadiusLarge
+                                                                  RadiusTopRight: =RadiusLarge
+                                                                  Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                      - cntDepartmentFilterField:
+                                                          Control: GroupContainer
+                                                          Variant: AutoLayout
+                                                          Properties:
+                                                            DropShadow: =DropShadow.None
+                                                            FillPortions: =1
+                                                            Height: =62
+                                                            LayoutDirection: =LayoutDirection.Vertical
+                                                            LayoutGap: =Space1
+                                                            LayoutMinHeight: =62
+                                                            LayoutMinWidth: =0
+                                                            RadiusBottomLeft: =0
+                                                            RadiusBottomRight: =0
+                                                            RadiusTopLeft: =0
+                                                            RadiusTopRight: =0
+                                                            Visible: =App.Width >= BreakpointPhone
+                                                          Children:
+                                                            - lblDepartmentFilter:
+                                                                Control: ModernText
+                                                                Properties:
+                                                                  Color: =ColorTextSecondary
+                                                                  Font: =FontApp
+                                                                  FontWeight: =FontWeight.Semibold
+                                                                  Height: =14
+                                                                  LayoutMinHeight: =14
+                                                                  LayoutMinWidth: =0
+                                                                  PaddingBottom: =0
+                                                                  PaddingLeft: =Space1
+                                                                  PaddingRight: =0
+                                                                  PaddingTop: =0
+                                                                  Size: =FontSizeCaption
+                                                                  Text: ="DEPARTMENT"
+                                                                  Wrap: =false
+                                                            - cmbDepartmentFilterV2:
+                                                                Control: ModernDropdown
+                                                                Properties:
+                                                                  AccessibleLabel: ="Filter requests by department"
+                                                                  AlignInContainer: =AlignInContainer.Stretch
+                                                                  Appearance: =Appearance.Outline
+                                                                  BorderColor: =ColorBorder
+                                                                  BorderThickness: =1
+                                                                  Default: |-
+                                                                    =LookUp(Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options), Value = gblDepartmentFilter)
+                                                                  Font: =FontApp
+                                                                  Height: =InputHeight
+                                                                  ItemDisplayText: =ThisItem.Value
+                                                                  Items: |-
+                                                                    =Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options)
+                                                                  LayoutMinHeight: =InputHeight
+                                                                  LayoutMinWidth: =0
+                                                                  OnChange: =Set(gblDepartmentFilter, Self.Selected.Value)
+                                                                  RadiusBottomLeft: =RadiusLarge
+                                                                  RadiusBottomRight: =RadiusLarge
+                                                                  RadiusTopLeft: =RadiusLarge
+                                                                  RadiusTopRight: =RadiusLarge
+                                                                  Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
+                                                      - btnResetFiltersV2:
+                                                          Control: ModernButton
+                                                          Properties:
+                                                            AccessibleLabel: ="Reset filters"
+                                                            AlignInContainer: =AlignInContainer.End
+                                                            Appearance: =ButtonAppearance.Transparent
+                                                            Font: =FontApp
+                                                            Height: =InputHeight
+                                                            Icon: ="ArrowReset"
+                                                            Layout: =ButtonLayout.IconOnly
+                                                            LayoutMinHeight: =InputHeight
+                                                            LayoutMinWidth: =InputHeight
+                                                            OnSelect: |-
+                                                              =Set(gblStatusFilter, "All");
+                                                              Set(gblDepartmentFilter, "All");
+                                                              Set(gblSearchText, "");
+                                                              Reset(txtSearch);
+                                                              Reset(cmbStatusFilterV2);
+                                                              Reset(cmbDepartmentFilterV2)
+                                                            RadiusBottomLeft: =RadiusLarge
+                                                            RadiusBottomRight: =RadiusLarge
+                                                            RadiusTopLeft: =RadiusLarge
+                                                            RadiusTopRight: =RadiusLarge
+                                                            Text: =""
+                                                            Tooltip: ="Clear search and filters"
+                                                            Visible: =gblStatusFilter <> "All" || gblDepartmentFilter <> "All" || !IsBlank(gblSearchText)
+                                                            Width: =InputHeight
                                           - lblQueueLoading:
                                               Control: ModernText
                                               Properties:
@@ -1275,12 +1377,12 @@ Screens:
                                                 Headline: =If(gblStatusFilter <> "All" || gblDepartmentFilter <> "All" || !IsBlank(gblSearchText), "No requests match these filters", "No FOIA requests yet")
                                                 Height: =If(App.Width >= BreakpointDesktop, Parent.Height, 240)
                                                 Hint: ="Requests appear here as they are received. Summary, assignments and activity open on the right on desktop."
-                                                Icon: ="DocumentSearch"
+                                                Icon: ="DocumentArrowUp"
                                                 LayoutMinHeight: =0
                                                 LayoutMinWidth: =0
                                                 OnAction: |-
                                                   =If(gblStatusFilter <> "All" || gblDepartmentFilter <> "All" || !IsBlank(gblSearchText),
-                                                    Set(gblStatusFilter, "All"); Set(gblDepartmentFilter, "All"); Set(gblSearchText, ""); Reset(txtSearch); Reset(cmbStatusFilter); Reset(cmbDepartmentFilter),
+                                                    Set(gblStatusFilter, "All"); Set(gblDepartmentFilter, "All"); Set(gblSearchText, ""); Reset(txtSearch); Reset(cmbStatusFilterV2); Reset(cmbDepartmentFilterV2),
                                                     Navigate(NewRequest, ScreenTransition.Fade))
                                                 Visible: =!gblIsLoading && !gblLoadError && !gblPermissionDenied && galRequests.AllItemsCount = 0
                                     - cntHomeDetailPane:
@@ -1396,6 +1498,33 @@ Screens:
                                                     Set(gblSelectedRequest, LookUp('FOIA Pilot Requests', ID = gblSelectedRequest.ID));
                                                     cmpToastHostHome.SendToast("Due date confirmed", "Statutory deadline locked for " & Coalesce(gblSelectedRequest.Title, "this request") & ".", "Success"),
                                                     cmpToastHostHome.SendToast("Couldn't confirm the due date", FirstError.Message, "Error")
+                                                  )
+                                                OnCreateAssignment: |-
+                                                  =If(
+                                                    IsBlank(gblAssignmentDepartmentCandidate),
+                                                    cmpToastHostHome.SendToast("Select a department", "Choose a department before creating the assignment.", "Warning"),
+                                                    IfError(
+                                                      Set(
+                                                        gblSelectedAssignment,
+                                                        Patch(
+                                                          'FOIA Pilot Assignments',
+                                                          Defaults('FOIA Pilot Assignments'),
+                                                          {
+                                                            Title: Coalesce(gblSelectedRequest.Title, "Request") & " - " & gblAssignmentDepartmentCandidate.Title,
+                                                            Request: {Id: gblSelectedRequest.ID, Value: gblSelectedRequest.Title},
+                                                            Department: {Id: gblAssignmentDepartmentCandidate.ID, Value: gblAssignmentDepartmentCandidate.Title},
+                                                            AssignmentStatus: {Value: "New"},
+                                                            AssignmentDueDate: gblSelectedRequest.DueDate,
+                                                            Active: true
+                                                          }
+                                                        )
+                                                      );
+                                                      Set(gblSelectedDepartment, gblSelectedAssignment.Department);
+                                                      Refresh('FOIA Pilot Assignments');
+                                                      cmpToastHostHome.SendToast("Department assigned", gblAssignmentDepartmentCandidate.Title & " can now begin department work.", "Success");
+                                                      Navigate(DepartmentWork, ScreenTransition.None),
+                                                      cmpToastHostHome.SendToast("Couldn't create the assignment", FirstError.Message, "Error")
+                                                    )
                                                   )
                                                 OnOpenCloseout: =Navigate(ResponseCloseout, ScreenTransition.None)
                                                 OnOpenDepartmentWork: |-

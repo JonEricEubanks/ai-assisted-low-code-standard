@@ -124,6 +124,7 @@ ComponentDefinitions:
                         AccessibleLabel: |-
                           =cmpMetricTile.Label & ": " & cmpMetricTile.Value
                         AlignInContainer: =If(cmpMetricTile.Compact, AlignInContainer.Center, AlignInContainer.Stretch)
+                        AutoHeight: =true
                         Color: =ColorTextPrimary
                         Font: =FontApp
                         FontWeight: =FontWeight.Semibold

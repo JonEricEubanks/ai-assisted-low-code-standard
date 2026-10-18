@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Common Delivery Lifecycle</title>
+    <meta
+      name="description"
+      content="A developer-friendly guide to MGP's nine-stage delivery lifecycle, from intake through continuous improvement."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./lifecycle.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to lifecycle</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Delivery Lifecycle</span>
+        </a>
+
+        <nav aria-label="Lifecycle navigation">
+          <a href="#lifecycle">Stages</a>
+          <a href="#quality-gates">Quality gates</a>
+          <a class="nav-cta" href="../guide/index.html?doc=standards%2Fcommon-delivery-lifecycle.md">
+            View source
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="lifecycle-hero" aria-labelledby="page-title">
+        <div class="lifecycle-grid" aria-hidden="true"></div>
+        <div class="lifecycle-glow" aria-hidden="true"></div>
+        <div class="container lifecycle-hero-layout">
+          <div>
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              MGP delivery system
+            </span>
+            <h1 id="page-title">Nine gates.<span>One clear path.</span></h1>
+            <p>
+              Move from a testable outcome to a supportable solution. Each stage names the work,
+              the evidence, and the exit criteria required to advance.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#lifecycle">
+                Explore the stages
+                <span aria-hidden="true">↓</span>
+              </a>
+              <a class="button button-secondary" href="#quality-gates">Check Ready &amp; Done</a>
+            </div>
+          </div>
+
+          <aside class="hero-gate" aria-label="How to use this lifecycle">
+            <span class="gate-label">How to use it</span>
+            <ol>
+              <li><span>01</span><strong>Open</strong> the stage you are working in.</li>
+              <li><span>02</span><strong>Use</strong> the linked standard or template.</li>
+              <li><span>03</span><strong>Pass</strong> the exit criteria before moving on.</li>
+            </ol>
+            <p>Stages are sequential; learning and risk review continue throughout.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="phase-map" aria-label="Lifecycle phase map">
+        <div class="container phase-map-inner">
+          <a href="#stage-1"><span>Shape</span><strong>01–03</strong></a>
+          <a href="#stage-4"><span>Make</span><strong>04–05</strong></a>
+          <a href="#stage-6"><span>Prove</span><strong>06</strong></a>
+          <a href="#stage-7"><span>Ship</span><strong>07–08</strong></a>
+          <a href="#stage-9"><span>Improve</span><strong>09</strong></a>
+        </div>
+      </section>
+
+      <section id="lifecycle" class="lifecycle-section">
+        <div class="container">
+          <div class="lifecycle-heading">
+            <div>
+              <span class="eyebrow">The lifecycle</span>
+              <h2>Follow the evidence, not the calendar.</h2>
+            </div>
+            <p>
+              The summary shows the gate. Expand any stage for the work and supporting artifacts.
+            </p>
+          </div>
+
+          <div class="stage-list">
+            <details id="stage-1" class="stage-card stage-shape" open>
+              <summary>
+                <span class="stage-number">01</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Shape · qualify the work</span>
+                  <strong>Intake and qualification</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Approved intake brief and initial risk class
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Capture the business outcome, users, scope, constraints, data sensitivity,
+                  urgency, owner, and success measures. Reject or re-scope work without an
+                  accountable owner or testable outcome.
+                </p>
+                <div class="artifact-links" aria-label="Stage 1 resources">
+                  <a href="../templates/artifact.html?type=intake">Solution intake builder <span>↗</span></a>
+                  <a href="../guide/index.html?doc=standards%2Fintake-and-triage.md">Intake and triage standard <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Approved intake brief and initial risk class.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-2" class="stage-card stage-shape">
+              <summary>
+                <span class="stage-number">02</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Shape · make it testable</span>
+                  <strong>Discovery and requirements</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Requirements are testable and unknowns are logged
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Identify personas, journeys, functional and non-functional requirements,
+                  exceptions, accessibility, records, security, integrations, volume, support,
+                  and acceptance criteria.
+                </p>
+                <div class="artifact-links" aria-label="Stage 2 resources">
+                  <a href="../templates/test-case.html">Test case builder <span>↗</span></a>
+                  <a href="../guide/index.html?doc=standards%2Fintegrated-solutions.md">Integrated solutions standard <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Requirements are testable and unknowns are logged.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-3" class="stage-card stage-shape">
+              <summary>
+                <span class="stage-number">03</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Shape · design the system</span>
+                  <strong>Architecture and data design</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Architecture decision and impact map approved
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Decide the system of record, component boundaries, data model, identities,
+                  permissions, environments, connectors, licensing, ALM, telemetry, error
+                  handling, recovery, retention, and rollback.
+                </p>
+                <div class="artifact-links" aria-label="Stage 3 resources">
+                  <a href="../guide/index.html?doc=templates%2Farchitecture-decision.md">Architecture decision template <span>↗</span></a>
+                  <a href="../guide/index.html?doc=standards%2Fintegrated-solutions.md">Integrated solutions standard <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Architecture decision and impact map approved.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-4" class="stage-card stage-make">
+              <summary>
+                <span class="stage-number">04</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Make · plan bounded changes</span>
+                  <strong>Build planning</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Approved plan and Definition of Ready
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Decompose work into bounded changes. Map every task to requirements, tests,
+                  owner, dependencies, risk, and evidence.
+                </p>
+                <div class="artifact-links" aria-label="Stage 4 resources">
+                  <a href="#definition-ready">Definition of Ready <span>↓</span></a>
+                  <a href="../templates/test-case.html">Test case builder <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Approved plan and Definition of Ready.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-5" class="stage-card stage-make">
+              <summary>
+                <span class="stage-number">05</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Make · build with standards</span>
+                  <strong>Implementation</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Builder self-review passes
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Use the applicable platform standards and skills. Work only in approved
+                  environments. Update source, documentation, tests, release notes, and evidence
+                  together.
+                </p>
+                <div class="artifact-links" aria-label="Stage 5 platform standards">
+                  <a href="../guide/index.html?doc=standards%2Fpower-apps.md">Power Apps <span>↗</span></a>
+                  <a href="../guide/index.html?doc=standards%2Fpower-automate.md">Power Automate <span>↗</span></a>
+                  <a href="../guide/index.html?doc=standards%2Fsharepoint.md">SharePoint <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Builder self-review passes.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-6" class="stage-card stage-prove">
+              <summary>
+                <span class="stage-number">06</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Prove · test independently</span>
+                  <strong>Independent QA</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Critical tests pass and defects are dispositioned
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Run deterministic checks first, then functional, accessibility, visual,
+                  exploratory, permissions, recovery, performance, and regression testing as
+                  applicable. Inspect the real rendered surface at every supported breakpoint.
+                </p>
+                <div class="artifact-links" aria-label="Stage 6 resources">
+                  <a href="../guide/index.html?doc=standards%2Fvisual-verification.md">Visual verification standard <span>↗</span></a>
+                  <a href="../templates/test-case.html">Test case builder <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Critical tests pass and defects are dispositioned.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-7" class="stage-card stage-ship">
+              <summary>
+                <span class="stage-number">07</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Ship · authorize the release</span>
+                  <strong>Release approval and deployment</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Named approvers authorize release
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Confirm solution version, dependencies, connection references, environment
+                  variables, permissions, rollback, communications, support, and evidence.
+                </p>
+                <div class="artifact-links" aria-label="Stage 7 resources">
+                  <a href="../templates/artifact.html?type=release">Release checklist <span>↗</span></a>
+                  <a href="../guide/index.html?doc=standards%2Fintegrated-solutions.md">Integrated solutions standard <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Named approvers authorize release.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-8" class="stage-card stage-ship">
+              <summary>
+                <span class="stage-number">08</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Ship · transfer ownership</span>
+                  <strong>Handoff and support</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Successor verification accepted
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Deliver inventory, architecture, runbook, support model, known issues,
+                  ownership, recovery, and regression pack. A successor performs representative
+                  tasks.
+                </p>
+                <div class="artifact-links" aria-label="Stage 8 resources">
+                  <a href="../templates/artifact.html?type=handoff">Handoff checklist <span>↗</span></a>
+                  <a href="../guide/index.html?doc=templates%2Farchitecture-decision.md">Architecture decision <span>↗</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Successor verification accepted.</span></div>
+              </div>
+            </details>
+
+            <details id="stage-9" class="stage-card stage-improve">
+              <summary>
+                <span class="stage-number">09</span>
+                <span class="stage-title">
+                  <span class="stage-kicker">Improve · close the loop</span>
+                  <strong>Retrospective and standard update</strong>
+                </span>
+                <span class="exit-preview">
+                  <small>Exit criteria</small>
+                  Metrics recorded and improvement backlog approved
+                </span>
+                <span class="expand-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="stage-content">
+                <p>
+                  Measure effort, rework, defects, outcomes, skill performance, manual
+                  intervention, and adoption. Promote reusable lessons into versioned standards.
+                </p>
+                <div class="artifact-links" aria-label="Stage 9 resources">
+                  <a href="../guide/index.html?doc=standards%2Fcommon-delivery-lifecycle.md">Lifecycle source standard <span>↗</span></a>
+                  <a href="#definition-done">Definition of Done <span>↓</span></a>
+                </div>
+                <div class="exit-gate"><strong>Exit</strong><span>Metrics recorded and improvement backlog approved.</span></div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="quality-gates" class="quality-section" aria-labelledby="quality-title">
+        <div class="container">
+          <div class="quality-heading">
+            <span class="eyebrow eyebrow-light">Quality gates</span>
+            <h2 id="quality-title">Ready to start. Done to last.</h2>
+            <p>Use these compact checks at planning and closeout. Every item should be evidenced.</p>
+          </div>
+
+          <div class="quality-grid">
+            <article id="definition-ready" class="quality-card">
+              <header>
+                <span class="quality-mark" aria-hidden="true">R</span>
+                <div><small>Before implementation</small><h3>Definition of Ready</h3></div>
+              </header>
+              <ul>
+                <li>Named owner and approver</li>
+                <li>Testable outcome and acceptance criteria</li>
+                <li>Data classification and approved AI boundary</li>
+                <li>Architecture and impact understood</li>
+                <li>Licensing, security, records, and accessibility considered</li>
+                <li>Environment and test data ready</li>
+                <li>Dependencies and rollback identified</li>
+              </ul>
+            </article>
+
+            <article id="definition-done" class="quality-card">
+              <header>
+                <span class="quality-mark" aria-hidden="true">D</span>
+                <div><small>Before closeout</small><h3>Definition of Done</h3></div>
+              </header>
+              <ul>
+                <li>Acceptance criteria and critical regression pass</li>
+                <li>No unresolved Sev 1/2 defects</li>
+                <li>Security, accessibility, records, and licensing decisions retained</li>
+                <li>Release and rollback evidence retained</li>
+                <li>Runbook and handoff complete</li>
+                <li>Successor can locate and use the artifacts</li>
+                <li>Metrics and retrospective recorded</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="source-section">
+        <div class="container source-card">
+          <div>
+            <span class="eyebrow">Source of truth</span>
+            <h2>Keep the standard authoritative.</h2>
+            <p>
+              This page is a visual companion. Propose lifecycle changes in the raw Markdown
+              standard so every implementation stays aligned.
+            </p>
+          </div>
+          <div class="source-actions">
+            <a class="button button-primary" href="../guide/index.html?doc=standards%2Fcommon-delivery-lifecycle.md">
+              Open raw standard <span aria-hidden="true">↗</span>
+            </a>
+            <a class="button button-secondary" href="../index.html">Back to delivery guide</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="lifecycle-footer">
+      <div class="container">
+        <img src="../assets/mgp-header-logo.png" alt="MGP — Improving Communities" />
+        <p>Plan deliberately. Prove the work. Leave it supportable.</p>
+      </div>
+    </footer>
+  </body>
+</html>

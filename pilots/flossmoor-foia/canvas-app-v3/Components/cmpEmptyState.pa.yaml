@@ -33,7 +33,7 @@ ComponentDefinitions:
         DisplayName: Icon
         Description: Fluent icon name.
         DataType: Text
-        Default: ="DocumentSearch"
+        Default: ="DocumentArrowUp"
       OnAction:
         PropertyKind: Event
         DisplayName: OnAction

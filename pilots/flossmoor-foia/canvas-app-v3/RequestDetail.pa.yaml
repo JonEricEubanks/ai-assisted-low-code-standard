@@ -211,6 +211,7 @@ Screens:
                                     LayoutMinHeight: =0
                                     LayoutMinWidth: =0
                                     OnConfirmDueDate: =false
+                                    OnCreateAssignment: =false
                                     OnOpenCloseout: =Navigate(ResponseCloseout, ScreenTransition.None)
                                     OnOpenDepartmentWork: |-
                                       =If(IsBlank(gblSelectedAssignment) || gblSelectedAssignment.Request.Id <> gblSelectedRequest.ID,
@@ -657,6 +658,33 @@ Screens:
                                               Set(gblSelectedRequest, LookUp('FOIA Pilot Requests', ID = gblSelectedRequest.ID));
                                               cmpToastHostRequestDetail.SendToast("Due date confirmed", "Statutory deadline locked for " & Coalesce(gblSelectedRequest.Title, "this request") & ".", "Success"),
                                               cmpToastHostRequestDetail.SendToast("Couldn't confirm the due date", FirstError.Message, "Error")
+                                            )
+                                          OnCreateAssignment: |-
+                                            =If(
+                                              IsBlank(gblAssignmentDepartmentCandidate),
+                                              cmpToastHostRequestDetail.SendToast("Select a department", "Choose a department before creating the assignment.", "Warning"),
+                                              IfError(
+                                                Set(
+                                                  gblSelectedAssignment,
+                                                  Patch(
+                                                    'FOIA Pilot Assignments',
+                                                    Defaults('FOIA Pilot Assignments'),
+                                                    {
+                                                      Title: Coalesce(gblSelectedRequest.Title, "Request") & " - " & gblAssignmentDepartmentCandidate.Title,
+                                                      Request: {Id: gblSelectedRequest.ID, Value: gblSelectedRequest.Title},
+                                                      Department: {Id: gblAssignmentDepartmentCandidate.ID, Value: gblAssignmentDepartmentCandidate.Title},
+                                                      AssignmentStatus: {Value: "New"},
+                                                      AssignmentDueDate: gblSelectedRequest.DueDate,
+                                                      Active: true
+                                                    }
+                                                  )
+                                                );
+                                                Set(gblSelectedDepartment, gblSelectedAssignment.Department);
+                                                Refresh('FOIA Pilot Assignments');
+                                                cmpToastHostRequestDetail.SendToast("Department assigned", gblAssignmentDepartmentCandidate.Title & " can now begin department work.", "Success");
+                                                Navigate(DepartmentWork, ScreenTransition.None),
+                                                cmpToastHostRequestDetail.SendToast("Couldn't create the assignment", FirstError.Message, "Error")
+                                              )
                                             )
                                           OnOpenCloseout: =Navigate(ResponseCloseout, ScreenTransition.None)
                                           OnOpenDepartmentWork: |-

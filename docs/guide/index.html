@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Guide</title>
+    <meta
+      name="description"
+      content="Read MGP delivery standards and guidance in a clear, branded experience."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./guide.css" />
+    <script src="./guide.js" defer></script>
+  </head>
+  <body class="guide-page">
+    <a class="skip-link" href="#guide-content">Skip to guide</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Developer Delivery Guide</span>
+        </a>
+
+        <nav aria-label="Guide navigation">
+          <a href="../training/index.html">Quick starts</a>
+          <a class="nav-cta" href="../index.html">
+            Guide home
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="reader-hero">
+        <div class="reader-grid" aria-hidden="true"></div>
+        <div class="container reader-hero-layout">
+          <div>
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              <span id="guide-category">MGP guidance</span>
+            </span>
+            <h1 id="guide-title">Loading guide…</h1>
+            <p id="guide-summary">Preparing the readable version of this resource.</p>
+          </div>
+          <div class="reader-actions">
+            <button id="back-button" class="button button-primary" type="button">
+              <span aria-hidden="true">←</span>
+              Back
+            </button>
+            <a id="quick-path-link" class="button button-secondary" href="../training/index.html" hidden>
+              Open quick path
+              <span aria-hidden="true">→</span>
+            </a>
+            <a id="download-source" class="button button-secondary" href="../index.html" download>
+              Download Markdown
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="reader-section">
+        <div class="container reader-layout">
+          <aside class="reader-sidebar" aria-label="On this page">
+            <span class="sidebar-label">On this page</span>
+            <nav id="table-of-contents" class="reader-toc"></nav>
+          </aside>
+
+          <article id="guide-content" class="guide-content" aria-live="polite">
+            <div class="reader-loading">
+              <span aria-hidden="true"></span>
+              Loading guide…
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Developer delivery system</span>
+        <div>
+          <a href="../index.html">Guide home</a>
+          <a href="../training/index.html">Quick starts</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

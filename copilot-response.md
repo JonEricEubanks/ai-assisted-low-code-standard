@@ -28,7 +28,7 @@ Do not create another generic plan and do not infer missing facts. Explicitly li
 3. Named owners and backups
 4. Existing effort, defect, rework, and documentation-completeness data
 5. Existing screenshots or demos suitable for internal evidence
-6. Manager-approved Advanced rating thresholds
+6. Power Desk-approved delivery quality thresholds
 
 Then provide:
 
@@ -38,4 +38,3 @@ Then provide:
 4. A list of content that must not be used in a public blog because it contains client, tenant, personal, security, or proprietary information.
 
 Use citations for every factual claim and keep confirmed evidence separate from recommendations.
-

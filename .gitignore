@@ -1,5 +1,9 @@
 # Local env
-.vscode/
+.vscode/*
+!.vscode/
+!.vscode/extensions.json
+.playwright-mcp/
+qa-live-power-app.png
 .DS_Store
 *.log
 *.tmp

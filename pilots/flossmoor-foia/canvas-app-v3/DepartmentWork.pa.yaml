@@ -475,7 +475,7 @@ Screens:
                                                 Headline: ="No active department assignments"
                                                 Height: =220
                                                 Hint: ="Assignments created for this request will appear here with their status and due date."
-                                                Icon: ="People"
+                                                Icon: ="DocumentArrowUp"
                                                 LayoutMinHeight: =0
                                                 LayoutMinWidth: =0
                                                 OnAction: =Navigate(RequestDetail, ScreenTransition.None)

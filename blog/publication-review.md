@@ -7,7 +7,7 @@ Use this checklist for each article, case study, image, and presentation. Review
 - [ ] **Privacy:** No personal, employee, applicant, resident, vendor, or user data; no identifying details hidden only by redaction.
 - [ ] **Security:** No tenant/environment/resource identifiers, internal URLs, credentials, tokens, connection details, access gaps, or security findings.
 - [ ] **Client/confidentiality:** No client names, branding, feedback, screenshots, recordings, emails, defect history, or confidential evidence.
-- [ ] **Proprietary content:** No private code, exported packages, internal standards, training guides, infrastructure details, staffing/handoff details, performance or career/promotion content, or unapproved rating information.
+- [ ] **Proprietary content:** No private code, exported packages, internal standards, training guides, infrastructure details, staffing or handoff details, personnel information, or unapproved internal evaluation content.
 - [ ] **Architecture exclusions:** No detailed finance, audit, records, retention, folder, payment, or external-integration architecture.
 - [ ] **Accessibility:** Alt text, descriptive captions, contrast, reading order, and final publication format reviewed.
 - [ ] **Claims:** Every claim has a traceable source and is classified as synthetic, projected, or realized. Projections state assumptions; realized benefits cite approved measurement evidence.

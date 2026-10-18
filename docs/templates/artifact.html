@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Delivery Artifact</title>
+    <meta
+      name="description"
+      content="Complete and export an MGP developer delivery artifact."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./template.css" />
+    <script src="./artifact.js" defer></script>
+  </head>
+  <body class="template-page">
+    <a class="skip-link" href="#main">Skip to artifact</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title" id="header-title">Delivery Artifact</span>
+        </a>
+
+        <nav aria-label="Template navigation">
+          <a href="../training/index.html">Quick starts</a>
+          <a class="nav-cta" id="source-link" href="../index.html" download>
+            Download source
+            <span aria-hidden="true">↓</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="template-hero">
+        <div class="template-grid" aria-hidden="true"></div>
+        <div class="container template-hero-layout">
+          <div>
+            <span class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              <span id="artifact-eyebrow">Delivery artifact</span>
+            </span>
+            <h1 id="artifact-title">Preparing your workspace…</h1>
+            <p id="artifact-description"></p>
+          </div>
+          <aside class="template-guide" aria-label="Artifact workflow">
+            <span>How to use it</span>
+            <ol id="workflow-steps"></ol>
+          </aside>
+        </div>
+      </section>
+
+      <section class="template-workspace">
+        <div class="container workspace-layout">
+          <form id="artifact-form" class="test-form" aria-label="Delivery artifact"></form>
+
+          <aside class="export-panel">
+            <div class="export-card">
+              <span class="export-kicker">Your output</span>
+              <h2>Keep the record with the work.</h2>
+              <p>
+                The information stays in this browser until you export it. Nothing is submitted
+                or stored by this page.
+              </p>
+
+              <div class="completion-meter" aria-live="polite">
+                <span>
+                  <b id="completion-count">0 of 0</b>
+                  complete
+                </span>
+                <div><span id="completion-bar"></span></div>
+              </div>
+
+              <div class="export-actions">
+                <button class="button button-primary" id="download-button" type="button">
+                  Download artifact
+                  <span aria-hidden="true">↓</span>
+                </button>
+                <button class="button button-secondary" id="copy-button" type="button">
+                  Copy as Markdown
+                </button>
+                <button class="text-button" id="print-button" type="button">
+                  Print or save as PDF
+                  <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+
+              <p id="action-status" class="action-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="traceability-card">
+              <span id="rule-label">Delivery rule</span>
+              <strong id="rule-text">Complete the artifact before moving forward.</strong>
+              <a id="return-link" href="../training/index.html">
+                Return to quick starts
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Developer delivery system</span>
+        <div>
+          <a href="../index.html">Guide home</a>
+          <a id="footer-source-link" href="../index.html" download>Download Markdown</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

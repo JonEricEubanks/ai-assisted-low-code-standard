@@ -75,7 +75,7 @@ App:
       TouchTarget = 44;
       ControlMinTouch = TouchTarget;
       InputHeight = 44;
-      FieldHeight = 72;
+      FieldHeight = 64;
 
       // ---- Shell dimensions ----
       HeaderHeight = 64;

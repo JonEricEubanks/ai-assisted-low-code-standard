@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Azure Resource Guardrails</title>
+    <meta
+      name="description"
+      content="A concise MGP training path for verifying Azure identity, subscription, resource-group scope, and approval before Azure work."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./azure.css" />
+  </head>
+  <body class="azure-page">
+    <a class="skip-link" href="#main">Skip to Azure guardrails</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <span class="logo-lockup">
+            <img
+              class="brand-logo"
+              src="../assets/mgp-header-logo.png"
+              alt="MGP — Improving Communities"
+            />
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-title">Azure Guardrails</span>
+        </a>
+        <nav aria-label="Azure guardrail navigation">
+          <a href="../start/index.html#prerequisites">Setup</a>
+          <a href="../training/index.html">Quick starts</a>
+          <a class="nav-cta" href="../index.html">Guide home <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="azure-hero">
+        <div class="azure-grid" aria-hidden="true"></div>
+        <div class="container azure-hero-layout">
+          <div class="azure-icon-stack" aria-hidden="true">
+            <span class="azure-icon azure-icon-primary">
+              <img src="../assets/product-icons/azure-resources.svg" alt="" />
+            </span>
+            <span class="azure-icon azure-icon-secondary">
+              <img src="../assets/product-icons/azure-resource-groups.svg" alt="" />
+            </span>
+          </div>
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Before any Azure work</span>
+            <h1>Verify the boundary. Then build.</h1>
+            <p>
+              Use <strong>Azure Resource Boundary</strong> before Azure CLI, MCP, SDK, REST, azd,
+              Bicep, Terraform, or any Azure resource change.
+            </p>
+            <div class="azure-actions">
+              <a class="button button-primary" href="#gate">Run the three-part gate</a>
+              <a
+                class="button button-secondary"
+                href="../guide/index.html?doc=skills%2Fazure-resource-boundary%2FSKILL.md"
+              >
+                Open the full procedure <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="boundary-strip" aria-label="Required Azure boundary">
+        <div class="container">
+          <span>Approved workload</span>
+          <b aria-hidden="true">→</b>
+          <span>Verified identity</span>
+          <b aria-hidden="true">→</b>
+          <span>Exact resource group</span>
+          <b aria-hidden="true">→</b>
+          <span>Approved operation</span>
+        </div>
+      </section>
+
+      <section id="gate" class="azure-section">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">The Azure gate</span>
+            <h2>Three checks before the first write.</h2>
+            <p class="section-lead">If one check is missing or mismatched, stop and report the blocker.</p>
+          </div>
+          <div class="gate-grid">
+            <article>
+              <span class="gate-number">01</span>
+              <img src="../assets/product-icons/azure-resources.svg" alt="" aria-hidden="true" />
+              <h3>Confirm the approved scope</h3>
+              <p>Name the workload, environment, approval reference, allowed locations, and exact resource group.</p>
+            </article>
+            <article>
+              <span class="gate-number">02</span>
+              <img src="../assets/product-icons/azure-resource-groups.svg" alt="" aria-hidden="true" />
+              <h3>Verify the executing identity</h3>
+              <p>Confirm the actual identity and subscription used by the CLI, MCP, SDK, or workflow—not an assumed default.</p>
+            </article>
+            <article>
+              <span class="gate-number">03</span>
+              <span class="approval-icon" aria-hidden="true">✓</span>
+              <h3>Review the operation</h3>
+              <p>Validate every target, permission, location, cost implication, and rollback before an approved write.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="azure-section azure-stop-section">
+        <div class="container stop-layout">
+          <div>
+            <span class="eyebrow eyebrow-light">Stop conditions</span>
+            <h2>Do not guess your way into Azure.</h2>
+            <p>
+              An Owner login, CLI default, existing resource group, or successful sign-in does not
+              prove that a workload is authorized.
+            </p>
+          </div>
+          <ul>
+            <li>No explicitly approved workload resource group</li>
+            <li>Identity or subscription cannot be verified</li>
+            <li>Target, region, permission, data use, or cost is outside the approved boundary</li>
+            <li>The plan includes deletion, public exposure, retention, or access changes without separate approval</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="azure-section">
+        <div class="container handoff-card">
+          <div>
+            <span class="eyebrow">Use it with MGP Delivery</span>
+            <h2>Tell Copilot what is approved—not what to assume.</h2>
+            <p>
+              Ask the MGP Delivery agent to use <strong>azure-resource-boundary</strong>. Provide the
+              workload, environment, approval reference, exact resource-group name and resource ID,
+              allowed locations, operation, execution channel, and accountable owner.
+            </p>
+          </div>
+          <div class="handoff-actions">
+            <a class="button button-primary" href="../start/index.html">Return to solution intake</a>
+            <a class="text-link" href="https://learn.microsoft.com/azure/architecture/icons/" target="_blank" rel="noreferrer">
+              Official Microsoft Azure icon guidance <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© MGP · Azure resource-boundary training</span>
+        <div>
+          <a href="../guide/index.html?doc=skills%2Fazure-resource-boundary%2FSKILL.md">Full skill</a>
+          <a href="../training/index.html">All quick starts</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
