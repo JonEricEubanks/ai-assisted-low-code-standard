@@ -124,10 +124,10 @@ ComponentDefinitions:
                         AccessibleLabel: |-
                           =cmpMetricTile.Label & ": " & cmpMetricTile.Value
                         AlignInContainer: =If(cmpMetricTile.Compact, AlignInContainer.Center, AlignInContainer.Stretch)
-                        AutoHeight: =true
                         Color: =ColorTextPrimary
                         Font: =FontApp
                         FontWeight: =FontWeight.Semibold
+                        Height: =If(cmpMetricTile.Compact, 34, 44)
                         LayoutMinHeight: =0
                         LayoutMinWidth: =0
                         OnSelect: =cmpMetricTile.OnSelect()
@@ -137,17 +137,18 @@ ComponentDefinitions:
                         PaddingTop: =0
                         Size: =If(cmpMetricTile.Compact, FontSizeTitleDesktop, App.Width < BreakpointPhone, FontSizeKpiPhone, App.Width < BreakpointDesktop, FontSizeKpiTablet, FontSizeKpiDesktop)
                         Text: =cmpMetricTile.Value
+                        Width: =If(cmpMetricTile.Compact, 64, 150)
                         Wrap: =false
                   - lblTileCaption:
                       Control: ModernText
                       Properties:
                         AccessibleLabel: =Self.Text
                         AlignInContainer: =If(cmpMetricTile.Compact, AlignInContainer.Center, AlignInContainer.Stretch)
-                        AutoHeight: =true
                         Color: =If(cmpMetricTile.Compact, ColorTextSecondary, ColorTextTertiary)
                         FillPortions: =If(cmpMetricTile.Compact, 1, 0)
                         Font: =FontApp
-                        LayoutMinHeight: =0
+                        Height: =20
+                        LayoutMinHeight: =20
                         LayoutMinWidth: =0
                         PaddingBottom: =0
                         PaddingLeft: =0
@@ -161,10 +162,10 @@ ComponentDefinitions:
                       Properties:
                         AccessibleLabel: =Self.Text
                         AlignInContainer: =AlignInContainer.Stretch
-                        AutoHeight: =true
                         Color: =ColorTextSecondary
                         Font: =FontApp
-                        LayoutMinHeight: =0
+                        Height: =17
+                        LayoutMinHeight: =17
                         LayoutMinWidth: =0
                         PaddingBottom: =0
                         PaddingLeft: =0

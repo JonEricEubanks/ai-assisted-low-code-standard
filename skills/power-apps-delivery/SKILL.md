@@ -25,6 +25,7 @@ description: Plan, implement, validate, and hand off a bounded Canvas app change
 7. **Check.** Compile/sync as supported, resolve every formula and App Checker error, and record warnings and dispositions. Run accessibility checks and the planned keyboard journey. Verify labels, gallery tab stops, focus order, contrast, and phone/tablet/desktop layouts at approved widths.
    - Follow `standards/visual-verification.md`: after every compile, capture the live Studio or Player surface in the shared browser at the phone, tablet, and desktop breakpoints, inspect the captures for clipping, overflow, broken imagery, wrapped buttons, and empty-state rendering, and record findings. A clean compile is not visual acceptance.
    - Run the **Elevated-UI acceptance checklist** (`references/design-system.md` §8) against the captures. Compare structure side-by-side with the reference apps: header, rail/phone nav, metric tiles, list rows, status pills, and state screens must be recognizably the same design language.
+   - Verify every icon rendered (no blank squares) and every `Icon:` value exists in `references/icon-catalog.md`; measure suspect controls in the live DOM (`getBoundingClientRect`) rather than guessing — a 0-height control is a layout defect the compiler cannot see.
 8. **Test.** Execute critical journeys for applicable personas, including validation, loading/empty/success/error states, denied permissions, write/duplicate behavior, connector failure/recovery, delegation, and representative synthetic volume. Check the data/service layer independently; a hidden control is not proof of authorization. Run critical regression tests.
 9. **Review.** Compare actual changes and test results against the approved plan and acceptance criteria. Any failed, blocked, or review-needed result is explicit, linked to a defect or decision, and never represented as a pass. Obtain independent review and required approval before release.
 10. **Hand off.** Provide app/version and dependency inventory, plan, validation evidence, screenshots cleared for the approved audience, defects/known limitations, release notes, support owner, rollback reference, and approval. Update relevant architecture and handoff records.
@@ -63,6 +64,7 @@ Complete for each bounded change. Stop and escalate instead of checking a box wh
 
 - `references/design-system.md` — tokens, screen skeleton, component catalog, signature patterns with YAML, motion/feedback, accessibility, and the Elevated-UI acceptance checklist. Read before specifying or editing any screen.
 - `references/toast-component.pa.yaml` — the reference Fluent 2 Toast component, verbatim. Import/recreate as `cmpToast` in every app; it is the default notification surface (design-system §5.9).
+- `references/icon-catalog.md` — the 181 valid modern `Icon` names (scraped from Studio), a semantic mapping, and a list of common invalid guesses. The service does not validate icon names; check every `Icon:` value against this file.
 
 ## Required outputs
 

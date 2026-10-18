@@ -132,7 +132,7 @@ Screens:
                                     LayoutGap: =SpaceMd
                                     LayoutMinHeight: =0
                                     LayoutMinWidth: =0
-                                    LayoutWrap: =true
+                                    LayoutWrap: =App.Width < BreakpointDesktop
                                     RadiusBottomLeft: =0
                                     RadiusBottomRight: =0
                                     RadiusTopLeft: =0
@@ -592,6 +592,7 @@ Screens:
                                         Properties:
                                           AlignInContainer: =AlignInContainer.Start
                                           Compact: =App.Width >= BreakpointDesktop
+                                          FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
                                           Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
                                           Icon: ="Document"
                                           Intent: ="Brand"
@@ -609,6 +610,7 @@ Screens:
                                         Properties:
                                           AlignInContainer: =AlignInContainer.Start
                                           Compact: =App.Width >= BreakpointDesktop
+                                          FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
                                           Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
                                           Icon: ="DocumentSearch"
                                           Intent: ="Info"
@@ -626,6 +628,7 @@ Screens:
                                         Properties:
                                           AlignInContainer: =AlignInContainer.Start
                                           Compact: =App.Width >= BreakpointDesktop
+                                          FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
                                           Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
                                           Icon: ="Warning"
                                           Intent: ="Warning"
@@ -643,6 +646,7 @@ Screens:
                                         Properties:
                                           AlignInContainer: =AlignInContainer.Start
                                           Compact: =App.Width >= BreakpointDesktop
+                                          FillPortions: =If(App.Width >= BreakpointDesktop, 1, 0)
                                           Height: =If(App.Width >= BreakpointDesktop, StatStripHeight, TileHeight)
                                           Icon: ="CheckmarkCircle"
                                           Intent: ="Success"
@@ -909,13 +913,12 @@ Screens:
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 FillPortions: =0
-                                                Height: =If(App.Width < BreakpointPhone, InputHeight * 3 + Space2 * 2, App.Width < BreakpointDesktop, InputHeight, InputHeight * 4 + Space2 * 3)
+                                                Height: =InputHeight * If(App.Width < BreakpointPhone, 2, 3) + Space2 * 2 + If(btnResetFilters.Visible, InputHeight + Space2, 0)
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
-                                                LayoutDirection: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, LayoutDirection.Horizontal, LayoutDirection.Vertical)
+                                                LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =SpaceSm
                                                 LayoutMinHeight: =0
                                                 LayoutMinWidth: =0
-                                                LayoutWrap: =true
                                                 RadiusBottomLeft: =0
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
@@ -927,11 +930,9 @@ Screens:
                                                       AccessibleLabel: ="Search requests"
                                                       AlignInContainer: =AlignInContainer.Stretch
                                                       Appearance: =Appearance.FilledLighter
-                                                      FillPortions: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 1, 0)
                                                       Font: =FontApp
                                                       Height: =InputHeight
                                                       LayoutMinHeight: =InputHeight
-                                                      LayoutMinWidth: =200
                                                       OnChange: =Set(gblSearchText, Self.Text)
                                                       Placeholder: ="Search requests…"
                                                       RadiusBottomLeft: =RadiusLarge
@@ -953,14 +954,12 @@ Screens:
                                                         ="Status: " & ThisItem.Value
                                                       Items: =["All", "New", "In Progress", "On Hold", "Closed"]
                                                       LayoutMinHeight: =InputHeight
-                                                      LayoutMinWidth: =160
                                                       OnChange: =Set(gblStatusFilter, Self.Selected.Value)
                                                       RadiusBottomLeft: =RadiusLarge
                                                       RadiusBottomRight: =RadiusLarge
                                                       RadiusTopLeft: =RadiusLarge
                                                       RadiusTopRight: =RadiusLarge
                                                       Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
-                                                      Width: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 180, Parent.Width)
                                                 - cmbDepartmentFilter:
                                                     Control: ModernDropdown
                                                     Properties:
@@ -975,7 +974,6 @@ Screens:
                                                       Items: |-
                                                         =Ungroup(Table({Options: Table({Value: "All"})}, {Options: Distinct(Filter('FOIA Pilot Departments', Active = true), Title)}), Options)
                                                       LayoutMinHeight: =InputHeight
-                                                      LayoutMinWidth: =160
                                                       OnChange: =Set(gblDepartmentFilter, Self.Selected.Value)
                                                       RadiusBottomLeft: =RadiusLarge
                                                       RadiusBottomRight: =RadiusLarge
@@ -983,7 +981,6 @@ Screens:
                                                       RadiusTopRight: =RadiusLarge
                                                       Size: =If(App.Width < BreakpointPhone, FontSizeBodyPhone, FontSizeBody)
                                                       Visible: =App.Width >= BreakpointPhone
-                                                      Width: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 220, Parent.Width)
                                                 - btnResetFilters:
                                                     Control: ModernButton
                                                     Properties:
@@ -994,7 +991,6 @@ Screens:
                                                       Height: =InputHeight
                                                       Icon: ="ArrowReset"
                                                       LayoutMinHeight: =InputHeight
-                                                      LayoutMinWidth: =0
                                                       OnSelect: |-
                                                         =Set(gblStatusFilter, "All");
                                                         Set(gblDepartmentFilter, "All");
@@ -1006,7 +1002,6 @@ Screens:
                                                       Text: ="Reset"
                                                       Tooltip: ="Clear search and filters"
                                                       Visible: =gblStatusFilter <> "All" || gblDepartmentFilter <> "All" || !IsBlank(gblSearchText)
-                                                      Width: =If(App.Width >= BreakpointPhone && App.Width < BreakpointDesktop, 110, Parent.Width)
                                           - lblQueueLoading:
                                               Control: ModernText
                                               Properties:

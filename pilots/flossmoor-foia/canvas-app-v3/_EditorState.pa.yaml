@@ -1,5 +1,6 @@
 EditorState:
   ScreensOrder:
+    - Screen1
     - DepartmentWork
     - Home
     - NewRequest
