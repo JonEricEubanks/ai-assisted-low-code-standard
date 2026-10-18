@@ -7,17 +7,14 @@ on:
         description: Approved Azure subscription ID
         required: true
         type: string
-        default: b8f90e47-b8ee-45f1-9442-d3b4f8fd0695
       resource_group:
         description: Approved Azure resource group
         required: true
         type: string
-        default: rg-mgp-foundry-qa-dev
       region:
         description: Approved Azure region
         required: true
         type: string
-        default: eastus2
 
 permissions:
   contents: read
