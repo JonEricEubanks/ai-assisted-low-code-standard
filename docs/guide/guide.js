@@ -44,11 +44,22 @@ function escapeHtml(value) {
 }
 
 function slugify(value) {
-  return value
+  let text = "";
+  for (let index = 0; index < value.length; index += 1) {
+    if (value[index] === "<") {
+      const tagEnd = value.indexOf(">", index + 1);
+      if (tagEnd !== -1) {
+        index = tagEnd;
+        continue;
+      }
+    }
+    text += value[index];
+  }
+
+  return text
     .toLowerCase()
-    .replace(/<[^>]+>/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+    .replace(/^-+|-+$/g, "");
 }
 
 function sourceUrl() {
