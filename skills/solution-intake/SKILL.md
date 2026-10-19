@@ -16,7 +16,15 @@ A new client request has arrived as a scope form, meeting summary, or email thre
 ## Inputs
 
 Required: the scope form or request narrative.
-Optional: meeting notes, email threads, existing solution inventory, prior work for the same client.
+Optional: an approved discovery package, attributed transcript or notes, email threads, existing solution inventory, and prior work for the same client.
+
+When discovery artifacts are supplied, use the public-safe repository templates:
+
+- `../../templates/discovery-script.md`
+- `../../templates/discovery-to-user-story-prompt.md`
+- `../../templates/user-story-specification.md`
+
+Treat the package as supplemental evidence. Product Owner acceptance confirms specification accuracy only; it does not authorize architecture, build, production change, or release.
 
 ## Prohibited actions
 
@@ -25,45 +33,69 @@ Optional: meeting notes, email threads, existing solution inventory, prior work 
 - Producing an effort estimate from the form alone
 - Designing screens, columns, or flow steps
 - Marking a request Ready while a Tier 1 question is open
+- Marking a request Ready without a complexity tier and risk class
+- Treating Product Owner specification acceptance as approval for a later lifecycle gate
+- Generating or retaining a client-specific statement without source attribution
+- Sending recordings or transcripts through AI before recording, classification, records, access, retention, and approved-AI-boundary checks
 - Touching any production environment
 
 ## Procedure
 
-### 1. Parse into four buckets
+### 1. Register and qualify sources
+
+Assign each source a stable `SRC-##` ID. Record title/type, date, provider or participants, locator method, data classification, access boundary, retention status, and whether it is inside the approved AI boundary.
+
+If recording or transcription is planned, first confirm the approved platform, participant notice/consent, storage and access, records/retention treatment, and permitted AI processing. If a check is unresolved, use approved non-recorded notes or stop; never treat inaccessible or unapproved content as reviewed.
+
+### 2. Parse into four buckets
 
 Read every section including narrative free text. Place each statement into exactly one bucket: **confirmed fact**, **implied requirement**, **assumption**, or **unknown**.
 
 Narrative success-criteria text usually contains more real requirements than the structured sections. Mine it line by line.
 
-### 2. Detect silent gaps
+### 3. Detect silent gaps
 
 Flag each default-state or absent field as an unanswered question rather than a negative answer. Apply the silent-gap list in `standards/intake-and-triage.md`.
 
 Challenge any "Constraints: None" on records-bearing, regulated, financial, or public-sector work.
 
-### 3. Score
+Explicitly establish data classification, records/retention, external access, volume/concurrency, devices/connectivity/offline use, accessibility, licensing/cost ownership, support/escalation, and the recording/transcription/AI boundary.
+
+### 4. Incorporate an accepted User Story Specification
+
+If the discovery package includes a Product Owner-accepted specification:
+
+1. Preserve its accepted version and source register.
+2. Keep stable story IDs (`US-###`) and acceptance IDs (`US-###-AC-##`); do not renumber or reuse retired IDs.
+3. Map every story and criterion into the Solution Brief.
+4. Transfer facts, rules, constraints, assumptions, and questions without changing their evidence status.
+5. Record contradictions or missing intake controls as open questions.
+
+Product Owner acceptance is evidence of specification accuracy, not readiness or authorization for architecture, build, production change, or release.
+
+### 5. Score
 
 Apply `reference/complexity-and-risk-scoring.md`. Produce complexity tier, risk class, records-bearing flag, and external-exposure flag.
 
-### 4. Recommend platform shape
+### 6. Recommend platform shape
 
 Apply `reference/platform-decision-rules.md`. For each component, record the requirement that forces it. Components without a forcing requirement are removed.
 
-### 5. Derive acceptance criteria
+### 7. Derive acceptance criteria
 
 Convert every narrative success criterion into a testable acceptance criterion or an explicitly deferred item with a reason. Nothing disappears silently.
 
-Format: persona + action + observable outcome + condition.
+Format: persona + action + observable outcome + condition. Preserve or assign stable IDs and cite `SRC-##` plus a section, timestamp, or paragraph locator where available.
 
-### 6. Build the question set
+### 8. Build the question set
 
 Apply `reference/question-bank.md`. Select Tier 1 questions only for round one. Cap at eight. Route each to a named role.
 
-### 7. Assign disposition
+### 9. Assign disposition
 
-Ready, Discovery, or Re-scope, with the reason stated.
+Ready, Discovery, or Re-scope, with the reason stated. Ready requires both assigned risk/complexity and closure of every Tier 1 question.
 
-### 8. Write the brief
+### 10. Write the brief
 
 Populate `templates/solution-intake.md` and produce the outputs below.
 
@@ -87,6 +119,9 @@ Stop and escalate rather than proceeding when:
 5. **Tier 1 question set** — routed to roles, capped at eight
 6. **Disposition** — Ready, Discovery, or Re-scope with reason
 7. **Risk register seed** — initial risks with owners
+8. **Source register and traceability map** — source IDs/locators mapped to stable story and acceptance IDs
+9. **Discovery governance record** — recording/transcription, approved AI boundary, classification, access, and retention checks
+10. **Specification acceptance record** — Product Owner accuracy acceptance kept distinct from readiness and later approvals
 
 ## Quality bar
 

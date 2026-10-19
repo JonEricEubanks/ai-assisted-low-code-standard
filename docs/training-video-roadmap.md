@@ -109,20 +109,26 @@ Production requirements:
 - cursor highlight only when selecting a route
 - narration pace of approximately 135 words per minute
 - host internally in Microsoft Stream or SharePoint unless public release is approved
+- use only synthetic discovery content in the training recording; never display a real transcript, recording, participant identity, client fact, or tenant detail
 
 ### Video 2: Review a CSM handoff
 
 Goal:
 
-- Show how to begin from the approved SharePoint project folder
+- Show how a qualified opportunity becomes a discovery package and enters developer intake
 
 Outline:
 
-- confirm the charter, scope, user stories, and owner are present
+- show the sequence: qualification, discovery interview, attributed transcript, Copilot draft, human refinement, Product Owner specification acceptance, developer triage/readiness, and architecture
+- explain that discovery recording and transcription require an approved tool, consent and policy compliance, controlled access and retention, and an approved AI boundary
+- confirm the charter, scope, Product Owner-accepted specification, attributed transcript reference, and owner are present
+- use a fictional attributed statement to draft one user story and Given/When/Then acceptance criterion
+- show a human removing unsupported wording and carrying unresolved data, permission, or record details into intake as unknowns
 - copy the SharePoint project folder link
 - launch the intake agent with the folder reference
 - review normalized requirements, gaps, and risk
-- route to the correct platform and existing/new solution path
+- assign the readiness disposition and, only when **Ready** and developer-approved, route to architecture
+- state that Product Owner specification acceptance is not build or release approval
 
 ### Video 3: Build using a playbook
 

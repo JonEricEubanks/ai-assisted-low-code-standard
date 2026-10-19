@@ -14,6 +14,8 @@ Deliverable recorded as: *Other — M365 Solution*.
 Constraints recorded as: *None*.
 Target completion date: *blank*.
 
+For this sanitized example, the submitted scope form is registered as `SRC-01`. The numbered narrative requirements below use stable `IR-##` identifiers and cite `SRC-01`; a live intake would also retain a paragraph, section, or transcript timestamp locator.
+
 ---
 
 ## Stage 1 — Four-bucket parse
@@ -33,25 +35,25 @@ Target completion date: *blank*.
 
 Every item below appears only in narrative success-criteria text. None appear in a structured field. This is typical.
 
-| # | Implied requirement |
+| ID | Implied requirement |
 |---|---|
-| 1 | Both departments access the same system with shared visibility |
-| 2 | Inspection status and history visible across departments |
-| 3 | Inspections completed on iPads in the field |
-| 4 | Checklist-driven pass/fail or yes/no responses |
-| 5 | Minimal manual data entry |
-| 6 | Identify properties awaiting inspection, completed, failed, and requiring enforcement |
-| 7 | Track and manage annual inspection cycles |
-| 8 | Notify Community Development when a follow-up-requiring inspection completes |
-| 9 | Generate reminders when inspections become due |
-| 10 | Failed inspections move into enforcement and adjudication |
-| 11 | Track compliance, fines, court actions, and case resolution |
-| 12 | Attach photos as evidence |
-| 13 | Require photo documentation on failed items |
-| 14 | Documentation supports code enforcement and adjudication |
-| 15 | Maintain master inventory of commercial and multifamily properties |
-| 16 | Store inspection history, notes, contacts, photos, and outcomes in one place |
-| 17 | Preserve organizational knowledge regardless of staff changes |
+| IR-01 | Both departments access the same system with shared visibility |
+| IR-02 | Inspection status and history visible across departments |
+| IR-03 | Inspections completed on iPads in the field |
+| IR-04 | Checklist-driven pass/fail or yes/no responses |
+| IR-05 | Minimal manual data entry |
+| IR-06 | Identify properties awaiting inspection, completed, failed, and requiring enforcement |
+| IR-07 | Track and manage annual inspection cycles |
+| IR-08 | Notify Community Development when a follow-up-requiring inspection completes |
+| IR-09 | Generate reminders when inspections become due |
+| IR-10 | Failed inspections move into enforcement and adjudication |
+| IR-11 | Track compliance, fines, court actions, and case resolution |
+| IR-12 | Attach photos as evidence |
+| IR-13 | Require photo documentation on failed items |
+| IR-14 | Documentation supports code enforcement and adjudication |
+| IR-15 | Maintain master inventory of commercial and multifamily properties |
+| IR-16 | Store inspection history, notes, contacts, photos, and outcomes in one place |
+| IR-17 | Preserve organizational knowledge regardless of staff changes |
 
 ### Assumptions a developer would otherwise make silently
 
@@ -140,16 +142,16 @@ Phase 1 only. Later phases are named but not designed.
 
 | Component | Forcing requirement |
 |---|---|
-| Property list | Implied requirement 15 — master inventory with independent lifecycle |
-| Inspection list | Implied requirements 6, 7 — inspections have their own status and annual cycle |
-| Checklist Item list | Implied requirements 4, 13 — per-item pass/fail with conditional photo evidence |
-| Evidence document library | Implied requirements 12, 14 — binaries used as enforcement evidence need versioning and retention |
+| Property list | IR-15 — master inventory with independent lifecycle |
+| Inspection list | IR-06, IR-07 — inspections have their own status and annual cycle |
+| Checklist Item list | IR-04, IR-13 — per-item pass/fail with conditional photo evidence |
+| Evidence document library | IR-12, IR-14 — binaries used as enforcement evidence need versioning and retention |
 | Reference list | Rule: repeated values across lists need one auditable source |
-| Canvas app, role-aware | Implied requirements 1, 3, 5 — field tablet work with persona separation |
-| Event-triggered flow | Implied requirement 8 — notify on completion requiring follow-up |
-| Scheduled flow | Implied requirement 9 — due and overdue reminders on an annual cycle |
+| Canvas app, role-aware | IR-01, IR-03, IR-05 — field tablet work with persona separation |
+| Event-triggered flow | IR-08 — notify on completion requiring follow-up |
+| Scheduled flow | IR-09 — due and overdue reminders on an annual cycle |
 
-**Deferred to Phase 2:** enforcement case management, adjudication outcome tracking, fines, court actions, and case resolution. Reason: implied requirements 10 and 11 depend on a records decision, an external-integration decision, and a financial-handling decision that are all currently unknown.
+**Deferred to Phase 2:** enforcement case management, adjudication outcome tracking, fines, court actions, and case resolution. Reason: IR-10 and IR-11 depend on a records decision, an external-integration decision, and a financial-handling decision that are all currently unknown.
 
 **Not recommended:** Dataverse at this stage. No requirement yet forces it. Revisit if property or inspection volume, row-level security, or relational integrity requirements emerge during discovery.
 
@@ -157,21 +159,21 @@ Phase 1 only. Later phases are named but not designed.
 
 ## Stage 5 — Acceptance criteria
 
-| ID | Criterion | Source | Status |
+| Stable ID | Criterion | Source and locator | Status |
 |---|---|---|---|
-| AC-01 | A Fire inspector and a Community Development user both retrieve the same property's inspection history from one system | 1, 2 | Phase 1 |
-| AC-02 | An inspector completes a full inspection on a tablet without free-text entry except notes | 3, 4, 5 | Phase 1 |
-| AC-03 | A failed checklist item cannot be saved without at least one attached photo | 13 | Phase 1 |
-| AC-04 | A user filters properties by awaiting, completed, failed, and enforcement-required | 6 | Phase 1 |
-| AC-05 | The system identifies properties whose annual inspection is due or overdue | 7, 9 | Phase 1 |
-| AC-06 | Community Development receives a notification when an inspection requiring follow-up completes | 8 | Phase 1 |
-| AC-07 | Photos are retrievable against the originating inspection item with capture date intact | 12, 14 | Phase 1 |
-| AC-08 | A master inventory of commercial and multifamily properties exists with history, notes, and contacts | 15, 16 | Phase 1 |
-| AC-09 | A new staff member locates a property's full inspection history without assistance from prior staff | 17 | Phase 1 |
-| AC-10 | A failed inspection initiates an enforcement case | 10 | **Deferred — Phase 2** |
-| AC-11 | Compliance, fines, court actions, and resolution are tracked to closure | 11 | **Deferred — Phase 2** |
+| US-001-AC-01 | A Fire inspector and a Community Development user both retrieve the same property's inspection history from one system | `SRC-01`: IR-01, IR-02 | Phase 1 |
+| US-002-AC-01 | An inspector completes a full inspection on a tablet without free-text entry except notes | `SRC-01`: IR-03, IR-04, IR-05 | Phase 1 |
+| US-002-AC-02 | A failed checklist item cannot be saved without at least one attached photo | `SRC-01`: IR-13 | Phase 1 |
+| US-001-AC-02 | A user filters properties by awaiting, completed, failed, and enforcement-required | `SRC-01`: IR-06 | Phase 1 |
+| US-003-AC-01 | The system identifies properties whose annual inspection is due or overdue | `SRC-01`: IR-07, IR-09 | Phase 1 |
+| US-003-AC-02 | Community Development receives a notification when an inspection requiring follow-up completes | `SRC-01`: IR-08 | Phase 1 |
+| US-002-AC-03 | Photos are retrievable against the originating inspection item with capture date intact | `SRC-01`: IR-12, IR-14 | Phase 1 |
+| US-001-AC-03 | A master inventory of commercial and multifamily properties exists with history, notes, and contacts | `SRC-01`: IR-15, IR-16 | Phase 1 |
+| US-001-AC-04 | A new staff member locates a property's full inspection history without assistance from prior staff | `SRC-01`: IR-17 | Phase 1 |
+| US-004-AC-01 | A failed inspection initiates an enforcement case | `SRC-01`: IR-10 | **Deferred — Phase 2** |
+| US-004-AC-02 | Compliance, fines, court actions, and resolution are tracked to closure | `SRC-01`: IR-11 | **Deferred — Phase 2** |
 
-Deferral reason for AC-10 and AC-11 recorded as: dependent on unresolved records, external-integration, and financial-handling decisions.
+Deferral reason for US-004-AC-01 and US-004-AC-02 recorded as: dependent on unresolved records, external-integration, and financial-handling decisions.
 
 **Nothing from the narrative was dropped.** Seventeen implied requirements map to eleven criteria, two of which are explicitly deferred.
 

@@ -37,12 +37,25 @@ Appropriately scoped solutions are delivered consistently without depending on o
 6. Records, licensing, rollback, and support decisions are documented.
 7. Every requirement maps to acceptance criteria, a test, and retained evidence.
 8. Handoff enables another developer to support the solution.
+9. Discovery statements retain source attribution and remain separated as confirmed facts, implied requirements, assumptions, or unknowns.
+10. Requirement, story, and acceptance-criterion IDs remain stable from discovery through handoff.
+11. Recording, transcription, and AI use during discovery require explicit approval for the applicable participants, content, and data boundary.
+12. Unresolved blockers remain visible and prevent readiness approval when they affect architecture or delivery.
+
+## Discovery-to-architecture control
+
+The governed sequence is:
+
+`Qualification/intake -> discovery artifacts -> Product Owner specification-accuracy validation -> developer/agent governed triage -> accountable readiness approval -> architecture`
+
+The Product Owner validates that the discovery specification accurately represents the intended need. That acceptance does not approve architecture, authorize build, or approve release. Governed triage and accountable readiness approval remain mandatory before architecture.
 
 ## Delivery gates
 
 | Gate | Exit criteria |
 |---|---|
-| Intake ready | Scope, owners, requirements, unknowns, risk, and platform recommendation reviewed |
+| Discovery specification validated | Sources are attributed; confirmed facts, implied requirements, assumptions, and unknowns are separated; stable requirement, story, and acceptance-criterion IDs are assigned; unresolved blockers are recorded; recording, transcription, and AI boundaries are approved; and the Product Owner confirms specification accuracy |
+| Intake ready | Developer/agent triage is complete; scope, owners, requirements, unknowns, blockers, risk, and platform recommendation are reviewed; and the accountable readiness approver accepts the baseline |
 | Architecture approved | Data, integration, security, licensing, support, impact, and rollback decisions accepted |
 | Build complete | Approved design implemented with traceability and no unauthorized production changes |
 | QA complete | Required functional, deterministic, accessibility, permission, recovery, and regression evidence accepted |
@@ -52,6 +65,9 @@ Appropriately scoped solutions are delivered consistently without depending on o
 ## Ownership
 
 - Power Desk leadership owns this charter and the approved delivery boundaries.
+- Product Owners validate discovery specification accuracy without granting architecture, build, or release approval.
+- Developers or agents complete governed triage after specification validation.
+- The designated readiness approver authorizes progression from a `Ready` triage baseline to architecture.
 - Solution owners approve scope, architecture, release, and material risk decisions.
 - Developers follow the lifecycle and retain required evidence.
 - Independent reviewers validate the solution against approved requirements.

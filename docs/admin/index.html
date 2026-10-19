@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>MGP | Repository Explorer</title>
+    <meta
+      name="description"
+      content="Local repository explorer for previewing MGP skills, instructions, agents, standards, templates, and training resources."
+    />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./admin.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#document-viewer">Skip to document viewer</a>
+
+    <div id="local-access-message" class="access-message" hidden>
+      <div>
+        <span>Local access required</span>
+        <h1>Open this explorer from the repository preview server.</h1>
+        <p>
+          This content browser intentionally runs from localhost. It is not an
+          authentication system and should not be published as a private portal.
+        </p>
+      </div>
+    </div>
+
+    <div id="explorer-shell" class="explorer-shell">
+      <header class="topbar">
+        <a class="brand" href="../index.html" aria-label="MGP Developer Delivery Guide home">
+          <img src="../assets/mgp-header-logo.png" alt="MGP — Improving Communities" />
+          <span>
+            <small>Admin workspace</small>
+            <strong>Repository Explorer</strong>
+          </span>
+        </a>
+        <div class="topbar-actions">
+          <span class="local-pill"><i aria-hidden="true"></i> Local source view</span>
+          <a href="../index.html">Developer guide</a>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="category-panel" aria-label="Repository categories">
+          <div class="panel-heading">
+            <span>Library</span>
+            <strong id="catalog-total">0</strong>
+          </div>
+          <nav id="category-list" class="category-list"></nav>
+          <div class="source-note">
+            <strong>Source of truth</strong>
+            <p>These previews load the repository files directly. Editing stays in VS Code and GitHub.</p>
+          </div>
+        </aside>
+
+        <section class="document-panel" aria-labelledby="library-title">
+          <div class="library-header">
+            <div>
+              <p class="eyebrow">Quick view library</p>
+              <h1 id="library-title">Browse everything in one place</h1>
+            </div>
+            <label class="search-box" for="document-search">
+              <span aria-hidden="true">⌕</span>
+              <input
+                id="document-search"
+                type="search"
+                placeholder="Search skills, instructions, templates..."
+                autocomplete="off"
+              />
+            </label>
+          </div>
+
+          <div class="filter-summary">
+            <span id="active-filter">All resources</span>
+            <span id="result-count">Loading catalog…</span>
+          </div>
+
+          <div id="document-list" class="document-list" aria-live="polite"></div>
+        </section>
+
+        <section id="document-viewer" class="viewer-panel" aria-labelledby="viewer-title">
+          <div class="viewer-empty" id="viewer-empty">
+            <span class="empty-icon" aria-hidden="true">⌘</span>
+            <h2>Select a resource</h2>
+            <p>Choose any skill, instruction, agent, standard, template, or guide to inspect it.</p>
+          </div>
+
+          <div id="viewer-content" class="viewer-content" hidden>
+            <header class="viewer-header">
+              <div>
+                <span id="viewer-category" class="viewer-category"></span>
+                <h2 id="viewer-title">Resource preview</h2>
+                <p id="viewer-path"></p>
+              </div>
+              <div class="viewer-actions">
+                <button id="edit-with-copilot" class="primary-action" type="button">Edit with Copilot</button>
+                <button id="suggest-change" type="button">Suggest a change</button>
+                <button id="copy-path" type="button">Copy path</button>
+                <a id="open-full-preview" href="#" target="_blank" rel="noreferrer">Open full preview ↗</a>
+              </div>
+            </header>
+
+            <div class="view-tabs" role="tablist" aria-label="Document view">
+              <button
+                id="preview-tab"
+                class="is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="preview-panel"
+              >
+                Preview
+              </button>
+              <button
+                id="source-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="source-panel"
+              >
+                Source
+              </button>
+            </div>
+
+            <div id="preview-panel" class="tab-panel preview-panel" role="tabpanel" aria-labelledby="preview-tab">
+              <iframe id="document-preview" title="Readable document preview"></iframe>
+            </div>
+
+            <div
+              id="source-panel"
+              class="tab-panel source-panel"
+              role="tabpanel"
+              aria-labelledby="source-tab"
+              hidden
+            >
+              <div class="source-toolbar">
+                <span>Markdown source</span>
+                <button id="copy-source" type="button">Copy source</button>
+              </div>
+              <pre><code id="document-source">Loading source…</code></pre>
+            </div>
+
+            <p id="viewer-status" class="viewer-status" aria-live="polite"></p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="change-dialog" class="change-dialog" aria-labelledby="change-dialog-title">
+      <form method="dialog" class="change-dialog-shell">
+        <header class="change-dialog-header">
+          <div>
+            <span id="change-dialog-mode">Owner workflow</span>
+            <h2 id="change-dialog-title">Edit with Copilot</h2>
+          </div>
+          <button id="close-change-dialog" class="dialog-close" type="button" aria-label="Close change composer">×</button>
+        </header>
+
+        <div class="change-dialog-body">
+          <section class="change-target" aria-label="Selected repository resource">
+            <span>Selected resource</span>
+            <strong id="change-target-title"></strong>
+            <code id="change-target-path"></code>
+          </section>
+
+          <div class="change-form-grid">
+            <label for="change-type">
+              Change type
+              <select id="change-type">
+                <option value="Improve or clarify the existing content">Improve or clarify content</option>
+                <option value="Correct an error or outdated instruction">Correct an error</option>
+                <option value="Add a new governed capability">Add a capability</option>
+                <option value="Refactor the structure without changing intended behavior">Refactor structure</option>
+              </select>
+            </label>
+
+            <label for="change-goal">
+              What should Copilot change?
+              <textarea
+                id="change-goal"
+                rows="5"
+                placeholder="Example: Add a short prerequisites section and make the approval boundary clearer."
+              ></textarea>
+            </label>
+          </div>
+
+          <label class="impact-option" for="include-impact-review">
+            <input id="include-impact-review" type="checkbox" checked />
+            <span>
+              <strong>Review connected files and tests</strong>
+              <small>Ask Copilot to update directly related documentation and validation.</small>
+            </span>
+          </label>
+
+          <section class="prompt-preview" aria-labelledby="prompt-preview-title">
+            <div>
+              <span id="prompt-preview-title">Prompt for Copilot</span>
+              <small>Review before copying</small>
+            </div>
+            <pre><code id="generated-change-prompt"></code></pre>
+          </section>
+
+          <p id="change-dialog-status" class="change-dialog-status" aria-live="polite"></p>
+        </div>
+
+        <footer class="change-dialog-footer">
+          <button id="copy-change-path" type="button">Copy file path</button>
+          <button id="copy-change-prompt" class="primary-action" type="button">Copy prompt for Copilot</button>
+        </footer>
+      </form>
+    </dialog>
+  </body>
+</html>

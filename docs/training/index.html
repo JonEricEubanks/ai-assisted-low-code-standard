@@ -9,6 +9,7 @@
       name="description"
       content="Task-focused quick starts for planning, building, validating, and releasing MGP low-code solutions."
     />
+    <link rel="icon" href="../assets/mgp-header-logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -84,7 +85,7 @@
             <a href="#start-solution">
               <span class="choice-number">01</span>
               <strong>Review a CSM handoff</strong>
-              <small>Turn the SharePoint project folder into an approved delivery direction.</small>
+              <small>Trace discovery evidence into a developer readiness decision.</small>
               <span class="choice-link">Go to route <b aria-hidden="true">↓</b></span>
             </a>
             <a href="#build-solution">
@@ -109,9 +110,9 @@
             <div>
               <span class="module-kicker">Quick start 01</span>
               <h2 id="start-title">Review the CSM handoff</h2>
-              <p>Use this after the CSM places the charter, scope, and user stories in the approved SharePoint project folder.</p>
+              <p>Use this after qualification, discovery, human refinement, and Product Owner acceptance place an approved discovery package in the SharePoint project folder.</p>
             </div>
-            <span class="time-pill">About 15 min</span>
+            <span class="time-pill">About 20 min</span>
           </div>
 
           <div class="module-layout">
@@ -121,28 +122,42 @@
                   <span class="action-number">1</span>
                   <span>
                     <strong>Confirm the handoff package</strong>
-                    <small>Verify the folder contains the charter, project scope, user stories, owner, and known constraints.</small>
+                    <small>Verify the folder contains the charter, scope, Product Owner-accepted specification, attributed transcript reference, owner, and known constraints.</small>
                   </span>
                 </li>
                 <li>
                   <span class="action-number">2</span>
+                  <span>
+                    <strong>Trace transcript to specification</strong>
+                    <small>Confirm every client-specific statement is attributable, unsupported wording was removed, and assumptions and open questions remain visible.</small>
+                  </span>
+                </li>
+                <li>
+                  <span class="action-number">3</span>
+                  <span>
+                    <strong>Verify discovery controls</strong>
+                    <small>Recording and transcription must use approved tools with required consent and policy, controlled access and retention, and an approved AI processing boundary.</small>
+                  </span>
+                </li>
+                <li>
+                  <span class="action-number">4</span>
                   <span>
                     <strong>Copy the SharePoint folder link</strong>
                     <small>Use the approved project folder—not an individual document or a local download.</small>
                   </span>
                 </li>
                 <li>
-                  <span class="action-number">3</span>
+                  <span class="action-number">5</span>
                   <span>
                     <strong>Launch the intake agent</strong>
                     <small>Provide the folder link so the agent can normalize requirements, identify gaps, and recommend the delivery path.</small>
                   </span>
                 </li>
                 <li>
-                  <span class="action-number">4</span>
+                  <span class="action-number">6</span>
                   <span>
-                    <strong>Review before build</strong>
-                    <small>Confirm requirement IDs, acceptance criteria, risks, unknowns, and whether the solution is existing or new.</small>
+                    <strong>Decide readiness before architecture</strong>
+                    <small>Confirm IDs, criteria, risks, and unknowns; assign Ready, Discovery, or Re-scope. Ready plus accountable developer approval opens architecture—not build or release.</small>
                   </span>
                 </li>
               </ol>
@@ -164,6 +179,18 @@
                   See the agent flow
                   <span aria-hidden="true">↗</span>
                 </a>
+                <a class="text-link" href="../guide/index.html?doc=templates%2Fdiscovery-script.md">
+                  Open discovery script
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="text-link" href="../guide/index.html?doc=templates%2Fdiscovery-to-user-story-prompt.md">
+                  Open Copilot prompt
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a class="text-link" href="../guide/index.html?doc=templates%2Fuser-story-specification.md">
+                  Open user story specification
+                  <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </div>
 
@@ -173,7 +200,8 @@
                 <ul>
                   <li>SharePoint folder link</li>
                   <li>CSM charter and scope</li>
-                  <li>User stories and owner</li>
+                  <li>Accepted specification and owner</li>
+                  <li>Attributed transcript reference</li>
                 </ul>
               </div>
               <div>
@@ -183,9 +211,22 @@
                   <li>Traceable requirements</li>
                   <li>Platform and retrieval path</li>
                   <li>Missing decisions</li>
+                  <li>Readiness disposition</li>
                 </ul>
               </div>
             </aside>
+          </div>
+
+          <div class="module-layout">
+            <div class="module-main">
+              <div class="module-header">
+                <div>
+                  <span class="module-kicker">Practice objective</span>
+                  <h3>Transcript → story → intake</h3>
+                  <p>Use only fictional content: <strong>Request owner:</strong> “A requester needs missing required information identified before submission.” Draft a requester story and a Given/When/Then criterion, then carry the data source, permissions, records, volume, and support details into intake as unknowns. Simulated Product Owner acceptance confirms the specification wording only; readiness and architecture remain separate gates.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

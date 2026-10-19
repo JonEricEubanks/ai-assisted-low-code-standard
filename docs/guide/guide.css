@@ -2,6 +2,35 @@
   background: #f5f8fc;
 }
 
+.guide-embed .site-header,
+.guide-embed .reader-hero,
+.guide-embed .reader-sidebar,
+.guide-embed footer {
+  display: none;
+}
+
+.guide-embed .reader-section {
+  padding: 0;
+}
+
+.guide-embed .reader-layout {
+  width: 100%;
+  max-width: none;
+  display: block;
+}
+
+.guide-embed .guide-content {
+  min-height: 100vh;
+  padding: clamp(24px, 5vw, 54px);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.guide-embed .guide-content h1 {
+  display: block;
+}
+
 .reader-hero {
   position: relative;
   isolation: isolate;

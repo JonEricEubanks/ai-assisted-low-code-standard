@@ -4,6 +4,71 @@
 
 Operationalize the Copilot research package as a versioned Power Desk delivery system with standards, reusable skills, agents, templates, QA evidence, pilots, developer onboarding, metrics, operational evidence, and public-safe training content. The approach standardizes the lifecycle first, encodes it as skills second, uses existing MCP tools third, and introduces specialized agents only where role separation adds measurable value.
 
+## Discovery Workflow Update Plan
+
+The new discovery package (Discovery Script, User Story Specification, and Copilot translation prompt) is a strong operational improvement for discovery and user-story capture, but it must be integrated into the existing governance lifecycle rather than treated as a replacement for architecture, intake, QA, or release approval.
+
+### Rollout objective
+
+Align the repo around a single discovery-to-delivery workflow:
+
+1. CSM package and intake brief establish scope and unknowns.
+2. Discovery captures business problem, users, outcomes, constraints, and open questions.
+3. User Story Specification and acceptance criteria are reviewed by the Product Owner.
+4. Intake triage and risk classification determine whether the request is Ready, Discovery, or Re-scope.
+5. Architecture and implementation only begin after formal approval.
+6. QA, release, and handoff remain governed by the same evidence and approval model.
+
+### Workstreams to update in one batch
+
+- Repo overview and onboarding: `README.md`, `AGENT_WORKFLOW.md`, `docs/start/*`, `docs/architecture/*`
+- Governance and lifecycle standards: `standards/common-delivery-lifecycle.md`, `standards/intake-and-triage.md`, `skills/solution-intake/*`, `templates/solution-intake.md`
+- Agent behavior: `agents/delivery-orchestrator.md`, `.github/agents/mgp-delivery.agent.md`, `.github/copilot-instructions.md`
+- Training and public-facing content: `docs/training/*`, `blog/*`, `docs/index.html`, `portfolio/*` where appropriate
+- GitHub tracking: create a coordinated update issue and a single review PR for the documentation batch
+
+### Delivery sequence and status
+
+#### Phase A — Governance alignment
+- [x] Confirm the discovery package is treated as a discovery artifact, not a release decision.
+- [x] Update the intake standard to explicitly differentiate Product Owner specification acceptance from architecture readiness.
+- [x] Update the solution intake template and question bank to capture records, retention, volume, owner, approval path, data classification, and approved recording/AI boundaries.
+- [x] Confirm that all statements, open questions, and assumptions remain traceable to an attributed source.
+
+#### Phase B — Repository updates
+- [x] Update `README.md` to describe the new discovery flow as the default intake path.
+- [x] Update `AGENT_WORKFLOW.md` to route work through discovery before architecture.
+- [x] Publish repository-native discovery script, transcript-to-story prompt, and User Story Specification templates.
+- [x] Refresh `skills/solution-intake/SKILL.md` and the intake reference material to include the new discovery package and Product Owner validation gate.
+- [x] Update `templates/solution-intake.md` and the supporting standards to require a governance review before Ready is assigned.
+
+#### Phase C — Training and enablement
+- [x] Update onboarding, training materials, and workshop docs to teach the new discovery script and user-story workflow.
+- [x] Update blog and public-safe materials to describe the governed discovery flow and the approval gates that follow it.
+- [x] Add examples showing how a discovery transcript becomes a user story specification and then enters the lifecycle.
+
+#### Phase D — GitHub tracking and review
+- [x] Create repo-level issue `#34` covering the documentation and standards alignment batch.
+- [ ] Open a single PR branch for the cross-document update and keep the scope limited to documentation and workflow alignment.
+- [ ] Require review from the program owner, developer representative, and training/enablement owner before merge.
+
+### Change owners
+
+- Program owner: lifecycle, readiness gate, and strategic approval
+- Developer/architect: standards, intake, risk classification, and architecture readiness
+- Repo editor: README, repo map, cross-link cleanup, and documentation consistency
+- Training owner: docs/training and blog updates
+- GitHub/ops: issue, PR, and branch tracking
+
+### Acceptance criteria for the rollout
+
+- The repo clearly states that discovery and user-story capture are upstream of architecture and build.
+- The workflow preserves explicit human approval at each gate.
+- The repo distinguishes confirmed facts, assumptions, unknowns, and open questions.
+- Transcript-derived statements retain source and participant attribution, and recording/transcription stays within the approved consent, access, retention, and AI boundary.
+- Training materials explain both the discovery script and the governance gates that follow it.
+- The README and operating guidance reflect the same lifecycle sequence.
+
 ## Technical Context
 
 - Platforms: Microsoft Power Apps, Power Automate, SharePoint, Microsoft 365, Microsoft Foundry
@@ -64,6 +129,12 @@ Operationalize the Copilot research package as a versioned Power Desk delivery s
 - [x] T016 [P] [Plan:2.2] Publish `templates/test-case.md`.
 - [x] T017 [P] [Plan:2.2] Publish `templates/release-checklist.md`.
 - [x] T018 [P] [Plan:2.2] Publish `templates/handoff-checklist.md`.
+
+#### Plan 2.3 - Integrate governed discovery (REQ-015)
+
+- [x] T018A [P] [Plan:2.3] Publish the discovery script, transcript-to-story prompt, and User Story Specification templates.
+- [x] T018B [Plan:2.3] Align intake, lifecycle, agent, and training guidance with Product Owner specification acceptance and the separate readiness decision.
+- [x] T018C [Plan:2.3] Validate cross-document links, terminology, source attribution, recording/AI-boundary controls, negative approval cases, and desktop/mobile training-page smoke paths.
 
 ### Phase 3: Reusable skill and orchestration layer
 

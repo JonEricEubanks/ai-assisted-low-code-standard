@@ -1,14 +1,28 @@
 const allowedRoots = new Set([
+  ".github",
+  "agents",
+  "blog",
   "standards",
   "qa",
   "governance",
   "docs",
+  "metrics",
+  "portfolio",
   "templates",
   "skills",
+  "workstreams",
 ]);
-const allowedRootFiles = new Set(["README.md", "AGENT_WORKFLOW.md", "CONTRIBUTING.md"]);
+const allowedRootFiles = new Set([
+  "README.md",
+  "AGENT_WORKFLOW.md",
+  "BRANCHING.md",
+  "CONTRIBUTING.md",
+  "plan.md",
+  "requirements.md",
+]);
 const params = new URLSearchParams(window.location.search);
 const documentPath = params.get("doc") || "";
+const embedded = params.get("embed") === "1";
 const content = document.querySelector("#guide-content");
 const repoRoot = new URL("../../", window.location.href);
 const quickPathLink = document.querySelector("#quick-path-link");
@@ -19,6 +33,10 @@ const quickPathByDocument = {
   "standards/integrated-solutions.md": "../platform/index.html?type=integrated",
   "skills/azure-resource-boundary/SKILL.md": "../azure/index.html",
 };
+
+if (embedded) {
+  document.body.classList.add("guide-embed");
+}
 
 if (quickPathByDocument[documentPath]) {
   quickPathLink.href = quickPathByDocument[documentPath];
@@ -332,8 +350,9 @@ async function loadDocument() {
   }
 
   const markdown = await response.text();
-  const titleMatch = markdown.match(/^#\s+(.+)$/m);
-  const firstParagraph = markdown
+  const readableMarkdown = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+  const titleMatch = readableMarkdown.match(/^#\s+(.+)$/m);
+  const firstParagraph = readableMarkdown
     .split(/\n\s*\n/)
     .find((block) => block.trim() && !block.trim().startsWith("#") && !block.trim().startsWith("|"));
   const title = titleMatch ? titleMatch[1].trim() : "MGP Guide";
@@ -346,7 +365,7 @@ async function loadDocument() {
     : "MGP delivery guidance and standards.";
   document.querySelector("#download-source").href = sourceUrl().href;
   document.querySelector("#download-source").download = documentPath.split("/").pop();
-  content.innerHTML = renderMarkdown(markdown);
+  content.innerHTML = renderMarkdown(readableMarkdown);
   buildTableOfContents();
 }
 

@@ -1,0 +1,495 @@
+{
+    "schemaVersion":  1,
+    "documents":  [
+                      {
+                          "category":  "Agents",
+                          "title":  "Azure Boundary",
+                          "path":  ".github/agents/azure-boundary.agent.md",
+                          "summary":  "Use before any Azure CLI, Azure MCP, SDK, REST, azd, Bicep, Terraform, OCR, Document Intelligence, Foundry, storage, or other Azure operation. Resolve and verify the approved subscription, workload resource group, loc...",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Agents",
+                          "title":  "Delivery Orchestrator Instructions",
+                          "path":  "agents/delivery-orchestrator.md",
+                          "summary":  "Coordinate the approved lifecycle without replacing accountable human decisions.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Agents",
+                          "title":  "Foundry QA Builder",
+                          "path":  ".github/agents/foundry-qa.agent.md",
+                          "summary":  "Use for building or changing the governed Foundry QA/QC system: evaluator adapters, synthetic datasets, visual evaluation, shadow workflows, evidence normalization, model comparisons, and bounded non-production valida...",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Agents",
+                          "title":  "Foundry Validation Architecture",
+                          "path":  "agents/foundry-validation-architecture.md",
+                          "summary":  "1. Planner/test-orchestrator: converts approved requirements into bounded test assignments.\n2. Deterministic runner: executes API, schema, policy, solution, and supported UI assertions.\n3. Playwright runner: handles s...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Agents",
+                          "title":  "MGP Delivery",
+                          "path":  ".github/agents/mgp-delivery.agent.md",
+                          "summary":  "Use when: processing a CSM SharePoint handoff, running solution intake, selecting an MGP low-code platform, planning a Power Apps/Power Automate/SharePoint solution, validating a release, or preparing handoff.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Agents",
+                          "title":  "QA Reviewer Instructions",
+                          "path":  "agents/qa-reviewer.md",
+                          "summary":  "Independently determine whether the specified solution version has sufficient evidence for human release approval.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Architecture",
+                          "title":  "Agent Assignment Matrix",
+                          "path":  "docs/architecture/AGENT_ASSIGNMENT_MATRIX.md",
+                          "summary":  "1. Governance and controls\r\n2. Platform workstreams in parallel\r\n3. QA deterministic foundation\r\n4. Metrics baseline\r\n5. Foundry visual and computer-use evaluation\r\n6. Portfolio and blog publication",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Architecture",
+                          "title":  "Repository Architecture",
+                          "path":  "docs/architecture/REPO_ARCHITECTURE.md",
+                          "summary":  "This repository is designed to support parallel AI and developer work without creating unmaintainable drift. It is structured so each workstream owns a bounded domain and merges into a single source of truth.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Architecture",
+                          "title":  "Scaling Guide",
+                          "path":  "docs/architecture/SCALING_GUIDE.md",
+                          "summary":  "When another developer joins:",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Governance",
+                          "title":  "Evidence Boundary",
+                          "path":  "governance/evidence-boundary.md",
+                          "summary":  "The internal evidence review confirms that the organization has substantial reusable low-code delivery experience and existing QA, handoff, release, and rollback practices. It also confirms that project-level evidence...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Governance",
+                          "title":  "Operating Model",
+                          "path":  "governance/operating-model.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Governance",
+                          "title":  "Power Desk Delivery Charter",
+                          "path":  "governance/power-desk-delivery-charter.md",
+                          "summary":  "Provide new hires and current Power Desk developers with one governed, reusable delivery system for Power Apps, Power Automate, SharePoint lists, modern pages, document libraries, and related Microsoft 365 components.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Governance",
+                          "title":  "Power Desk Delivery Quality Scorecard",
+                          "path":  "governance/delivery-quality-scorecard.md",
+                          "summary":  "Use this scorecard to evaluate whether the delivery system is working consistently for new hires and current developers.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Governance",
+                          "title":  "Repository Controls",
+                          "path":  "governance/repository-controls.md",
+                          "summary":  "GitHub branch protection is unavailable for a private repository on the current personal GitHub plan. GitHub returned HTTP 403 and requires GitHub Pro, a qualifying organization plan, or a public repository.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Instructions",
+                          "title":  "Agent Workflow",
+                          "path":  "AGENT_WORKFLOW.md",
+                          "summary":  "1. Read the program charter, repo architecture, and current branch status.\r\n2. Confirm the current lifecycle stage and the approval that permits work at that stage.\r\n3. For new requests, run solution intake before arc...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Instructions",
+                          "title":  "Contributing",
+                          "path":  "CONTRIBUTING.md",
+                          "summary":  "This repository is a standards and delivery operating system for AI-assisted Microsoft 365 and Power Platform delivery.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Instructions",
+                          "title":  "MGP AI-Assisted Delivery Instructions",
+                          "path":  ".github/copilot-instructions.md",
+                          "summary":  "This repository defines the governed MGP delivery lifecycle for Power Apps, Power Automate, SharePoint, Microsoft 365, and integrated low-code solutions.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Planning",
+                          "title":  "AI-Assisted Low-Code Delivery Standard",
+                          "path":  "README.md",
+                          "summary":  "This workspace provides the Power Desk with a governed, reusable AI-assisted delivery system for Power Apps, Power Automate, SharePoint, and related Microsoft 365 solutions. It is designed for new-hire onboarding and...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Planning",
+                          "title":  "AI-Assisted Low-Code Standard Implementation Plan",
+                          "path":  "plan.md",
+                          "summary":  "Operationalize the Copilot research package as a versioned Power Desk delivery system with standards, reusable skills, agents, templates, QA evidence, pilots, developer onboarding, metrics, operational evidence, and p...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Planning",
+                          "title":  "Branching and Parallel Agent Operating Model",
+                          "path":  "BRANCHING.md",
+                          "summary":  "One branch = one workstream.\r\nOne workstream = one owner.\r\nOne PR = one approval gate.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Planning",
+                          "title":  "Program Requirements",
+                          "path":  "requirements.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "QA",
+                          "title":  "Deterministic Check Interfaces",
+                          "path":  "qa/deterministic-checks.md",
+                          "summary":  "Deterministic checks are repeatable, machine-verifiable results. They run before visual review or exploratory computer use. A check that depends on subjective judgment must return `review-needed`, not a guessed pass.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "QA",
+                          "title":  "Evidence Schema",
+                          "path":  "qa/evidence-schema.md",
+                          "summary":  "Every validation artifact must be traceable through these fields. The machine-readable contract is [`evidence-schema.json`](evidence-schema.json); the standard-library validator checks evidence IDs, requirement IDs, t...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "QA",
+                          "title":  "QA/QC Strategy",
+                          "path":  "qa/qa-strategy.md",
+                          "summary":  "Run deterministic checks first. Their authoritative checks include schema, configuration, solution dependencies, App Checker, accessibility output, flow validation/preflight, API assertions, permissions, test data, an...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "QA",
+                          "title":  "Screenshot and Visual Evidence Plan",
+                          "path":  "qa/screenshot-plan.md",
+                          "summary":  "Use `qa/screenshot-register.csv`. For every image, explain what it proves; a screenshot without a claim is decoration, not evidence.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "architecture-and-impact",
+                          "path":  ".github/skills/architecture-and-impact/SKILL.md",
+                          "summary":  "Use when: an approved MGP intake is Ready and needs architecture, data, integration, security, licensing, support, impact, and rollback decisions before implementation.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "architecture-and-impact",
+                          "path":  "skills/architecture-and-impact/SKILL.md",
+                          "summary":  "Produce an approved architecture and change-impact map for a low-code solution.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "azure-resource-boundary",
+                          "path":  ".github/skills/azure-resource-boundary/SKILL.md",
+                          "summary":  "Use when: doing any Azure work, using Azure CLI, Azure MCP, SDKs, REST, azd, Bicep, or Terraform; creating a resource group or subscription boundary; or turning on Azure guardrails. Covers Foundry, OCR, Document Intel...",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "azure-resource-boundary",
+                          "path":  "skills/azure-resource-boundary/SKILL.md",
+                          "summary":  "Use when: doing any Azure work, using Azure CLI, Azure MCP, SDKs, REST, azd, Bicep, or Terraform; creating a resource group or subscription boundary; or turning on Azure guardrails. Covers Foundry, OCR, Document Intel...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "documentation-handoff",
+                          "path":  ".github/skills/documentation-handoff/SKILL.md",
+                          "summary":  "Use when: an approved MGP solution release needs operational documentation, ownership transfer, support context, regression evidence, walkthrough, and successor acceptance.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "documentation-handoff",
+                          "path":  "skills/documentation-handoff/SKILL.md",
+                          "summary":  "Create a successor-ready inventory, runbook, support model, and handoff verification package.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "independent-qa",
+                          "path":  ".github/skills/independent-qa/SKILL.md",
+                          "summary":  "Use when: an MGP solution build is complete and needs independent, traceable functional, deterministic, accessibility, visual, permission, recovery, regression, and release-readiness validation.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "independent-qa",
+                          "path":  "skills/independent-qa/SKILL.md",
+                          "summary":  "Execute risk-based independent QA and produce release evidence for low-code solutions.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "power-apps-delivery",
+                          "path":  ".github/skills/power-apps-delivery/SKILL.md",
+                          "summary":  "Use when: implementing or changing an approved Power Apps Canvas app after intake and architecture gates have passed.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "power-apps-delivery",
+                          "path":  "skills/power-apps-delivery/SKILL.md",
+                          "summary":  "Plan, implement, validate, and hand off a bounded Canvas app change using the approved Power Apps standard and authorized Canvas MCP capabilities.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "power-automate-delivery",
+                          "path":  ".github/skills/power-automate-delivery/SKILL.md",
+                          "summary":  "Use when: implementing or changing an approved Power Automate cloud flow after intake and architecture gates have passed.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "power-automate-delivery",
+                          "path":  "skills/power-automate-delivery/SKILL.md",
+                          "summary":  "Plan, create, validate, test, and document a cloud flow using the approved flow standard and Flow MCP.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "retrospective-pattern-extraction",
+                          "path":  ".github/skills/retrospective-pattern-extraction/SKILL.md",
+                          "summary":  "Use when: an MGP delivery is complete and the team needs a retrospective, measured outcomes, reusable patterns, unresolved risks, and governed improvement backlog.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "retrospective-pattern-extraction",
+                          "path":  "skills/retrospective-pattern-extraction/SKILL.md",
+                          "summary":  "Measure a completed delivery and promote validated lessons into reusable standards, skills, and templates.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "sharepoint-delivery",
+                          "path":  ".github/skills/sharepoint-delivery/SKILL.md",
+                          "summary":  "Use when: implementing or changing an approved SharePoint List, Document Library, modern Page, permissions model, or related information architecture after intake and architecture gates have passed.",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "sharepoint-delivery",
+                          "path":  "skills/sharepoint-delivery/SKILL.md",
+                          "summary":  "Design and validate SharePoint lists, libraries, pages, metadata, permissions, and lifecycle controls.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "solution-intake",
+                          "path":  ".github/skills/solution-intake/SKILL.md",
+                          "summary":  "Use when: a CSM SharePoint handoff, project scope, charter, user stories, email thread, or intake package must become a developer-ready Solution Brief with questions, platform recommendation, risk, and readiness dispo...",
+                          "source":  "Active Copilot customization"
+                      },
+                      {
+                          "category":  "Skills",
+                          "title":  "solution-intake",
+                          "path":  "skills/solution-intake/SKILL.md",
+                          "summary":  "Triage a submitted project scope intake form into a developer-ready Solution Brief, a bounded clarification set, and a readiness disposition, without inferring unknown facts.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "Common Delivery Lifecycle",
+                          "path":  "standards/common-delivery-lifecycle.md",
+                          "summary":  "Capture business outcome, users, scope, constraints, data sensitivity, urgency, owner, and success measures. Reject or re-scope work that lacks an accountable owner or testable outcome.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "Intake and Triage Standard",
+                          "path":  "standards/intake-and-triage.md",
+                          "summary":  "Version 1.0 — provisional pending program owner approval.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "Integrated Solution Standard",
+                          "path":  "standards/integrated-solutions.md",
+                          "summary":  "Use this standard whenever a solution spans more than one app, flow, list, library, page, form, custom connector, or external service.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "Power Apps Delivery Standard",
+                          "path":  "standards/power-apps.md",
+                          "summary":  "This standard applies to Canvas app planning, bounded changes, validation, and handoff. Treat missing app, data, environment, and ownership facts as unknowns; do not fill gaps with assumptions.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "Power Automate Delivery Standard",
+                          "path":  "standards/power-automate.md",
+                          "summary":  "Flow version, connections by logical name, trigger sample, test IDs, run IDs, action results, retry behavior, failure notification, recovery result, reviewer, and approval.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "SharePoint Delivery Standard",
+                          "path":  "standards/sharepoint.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Standards",
+                          "title":  "Visual Verification Standard",
+                          "path":  "standards/visual-verification.md",
+                          "summary":  "Applies to Power Apps, Power Automate, SharePoint, and any other surface an end user sees.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Architecture Decision Record",
+                          "path":  "templates/architecture-decision.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Discovery Script",
+                          "path":  "templates/discovery-script.md",
+                          "summary":  "Use this public-safe conversation guide to capture business needs and user outcomes. Discovery supplements intake; it does not authorize architecture, build, production change, or release.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Discovery-to-User-Story Prompt",
+                          "path":  "templates/discovery-to-user-story-prompt.md",
+                          "summary":  "Use this public-safe prompt only after the recording/transcription, data-classification, records/retention, access, and approved-AI-boundary checks in `templates/discovery-script.md` are complete. Do not submit unappr...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Handoff Checklist",
+                          "path":  "templates/handoff-checklist.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Release Checklist",
+                          "path":  "templates/release-checklist.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Solution Intake",
+                          "path":  "templates/solution-intake.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "Test Case",
+                          "path":  "templates/test-case.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Templates",
+                          "title":  "User Story Specification",
+                          "path":  "templates/user-story-specification.md",
+                          "summary":  "Use this public-safe specification for straightforward discovery outcomes. It supplements the Solution Brief and does not replace intake, risk/complexity scoring, or Tier 1 closure.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "A Layered QA System for Low-Code Solutions",
+                          "path":  "blog/article-05-qa-system.md",
+                          "summary":  "Quality checks should match the risk and be repeatable. Begin with deterministic validation for required fields, formulas, and expected states. Add functional and accessibility checks for user journeys. Use visual rev...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Blog Series Plan",
+                          "path":  "blog/blog-series-plan.md",
+                          "summary":  "The public blog is a synthetic demonstration package, not a derivative of internal pilot artifacts. It must not expose client, tenant, user, security, licensing, or proprietary implementation details. Existing evidenc...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Build and Blog Work Log",
+                          "path":  "blog/work-log-template.md",
+                          "summary":  "Open this repository resource in preview or source view.",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "CSM Handoff to Developer Intake Flow",
+                          "path":  "docs/csm-handoff-intake-flow.md",
+                          "summary":  "Define how a qualified opportunity becomes an approved, traceable discovery package and then a developer-ready Solution Brief without requiring developers to manually reconstruct requirements or download disconnected...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Designing SharePoint Solutions with Explicit Contracts",
+                          "path":  "blog/article-04-sharepoint-design.md",
+                          "summary":  "SharePoint lists, libraries, and pages work best when their data and use are designed together. Before building, define the fields, required values, views, metadata, access model, and page purpose. Include only the da...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Designing the Delivery Lifecycle",
+                          "path":  "blog/article-02-delivery-lifecycle.md",
+                          "summary":  "A reliable delivery lifecycle makes the next decision visible. It begins when an opportunity is qualified, then moves through a discovery interview, an attributed transcript, a bounded Copilot draft, human refinement,...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Measuring Whether AI Improved Delivery",
+                          "path":  "blog/article-06-measurement.md",
+                          "summary":  "A credible improvement claim starts before a change is introduced. Define the activity, start and stop events, comparable work, data source, and sample size. Report the median and range, describe exclusions, and separ...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Publication Review and Approval Record",
+                          "path":  "blog/publication-review.md",
+                          "summary":  "Use this checklist for each article, case study, image, and presentation. Reviewers should use source records only in their approved internal location; this public workspace must not contain source material that the e...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Reusable Skills for Low-Code Delivery",
+                          "path":  "blog/article-03-reusable-skills.md",
+                          "summary":  "A reusable skill is a bounded contract, not a prompt that claims to build anything. It should state when to use it, what inputs it expects, which platform tools are allowed, what constraints apply, and how a person ve...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Training and Video Roadmap",
+                          "path":  "docs/training-video-roadmap.md",
+                          "summary":  "The training experience should help a developer answer three questions immediately:",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Training Materials Build Plan",
+                          "path":  "docs/training-materials-plan.md",
+                          "summary":  "Create a polished, developer-friendly Power Desk training portal that captures the full delivery lifecycle: governance, standards, skills, process, QA, operational evidence, and reusable delivery patterns. The final r...",
+                          "source":  "Governed repository source"
+                      },
+                      {
+                          "category":  "Training",
+                          "title":  "Why Low-Code Teams Need a Governed AI-Assisted Standard",
+                          "path":  "blog/article-01-governed-standard.md",
+                          "summary":  "Low-code tools make it quick to create an app or workflow. A team can still get inconsistent results if each person invents a different intake, review, testing, and handoff process. Adding AI to isolated prompting doe...",
+                          "source":  "Governed repository source"
+                      }
+                  ]
+}
