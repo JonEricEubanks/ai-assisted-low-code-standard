@@ -39,6 +39,20 @@ The active Copilot customizations are under `.github/agents/`, `.github/skills/`
 
 Do not download arbitrary MCP servers or store tenant credentials in this repository. A SharePoint URL only identifies the CSM handoff; the selected MCP tool must already be authenticated and authorized before intake can begin.
 
+Run `.\scripts\Test-DeveloperSetup.ps1` for local setup and a read-only SharePoint connection test. The checker uses **Microsoft 365 CLI (`m365`) and authenticated SharePoint REST**, following the pilot's connection pattern; Azure CLI alone is not enough. It signs in through the browser with the read-only **MGP Developer Onboarding CLI** app (delegated SharePoint `AllSites.Read` and Graph `User.Read`) in the Spark by MGP tenant, never the write-capable provisioning app. If you are signed out or another app is active, the browser sign-in opens automatically and the test continues after you sign in. The checker then lists the **Documents** folder in the Trey Research legal documents library on `communityessentials.sharepoint.com`, reads **Connection Test.docx** in memory, and fails unless its verification phrase matches. It performs only GET requests and does not log tokens, install tools, change permissions, or write tenant content.
+
+Keep **Connection Test.docx** synthetic-only and stored in that library's **Documents** folder. Delegated access is still limited to what each developer's own account can open. Client project URLs, sharing tokens, and client content must remain outside the repository. Use only approved synthetic content in training recordings.
+
+If browser sign-in is cancelled or fails, the checker stops the SharePoint test with a blocker instead of retrying. If your account cannot use the onboarding app or read the library, ask IT / the platform owner for access; do not create applications or grant permissions during onboarding.
+
+The checker also prints a **MGP Delivery** prompt under **Next: verify access in Copilot**. Copy that prompt into Copilot Chat, not the terminal, to test the agent separately. CLI success does **not** prove that Copilot has a SharePoint tool. The approved CLI/REST test is an onboarding access check, not a general-purpose client handoff reader.
+
+The optional `-SharePointFolderUrl` parameter overrides the folder in the Copilot prompt for an authorized project; the automatic CLI test runs only for the default synthetic folder. Supply only the HTTPS SharePoint folder URL, not the PowerShell command. A supplied value that is not an HTTPS URL with a hostname ending in `.sharepoint.com` is rejected with an explicit error before local checks run. URL validation does not prove that the link targets a folder or that the agent can access it.
+
+Local checks passing does not verify tenant access: the approved connection must actually list the folder and read the authorized documents within the approved AI-use boundary. For the synthetic test, confirm the returned verification phrase matches **Connection Test.docx**. Test-folder access does not prove access to future project folders. If no URL is available, verification remains pending; if the connection or permission is missing, stop and ask IT / the platform owner to enable the approved Copilot connection and folder read access before intake.
+
+Validate the CLI test without tenant access using `powershell -NoProfile -File .\qa\Test-DeveloperSetup.ps1`. It mocks authentication and HTTP calls and tests successful reading plus explicit blocker cases.
+
 For repository orientation:
 
 1. Read [the Power Desk delivery charter](governance/power-desk-delivery-charter.md).

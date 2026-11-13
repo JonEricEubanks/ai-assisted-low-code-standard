@@ -1,14 +1,47 @@
 const sharePointInput = document.querySelector("#sharepoint-url");
 const generateButton = document.querySelector("#generate-prompt");
 const copyPromptButton = document.querySelector("#copy-prompt");
-const copySetupButton = document.querySelector("#copy-setup-command");
 const promptOutput = document.querySelector("#prompt-output");
 const promptText = document.querySelector("#prompt-text");
 const urlError = document.querySelector("#url-error");
 const promptCopyStatus = document.querySelector("#prompt-copy-status");
-const setupCopyStatus = document.querySelector("#setup-copy-status");
 
-const setupCommand = ".\\scripts\\Test-DeveloperSetup.ps1";
+const copyIcon =
+  '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
+const copiedIcon =
+  '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+function addCardCopyButtons() {
+  document.querySelectorAll(".readiness-card code").forEach((code) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-copy";
+    code.replaceWith(wrapper);
+    wrapper.append(code);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "code-copy-button";
+    button.innerHTML = copyIcon;
+    button.title = "Copy";
+    button.setAttribute("aria-label", `Copy ${code.textContent.trim().slice(0, 60)}`);
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent.trim());
+        button.innerHTML = copiedIcon;
+        button.title = "Copied";
+      } catch {
+        button.title = "Copy failed";
+      }
+      setTimeout(() => {
+        button.innerHTML = copyIcon;
+        button.title = "Copy";
+      }, 2000);
+    });
+    wrapper.append(button);
+  });
+}
+
+addCardCopyButtons();
 
 function buildPrompt(folderUrl) {
   return `Run MGP solution intake for this approved CSM SharePoint project folder:
@@ -83,8 +116,4 @@ sharePointInput.addEventListener("keydown", (event) => {
 
 copyPromptButton.addEventListener("click", () => {
   copyText(promptText.textContent, promptCopyStatus, "Prompt copied. Paste it into Copilot Chat.");
-});
-
-copySetupButton.addEventListener("click", () => {
-  copyText(setupCommand, setupCopyStatus, "Readiness command copied.");
 });
