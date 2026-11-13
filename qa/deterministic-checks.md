@@ -35,6 +35,14 @@ An adapter records the platform tool and version, configuration/input reference,
 
 The sanitized example in [`fixtures/deterministic-evidence.json`](fixtures/deterministic-evidence.json) demonstrates `REQ-008` → `TST-QA-001` → `EVD-QA-001`. The test runs the evidence-contract validator against a synthetic record and expects a valid result with all three stable IDs present. The evidence record links the validator's synthetic log reference and states the claim it proves. A failing assertion must instead produce `fail`, a linked defect ID, and the observed result; a blocked check stays blocked.
 
+## Discovery workflow and training checks
+
+Run `python -m unittest discover -s qa -p "test*.py"` before asking a developer to exercise the discovery workflow or training portal.
+
+`test_discovery_workflow.py` checks each governed standard, skill, agent, template, training surface, blog article, and worked example independently. It verifies source and participant attribution, the four evidence buckets, recording/consent/access/retention/AI controls, stable IDs, risk and Tier 1 readiness, and the separation between Product Owner accuracy acceptance and later approvals. Negative mutation cases prove that omitted controls and unsafe approval claims are detected.
+
+`test_training_portal.py` checks unique HTML IDs, accessibility landmarks, discovery-template links, internal link targets, query-linked repository documents, the local repository explorer catalog, Preview/Source controls, and local HTTP serving. It verifies that every catalog path is safe, unique, and backed by a real Markdown file. Its negative cases prove that broken anchors and duplicate IDs are detected. These deterministic checks are followed by a rendered desktop/mobile browser smoke check for console errors, missing resources, clipping, and navigation.
+
 ## Playwright journeys and traces
 
 Use Playwright only for stable browser journeys, not as a substitute for platform-native deterministic checks.

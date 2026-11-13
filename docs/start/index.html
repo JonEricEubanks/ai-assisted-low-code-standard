@@ -83,8 +83,8 @@
             <span class="eyebrow">★ Prerequisites</span>
             <h2>Have these six things before you start.</h2>
             <p>
-              Install VS Code, Git, the two recommended extensions, and Azure CLI once. The MGP
-              agent, skills, prompts, and templates are already included in this repository.
+              Install VS Code, Git, Power Platform Tools, and Azure CLI once. The MGP agent,
+              skills, prompts, and templates are already included in this repository.
             </p>
           </div>
 
@@ -113,8 +113,8 @@
             <div class="prerequisite-item">
               <span class="prerequisite-icon" aria-hidden="true">04</span>
               <div>
-                <strong>Two VS Code extensions</strong>
-                <p>GitHub Copilot Chat and Microsoft Power Platform Tools.</p>
+                <strong>Power Platform Tools</strong>
+                <p>Install this VS Code extension. GitHub Copilot Chat is usually built in.</p>
               </div>
             </div>
             <div class="prerequisite-item">
@@ -127,8 +127,8 @@
             <div class="prerequisite-item">
               <span class="prerequisite-icon" aria-hidden="true">06</span>
               <div>
-                <strong>Approved tenant access</strong>
-                <p>IT must provision the authenticated SharePoint/Microsoft 365 MCP connection.</p>
+                <strong>SharePoint read access</strong>
+                <p>IT installs Microsoft 365 CLI and gives you read access to the Community Essentials test folder.</p>
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@
               <span class="readiness-number">01</span>
               <div>
                 <strong>Install VS Code and Git</strong>
-                <p>Start here on a blank machine. Both tools must be available before you can open the workspace.</p>
+                <p>Download and run both installers. If your laptop blocks installs, ask IT.</p>
               </div>
               <a href="https://code.visualstudio.com/download" target="_blank" rel="noreferrer">
                 Download VS Code <span aria-hidden="true">↗</span>
@@ -151,34 +151,29 @@
             <div class="readiness-card">
               <span class="readiness-number">02</span>
               <div>
-                <strong>Clone and open the repository</strong>
-                <p>Run this from a terminal, then open the cloned folder in VS Code.</p>
+                <strong>Get the project onto your machine</strong>
+                <p>
+                  In VS Code, select Open Folder. Go to your MGP OneDrive, create a folder named
+                  <strong>repos</strong>, and open it. Open a new terminal from the Terminal menu, paste
+                  this command, and press Enter. If GitHub asks you to sign in, use your
+                  organization account.
+                </p>
                 <code>git clone https://github.com/JonEricEubanks/ai-assisted-low-code-standard.git</code>
+                <p>When it finishes, run this in the terminal. VS Code reloads with the project open.</p>
+                <code>code -r .\ai-assisted-low-code-standard</code>
               </div>
-              <a
-                href="vscode://vscode.git/clone?url=https%3A%2F%2Fgithub.com%2FJonEricEubanks%2Fai-assisted-low-code-standard.git"
-              >
-                VS Code installed? Clone automatically <span aria-hidden="true">↗</span>
-              </a>
             </div>
 
             <div class="readiness-card">
               <span class="readiness-number">03</span>
               <div>
-                <strong>Install the recommended extensions</strong>
+                <strong>Install Power Platform Tools</strong>
                 <p>
-                  Accept the repository recommendations in VS Code. You do not separately install
-                  the MGP agent or skills.
+                  In the left sidebar, select the Extensions icon. Search for
+                  <strong>Power Platform</strong>, select Power Platform Tools, and select Install.
+                  GitHub Copilot Chat is usually already included in VS Code.
                 </p>
-                <code>GitHub.copilot-chat<br />microsoft-IsvExpTools.powerplatform-vscode</code>
               </div>
-              <a
-                href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Copilot Chat listing <span aria-hidden="true">↗</span>
-              </a>
               <a
                 href="https://marketplace.visualstudio.com/items?itemName=microsoft-IsvExpTools.powerplatform-vscode"
                 target="_blank"
@@ -193,11 +188,11 @@
               <div>
                 <strong>Install and verify Azure CLI</strong>
                 <p>
-                  The official installer may require local administrator rights. Ask your IT
-                  administrator to install Azure CLI so the <code>az</code> command is available
-                  in your terminal. After installation, run <code>az --version</code>. Sign in only
-                  when an approved workflow requires it.
+                  Installing it usually needs administrator rights, so send the guide below to IT.
+                  Once it's installed, paste this into the terminal and press Enter. A version
+                  number means it's ready. You don't need to sign in to Azure now.
                 </p>
+                <code>az --version</code>
               </div>
               <a href="https://learn.microsoft.com/cli/azure/install-azure-cli" target="_blank" rel="noreferrer">
                 Give this guide to your administrator <span aria-hidden="true">↗</span>
@@ -208,7 +203,12 @@
               <span class="readiness-number">05</span>
               <div>
                 <strong>Sign in to GitHub Copilot</strong>
-                <p>Use your approved organizational GitHub account and confirm Chat is available in VS Code.</p>
+                <p>
+                  Select the account icon in the bottom-left corner of VS Code and sign in with
+                  your organization's GitHub account. Open Copilot Chat from the chat icon at the
+                  top, then select <strong>MGP Delivery</strong> in the agent picker. If it isn't
+                  listed, make sure the project folder is open, not the <strong>repos</strong> folder.
+                </p>
               </div>
               <span class="readiness-state">One-time setup</span>
             </div>
@@ -216,12 +216,13 @@
             <div class="readiness-card">
               <span class="readiness-number">06</span>
               <div>
-                <strong>Request and verify tenant tools</strong>
+                <strong>Request SharePoint access</strong>
                 <p>
-                  SharePoint/Microsoft 365 MCP access is not downloaded from this repository. Use
-                  your standard IT service channel and send the request below.
+                  The app registration is already set up, so you don't need to create anything.
+                  If step 7 can't sign you in or read the test document, send IT this request
+                  through your usual service channel.
                 </p>
-                <code>Install or enable the approved SharePoint/Microsoft 365 MCP connection for the Power Desk developer workflow. Confirm I can list and read an authorized CSM project folder.</code>
+                <code class="code-wrap">Please set me up for the Power Desk developer readiness check: 1) a Community Essentials (Spark by MGP) account, 2) read access to the Documents folder on the Trey Research legal documents site, 3) access to the MGP Developer Onboarding CLI app if user assignment is required, and 4) Microsoft 365 CLI (m365) installed on my laptop.</code>
               </div>
               <span class="readiness-state">IT / platform owner</span>
             </div>
@@ -229,28 +230,27 @@
             <div class="readiness-card">
               <span class="readiness-number">07</span>
               <div>
-                <strong>Run the local readiness check</strong>
+                <strong>Run the readiness check</strong>
                 <p>
-                  In the VS Code PowerShell terminal, run this from the repository root. If policy
-                  blocks the script, contact IT rather than bypassing organizational controls.
+                  In the VS Code terminal, inside the project folder, run this and press Enter. Sign
+                  in with your Community Essentials account when your browser opens. It reads the
+                  test document and doesn't change anything. When you see PASS, you're ready. If
+                  policy blocks the script, contact IT rather than bypassing organizational
+                  controls.
                 </p>
                 <code>.\scripts\Test-DeveloperSetup.ps1</code>
               </div>
-              <button id="copy-setup-command" class="inline-action" type="button">
-                Copy command <span aria-hidden="true">⧉</span>
-              </button>
             </div>
           </div>
-          <p id="setup-copy-status" class="copy-status" role="status" aria-live="polite"></p>
 
           <div class="ownership-panel" aria-label="Setup responsibilities">
             <div>
               <span>You do</span>
-              <strong>Install approved extensions, open the repository, sign in to Copilot, and run the checker.</strong>
+              <strong>Install Power Platform Tools, open the project folder, sign in to Copilot, and run the checker.</strong>
             </div>
             <div>
               <span>IT / platform owner does</span>
-              <strong>Install Azure CLI when admin rights are required and provision approved MCP access.</strong>
+              <strong>Install Azure CLI and Microsoft 365 CLI, and grant SharePoint read access.</strong>
             </div>
             <div>
               <span>CSM provides</span>
@@ -264,16 +264,16 @@
               <h3>You are ready when all six checks are true.</h3>
             </div>
             <ul>
-              <li>VS Code has this repository open as the active workspace.</li>
+              <li>VS Code has the project folder open as the active workspace.</li>
               <li>Git works from the terminal.</li>
-              <li>Both recommended extensions are enabled.</li>
+              <li>Power Platform Tools is installed.</li>
               <li>GitHub Copilot Chat shows the MGP Delivery agent.</li>
               <li><code>az --version</code> succeeds.</li>
-              <li>The approved MCP connection can list and read an authorized CSM folder.</li>
+              <li>The readiness check shows PASS for the SharePoint test.</li>
             </ul>
             <p>
-              The readiness script verifies local tools and repository files. Tenant authentication
-              still requires the manual folder-read check above.
+              A PASS confirms you can read the test document. It does not prove access to a
+              client project folder.
             </p>
           </div>
         </div>

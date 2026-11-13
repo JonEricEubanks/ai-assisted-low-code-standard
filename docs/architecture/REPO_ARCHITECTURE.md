@@ -87,9 +87,27 @@ This repository is designed to support parallel AI and developer work without cr
 5. Human approval: no automated deployment or production change without a named person.
 6. Future-proofing: add new workstreams as bounded areas rather than expanding the shared root files.
 
+## Discovery package integration
+
+The repository's pre-architecture flow is:
+
+`Qualification/intake -> discovery artifacts -> Product Owner specification-accuracy validation -> developer/agent governed triage -> accountable readiness approval -> architecture`
+
+Discovery artifacts must:
+
+- attribute each material statement to its source and preserve source conflicts or uncertain precedence;
+- separate confirmed facts, implied requirements, assumptions, and unknowns;
+- retain unresolved blockers rather than converting them into assumptions;
+- use stable requirement, story, and acceptance-criterion IDs that downstream decisions, tasks, tests, and evidence reference; and
+- document the explicitly approved recording, transcription, and AI-use boundary.
+
+Product Owner acceptance confirms specification accuracy only. It is not architecture, build, or release approval. Architecture remains downstream of completed governed triage, a `Ready` disposition, and accountable readiness approval.
+
 ## Recommended agent ownership
 
-- Program owner: shared governance and cross-cutting change control
+- Program owner: shared governance, discovery-package controls, accountable readiness routing, and cross-cutting change control
+- Product Owner: discovery specification-accuracy validation
+- Developer/delivery agent: source-attributed governed triage and stable requirement/story/acceptance traceability
 - Power Apps workstream: standards and templates for app backlogs and UX patterns
 - Power Automate workstream: flow design, telemetry, failure-handling, recovery patterns
 - SharePoint workstream: list/library/page governance and information architecture

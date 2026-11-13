@@ -26,19 +26,23 @@ These screenshots support the 90-second MGP Developer Delivery Guide orientation
 
 ![Task routes](./04-training-task-flow.png)
 
-**Narration:** New developers can choose one route: start a solution, build with a playbook, or validate and release.
+**Narration:** Developers can review a CSM handoff, build with a platform quick path, or validate and release.
 
 ### 5. Follow the release checklist
 
 ![Release checklist](./05-training-release-checklist.png)
 
-**Narration:** Before release, test the requirement, capture evidence, pass the release gate, and transfer ownership.
+**Narration:** Before release, confirm the test target, run deterministic checks, test the live requirement, classify evidence, pass the release gate, and transfer ownership.
 
 ### 6. Use the focused platform standard
 
 ![Platform standards](./06-training-standards.png)
 
-**Narration:** During build, open only the standard that matches the solution and capture evidence as the work happens.
+**Narration:** Choose a quick path for Azure guardrails, Power Apps, Power Automate, SharePoint, or an integrated solution, and capture evidence as you work.
+
+## Capture status
+
+Screenshots 04–06 were recaptured on 2026-10-19 from the current sections of `docs/training/index.html` at a 1440-pixel browser width. Screenshots 01–03 remain from the earlier homepage capture; they were not refreshed.
 
 ## Editing notes
 

@@ -16,3 +16,4 @@
 | REQ-012 | Produce reusable operational evidence and public-safe training materials. |
 | REQ-013 | Address ALM, security, permissions, accessibility, records, licensing, support, rollback, and governance. |
 | REQ-014 | Preserve the original Copilot package and source-to-claim traceability. |
+| REQ-015 | Standardize governed stakeholder discovery, transcript-grounded user-story drafting, Product Owner specification acceptance, and the separate developer readiness decision before architecture. |

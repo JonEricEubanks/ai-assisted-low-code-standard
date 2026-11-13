@@ -207,6 +207,12 @@
   font-size: 1.05rem;
 }
 
+.readiness-card p strong {
+  display: inline;
+  font-size: inherit;
+  color: var(--ink, inherit);
+}
+
 .readiness-card p {
   margin: 5px 0 0;
   font-size: 0.87rem;
@@ -247,6 +253,44 @@
   font-family: Consolas, "Courier New", monospace;
   font-size: 0.76rem;
   white-space: nowrap;
+}
+
+.readiness-card code.code-wrap {
+  white-space: normal;
+  line-height: 1.5;
+}
+
+.code-copy {
+  position: relative;
+  margin-top: 10px;
+}
+
+.code-copy code {
+  margin-top: 0;
+  padding-right: 32px;
+}
+
+.code-copy-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: #082f47;
+  color: rgba(234, 248, 255, 0.55);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.code-copy-button:hover,
+.code-copy-button:focus-visible {
+  background: #154863;
+  color: #fff;
 }
 
 .copy-status {

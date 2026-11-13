@@ -4,13 +4,19 @@
 
 Capture business outcome, users, scope, constraints, data sensitivity, urgency, owner, and success measures. Reject or re-scope work that lacks an accountable owner or testable outcome.
 
-**Exit:** approved intake brief and initial risk class.
+An approved discovery package may supplement, but never replace, the intake evidence. Product Owner acceptance confirms that a User Story Specification accurately represents the sourced business need; it does not authorize architecture, build, production change, or release.
+
+**Exit:** approved intake brief, initial risk class, and any accepted discovery artifacts linked as attributed sources.
 
 ## 2. Discovery and requirements
 
 Identify personas, journeys, functional and non-functional requirements, exceptions, accessibility, records, security, integrations, volume, support, and acceptance criteria.
 
-**Exit:** requirements are testable and unknowns are logged.
+When recorded or AI-assisted discovery is proposed, confirm participant notice/consent, approved recording and transcription handling, the approved AI boundary, data classification, and records/retention treatment before capture or processing. Attribute each derived requirement to a source and preserve stable story and acceptance-criterion IDs.
+
+An accepted User Story Specification is handed into the Solution Brief through an explicit mapping of story and acceptance IDs; contradictions and missing intake controls remain open questions rather than being silently resolved.
+
+**Exit:** requirements are testable, sources are attributed, unknowns are logged, and the accepted specification is mapped into the Solution Brief.
 
 ## 3. Architecture and data design
 
@@ -61,6 +67,10 @@ Measure effort, rework, defects, outcomes, skill performance, manual interventio
 - Named owner and approver
 - Testable outcome and acceptance criteria
 - Data classification and approved AI boundary
+- Source attribution for discovery-derived requirements and stable story/acceptance IDs
+- Recording, transcription, and participant-notice checks completed when applicable
+- Complexity tier and risk class assigned
+- All Tier 1 intake questions closed with attributed answers
 - Architecture and impact understood
 - Licensing, security, records, and accessibility considered
 - Environment and test data ready
@@ -75,4 +85,3 @@ Measure effort, rework, defects, outcomes, skill performance, manual interventio
 - Runbook and handoff complete
 - Successor can locate and use the artifacts
 - Metrics and retrospective recorded
-

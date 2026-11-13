@@ -7,7 +7,7 @@
 | Time | Segment | Demonstration |
 |---|---|---|
 | 0–2 min | Problem and boundaries | State the synthetic scenario, audience, exclusions, and that it is not a pilot result |
-| 2–5 min | Governed delivery | Show intake, acceptance criteria, architecture decision, and human accountability |
+| 2–5 min | Governed delivery | Show qualification, synthetic discovery evidence, specification acceptance, intake readiness, architecture, and separate human approvals |
 | 5–9 min | Synthetic workflow | Submit one valid and one invalid request; show status and correction feedback |
 | 9–12 min | QA and accessibility | Show the test path, a synthetic failure/correction, and keyboard/accessibility checks |
 | 12–14 min | Evidence and measurement | Walk through the evidence matrix and distinguish unavailable, projected, and realized results |
@@ -17,6 +17,8 @@
 
 - Call out synthetic content before the demonstration begins and on any copied slide.
 - Do not open pilot recordings, emails, screenshots, defect history, access records, internal URLs, or client materials.
+- Demonstrate transcript-to-story-to-intake only with a fictional attributed transcript. State that real recording and transcription require approved tools, consent and policy compliance, controlled access and retention, and an approved AI boundary.
+- State that Product Owner specification acceptance confirms accuracy; it does not authorize build, release, publication, access changes, or production changes.
 - Do not claim measured improvement, pilot validation, independent adoption, or an achieved rating.
 - Do not display confidential finance/records architecture, performance-review content, personal data, credentials, or internal implementation details.
 - If unsanitized material appears, stop sharing, close it, and record the incident through the applicable internal process; do not reuse the material.

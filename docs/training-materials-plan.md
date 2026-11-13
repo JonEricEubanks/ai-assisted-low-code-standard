@@ -36,7 +36,12 @@ Organize the training portal around the repository's existing architecture:
    - how to navigate the standards and skills library
 
 2. Delivery lifecycle
-   - intake and triage
+   - opportunity qualification
+   - discovery interview using the approved script
+   - attributed transcript under approved consent, access, retention, and AI controls
+   - Copilot-generated specification draft
+   - human refinement and Product Owner specification acceptance
+   - developer intake triage and readiness
    - architecture and impact assessment
    - governance and approval
    - build and implementation
@@ -177,6 +182,18 @@ Add a lightweight video and walkthrough layer to the learning experience before 
 - link each video to a specific task or process path so developers know what to do next
 
 This keeps the portal easy to scan while still leaving room for richer learning assets as the program matures.
+
+### Discovery-to-intake learning objective
+
+After the quick start, a developer should be able to:
+
+- explain the sequence **qualification → discovery interview → attributed transcript → Copilot draft → human refinement → Product Owner specification acceptance → developer triage/readiness → architecture**
+- distinguish transcript-supported facts from assumptions, unknowns, and model-generated wording
+- explain that recording and transcription require an approved tool, consent and policy compliance, controlled access and retention, and an approved AI processing boundary
+- turn one attributed statement into a user story and observable acceptance criterion, then identify what remains for intake
+- state that Product Owner specification acceptance confirms accuracy only; it does not authorize build or release
+
+Use a fictional exercise rather than client material: an attributed request-owner statement says that a requester needs missing required information identified before submission. Learners draft the requester story and a Given/When/Then criterion, mark data source and permission details as unknown, obtain simulated Product Owner specification acceptance, and then triage those unknowns before readiness. The exercise ends at architecture entry, not implementation.
 
 ### Phase 1: content inventory and gap mapping
 
