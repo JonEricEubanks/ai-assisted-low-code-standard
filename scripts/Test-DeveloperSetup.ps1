@@ -201,8 +201,20 @@ function Get-GraphTestDocument {
     $site = Invoke-RestMethod -Method GET -Uri "$graph/sites/$($siteUri.Host):$($siteUri.AbsolutePath)?`$select=id" -Headers $headers -TimeoutSec 30 -MaximumRedirection 0
     $drive = Invoke-RestMethod -Method GET -Uri "$graph/sites/$($site.id)/drive?`$select=id" -Headers $headers -TimeoutSec 30 -MaximumRedirection 0
     $folder = (($Target.FolderPath.Trim('/') -split '/') | ForEach-Object { [uri]::EscapeDataString($_) }) -join '/'
-    $files = Invoke-RestMethod -Method GET -Uri "$graph/drives/$($drive.id)/root:/$folder`:/children?`$select=name&`$top=999" -Headers $headers -TimeoutSec 30 -MaximumRedirection 0
-    if (-not (@($files.value) | Where-Object { $_.name -eq 'Connection Test.docx' })) {
+    $filesUri = "$graph/drives/$($drive.id)/root:/$folder`:/children?`$select=name&`$top=999"
+    $testDocumentFound = $false
+    do {
+        $files = Invoke-RestMethod -Method GET -Uri $filesUri -Headers $headers -TimeoutSec 30 -MaximumRedirection 0
+        $testDocumentFound = [bool] (@($files.value) | Where-Object { $_.name -eq 'Connection Test.docx' })
+        $filesUri = [string] $files.'@odata.nextLink'
+        if (
+            -not $testDocumentFound -and $filesUri -and
+            -not $filesUri.StartsWith("$graph/", [StringComparison]::OrdinalIgnoreCase)
+        ) {
+            throw 'Microsoft Graph returned an unexpected folder pagination link.'
+        }
+    } while (-not $testDocumentFound -and $filesUri)
+    if (-not $testDocumentFound) {
         throw 'Folder listed, but Connection Test.docx is missing. Add the synthetic onboarding document and retry.'
     }
 
