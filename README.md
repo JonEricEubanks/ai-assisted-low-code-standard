@@ -39,11 +39,18 @@ The active Copilot customizations are under `.github/agents/`, `.github/skills/`
 
 Do not download arbitrary MCP servers or store tenant credentials in this repository. A SharePoint URL only identifies the CSM handoff; the selected MCP tool must already be authenticated and authorized before intake can begin.
 
-Run `.\scripts\Test-DeveloperSetup.ps1` for local setup and a read-only SharePoint connection test. The checker uses **Microsoft 365 CLI (`m365`) and authenticated SharePoint REST**, following the pilot's connection pattern; Azure CLI alone is not enough. It signs in through the browser with the read-only **MGP Developer Onboarding CLI** app (delegated SharePoint `AllSites.Read` and Graph `User.Read`) in the Spark by MGP tenant, never the write-capable provisioning app. If you are signed out or another app is active, the browser sign-in opens automatically and the test continues after you sign in. The checker then lists the **Documents** folder in the Trey Research legal documents library on `communityessentials.sharepoint.com`, reads **Connection Test.docx** in memory, and fails unless its verification phrase matches. It performs only GET requests and does not log tokens, install tools, change permissions, or write tenant content.
+Run `.\scripts\Test-DeveloperSetup.ps1` for local setup and a read-only SharePoint connection test. The checker uses **Microsoft 365 CLI (`m365`)**, following the pilot's connection pattern; Azure CLI alone is not enough. It tests two tenants in one run, each through the browser with its own read-only onboarding app and saved `m365` connection, never the write-capable provisioning app:
 
-Keep **Connection Test.docx** synthetic-only and stored in that library's **Documents** folder. Delegated access is still limited to what each developer's own account can open. Client project URLs, sharing tokens, and client content must remain outside the repository. Use only approved synthetic content in training recordings.
+| Tenant | App and permissions | API | Test document |
+|---|---|---|---|
+| Community Essentials (Spark by MGP) | **MGP Developer Onboarding CLI** `c894f981-…` (delegated SharePoint `AllSites.Read`, Graph `User.Read`); connection `mgp-onboarding-community-essentials` | SharePoint REST | Trey Research legal documents site on `communityessentials.sharepoint.com`, **Documents** folder |
+| MGP | `6ae6096d-…` (delegated SharePoint and Graph `Sites.Selected`, read granted on the Spark site only); connection `mgp-onboarding-mgp` | Microsoft Graph (`Sites.Selected` does not allow SharePoint REST folder reads) | `mgpinc.sharepoint.com/sites/Spark`, **Documents** library, **General** folder |
 
-If browser sign-in is cancelled or fails, the checker stops the SharePoint test with a blocker instead of retrying. If your account cannot use the onboarding app or read the library, ask IT / the platform owner for access; do not create applications or grant permissions during onboarding.
+An already-active or previously saved login for the right app and tenant is reused; otherwise the browser sign-in opens automatically and the test continues after you sign in. For each tenant the checker lists the test folder, reads **Connection Test.docx** in memory, and fails unless its verification phrase matches. Your previously active `m365` login is restored afterwards. It performs only GET requests and does not log tokens, install tools, change permissions, or write tenant content.
+
+Keep each **Connection Test.docx** synthetic-only and in the folder above. Delegated access is still limited to what each developer's own account can open. The MGP grant covers the whole Spark site, not only the test document, so treat that grant as access to all Spark content. Client project URLs, sharing tokens, and client content must remain outside the repository. Use only approved synthetic content in training recordings.
+
+If browser sign-in is cancelled or fails, the checker stops that tenant's SharePoint test with a blocker instead of retrying. If your account cannot use an onboarding app or read its test folder, ask IT / the platform owner for access; do not create applications or grant permissions during onboarding.
 
 The checker also prints a **MGP Delivery** prompt under **Next: verify access in Copilot**. Copy that prompt into Copilot Chat, not the terminal, to test the agent separately. CLI success does **not** prove that Copilot has a SharePoint tool. The approved CLI/REST test is an onboarding access check, not a general-purpose client handoff reader.
 
@@ -51,7 +58,7 @@ The optional `-SharePointFolderUrl` parameter overrides the folder in the Copilo
 
 Local checks passing does not verify tenant access: the approved connection must actually list the folder and read the authorized documents within the approved AI-use boundary. For the synthetic test, confirm the returned verification phrase matches **Connection Test.docx**. Test-folder access does not prove access to future project folders. If no URL is available, verification remains pending; if the connection or permission is missing, stop and ask IT / the platform owner to enable the approved Copilot connection and folder read access before intake.
 
-Validate the CLI test without tenant access using `powershell -NoProfile -File .\qa\Test-DeveloperSetup.ps1`. It mocks authentication and HTTP calls and tests successful reading plus explicit blocker cases.
+Validate the CLI test without tenant access using `powershell -NoProfile -File .\qa\Test-DeveloperSetup.ps1`. It mocks authentication and HTTP calls and tests successful reading in both tenants, saved-login reuse, login restoration, plus explicit blocker cases for each tenant.
 
 For repository orientation:
 
